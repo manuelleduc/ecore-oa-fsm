@@ -440,6 +440,15 @@ public class GfsmPackageImpl extends EPackageImpl implements GfsmPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getFSM_CurrentState() {
+		return (EReference)fsmEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getIntBinaryExpression() {
 		return intBinaryExpressionEClass;
 	}
@@ -748,6 +757,7 @@ public class GfsmPackageImpl extends EPackageImpl implements GfsmPackage {
 		createEReference(fsmEClass, FSM__TRANSITIONS);
 		createEReference(fsmEClass, FSM__INITIALSTATE);
 		createEAttribute(fsmEClass, FSM__NAME);
+		createEReference(fsmEClass, FSM__CURRENT_STATE);
 
 		intBinaryExpressionEClass = createEClass(INT_BINARY_EXPRESSION);
 		createEReference(intBinaryExpressionEClass, INT_BINARY_EXPRESSION__EXPRESSION1);
@@ -866,6 +876,7 @@ public class GfsmPackageImpl extends EPackageImpl implements GfsmPackage {
 		initEReference(getFSM_Transitions(), this.getTransition(), this.getTransition_Fsm(), "transitions", null, 0, -1, gfsm.FSM.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFSM_Initialstate(), this.getInitialState(), null, "initialstate", null, 1, 1, gfsm.FSM.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFSM_Name(), ecorePackage.getEString(), "name", "", 0, 1, gfsm.FSM.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFSM_CurrentState(), this.getState(), null, "currentState", null, 0, 1, gfsm.FSM.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(intBinaryExpressionEClass, IntBinaryExpression.class, "IntBinaryExpression", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getIntBinaryExpression_Expression1(), this.getIntExpression(), null, "expression1", null, 1, 1, IntBinaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

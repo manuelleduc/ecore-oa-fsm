@@ -20,7 +20,6 @@ import gfsm.IntVarAssign;
 import gfsm.IntVarRef;
 import gfsm.State;
 import gfsm.Transition;
-import java.util.Map;
 
 public interface GfsmAlgebra<A, B, C, D, E, F> {
 

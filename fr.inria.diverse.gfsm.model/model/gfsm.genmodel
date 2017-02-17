@@ -28,6 +28,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference gfsm.ecore#//FSM/transitions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference gfsm.ecore#//FSM/initialstate"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute gfsm.ecore#//FSM/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference gfsm.ecore#//FSM/currentState"/>
     </genClasses>
     <genClasses image="false" ecoreClass="gfsm.ecore#//IntBinaryExpression">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference gfsm.ecore#//IntBinaryExpression/expression1"/>

@@ -65,6 +65,7 @@ public class FSMItemProvider
 
 			addInitialstatePropertyDescriptor(object);
 			addNamePropertyDescriptor(object);
+			addCurrentStatePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -109,6 +110,28 @@ public class FSMItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Current State feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addCurrentStatePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_FSM_currentState_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_FSM_currentState_feature", "_UI_FSM_type"),
+				 GfsmPackage.Literals.FSM__CURRENT_STATE,
+				 true,
+				 false,
+				 true,
+				 null,
 				 null,
 				 null));
 	}

@@ -422,13 +422,22 @@ public interface GfsmPackage extends EPackage {
 	int FSM__NAME = 3;
 
 	/**
+	 * The feature id for the '<em><b>Current State</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FSM__CURRENT_STATE = 4;
+
+	/**
 	 * The number of structural features of the '<em>FSM</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FSM_FEATURE_COUNT = 4;
+	int FSM_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>FSM</em>' class.
@@ -1348,6 +1357,17 @@ public interface GfsmPackage extends EPackage {
 	EAttribute getFSM_Name();
 
 	/**
+	 * Returns the meta object for the reference '{@link gfsm.FSM#getCurrentState <em>Current State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Current State</em>'.
+	 * @see gfsm.FSM#getCurrentState()
+	 * @see #getFSM()
+	 * @generated
+	 */
+	EReference getFSM_CurrentState();
+
+	/**
 	 * Returns the meta object for class '{@link gfsm.IntBinaryExpression <em>Int Binary Expression</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1841,6 +1861,14 @@ public interface GfsmPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute FSM__NAME = eINSTANCE.getFSM_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Current State</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FSM__CURRENT_STATE = eINSTANCE.getFSM_CurrentState();
 
 		/**
 		 * The meta object literal for the '{@link gfsm.impl.IntBinaryExpressionImpl <em>Int Binary Expression</em>}' class.

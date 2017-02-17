@@ -15,8 +15,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import fr.inria.diverse.gfsm.impl.ExecutableGFSMAlgebra;
 import fr.inria.diverse.gfsm.impl.GraphvizGFSMAlgebra;
 import fr.inria.diverse.utils.GraphvizRep;
-import fsm.State;
-import gfsm.GFSM;
+import gfsm.FSM;
 import gfsm.GfsmPackage;
 import gfsm.algebra.GfsmAlgebra;
 
@@ -34,23 +33,11 @@ public class Program1 {
 		this.make(new ExecutableGFSMAlgebra() {
 
 			private Map<String, Integer> ctx = new HashMap<>();
-			private State currentState;
 			private Queue<String> userinput = initUserInput;
 
 			@Override
 			public Queue<String> getUserinput() {
 				return this.userinput;
-			}
-
-			@Override
-			public State getCurrentState() {
-				return this.currentState;
-			}
-
-			@Override
-			public void setCurrentState(final State state) {
-				this.currentState = state;
-
 			}
 
 			@Override
@@ -67,13 +54,12 @@ public class Program1 {
 		}, progName).execute();
 	}
 
-	private <A, B, F, C, D, E> F make(final GfsmAlgebra<A, B, F, C, D, E> graphvizGFSMAlgebra,
-			final String progName) {
-		final GFSM model = this.createModel(progName);
+	private <A, B, F, C, D, E> F make(final GfsmAlgebra<A, B, F, C, D, E> graphvizGFSMAlgebra, final String progName) {
+		final FSM model = this.createModel(progName);
 		return graphvizGFSMAlgebra.$(model);
 	}
 
-	private GFSM createModel(final String progName) {
+	private FSM createModel(final String progName) {
 		final ResourceSetImpl resSet = new ResourceSetImpl();
 		resSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("gfsm", new XMIResourceFactoryImpl());
 		final GfsmPackage gFsmPackage = GfsmPackage.eINSTANCE;
@@ -82,6 +68,6 @@ public class Program1 {
 				.createURI("/home/mleduc/dev/ecore/ecore-oa/fsm/fr.inria.diverse.gfsm.algebra/model/" + progName);
 		final Resource resource = resSet.getResource(createURI, true);
 		final EList<EObject> contents = resource.getContents();
-		return (GFSM) contents.get(0);
+		return (FSM) contents.get(0);
 	}
 }
