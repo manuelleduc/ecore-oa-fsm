@@ -5,20 +5,18 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import expression.IntOperation;
 import fr.inria.diverse.algebras.expressions.CtxEvalExp;
 import fr.inria.diverse.algebras.expressions.EvalOpExp;
 import fr.inria.diverse.expression.algebra.impl.EvalExpressionAlgebra;
 import fr.inria.diverse.fsm.algebra.exprs.ExecutableExp;
 import fr.inria.diverse.fsm.algebra.impl.ExecutableFSMAlgebra;
-import fsm.State;
-import fsm.Transition;
-import gfsm.GFSM;
-import gfsm.GFinalState;
-import gfsm.GInitialState;
-import gfsm.GState;
-import gfsm.GTransition;
+import gfsm.FSM;
+import gfsm.FinalState;
+import gfsm.InitialState;
+import gfsm.State;
+import gfsm.Transition;
 import gfsm.algebra.GfsmAlgebra;
+import gfsm.IntOperation;
 
 public interface ExecutableGFSMAlgebra extends ExecutableFSMAlgebra, EvalExpressionAlgebra,
 		GfsmAlgebra<CtxEvalExp<Integer, Boolean>, CtxEvalExp<Integer, Integer>, ExecutableExp, ExecutableExp, ExecutableExp, EvalOpExp<Integer>> {

@@ -12,7 +12,5 @@ Export-Package: gfsm,
  gfsm.impl,
  gfsm.util
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport,
- fr.inria.diverse.expression.model;bundle-version="0.1.0";visibility:=reexport,
- fr.inria.diverse.fsm.model;bundle-version="0.1.0";visibility:=reexport
+ org.eclipse.emf.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy
