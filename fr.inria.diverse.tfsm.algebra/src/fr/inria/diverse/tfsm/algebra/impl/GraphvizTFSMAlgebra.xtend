@@ -1,74 +1,25 @@
 package fr.inria.diverse.tfsm.algebra.impl
 
 import fr.inria.diverse.algebras.expressions.RepGraphvizExp
-import fr.inria.diverse.fsm.algebra.impl.GraphvizFSMAlgebra
 import tfsm.AndClockConstraint
 import tfsm.Clock
 import tfsm.ClockReset
+import tfsm.FSM
+import tfsm.FinalState
+import tfsm.InitialState
 import tfsm.LowerClockConstraint
 import tfsm.LowerEqualClockConstraint
 import tfsm.OrClockConstraint
-import tfsm.TimedFSM
-import tfsm.TimedFinalState
-import tfsm.TimedInitialState
-import tfsm.TimedState
-import tfsm.TimedTransition
+import tfsm.State
+import tfsm.Transition
 import tfsm.UpperClockConstraint
 import tfsm.UpperEqualClockConstraint
 import tfsm.algebra.TfsmAlgebra
-import fsm.FSM
-import fsm.State
-import fsm.Transition
-import fsm.FinalState
-import fsm.InitialState
 
-interface GraphvizTFSMAlgebra extends GraphvizFSMAlgebra, TfsmAlgebra<RepGraphvizExp, RepGraphvizExp, RepGraphvizExp, RepGraphvizExp, RepGraphvizExp, RepGraphvizExp> {
+interface GraphvizTFSMAlgebra extends TfsmAlgebra<RepGraphvizExp, RepGraphvizExp, RepGraphvizExp, RepGraphvizExp, RepGraphvizExp, RepGraphvizExp> {
 
-	override RepGraphvizExp timedFSM(TimedFSM timedFSM) {
-		[ rep |
-			rep.name = timedFSM.name
-			timedFSM.transitions.forEach[e|$(e).result(rep)]
-			rep.show
-		]
-	}
-
-	override timedInitialState(TimedInitialState timedInitialState) {
-		[ rep |
-			val nodename = timedState(timedInitialState).result(rep)
-			rep.addNode(nodename, newHashMap("shape" -> "box", "color" -> "red", "xlabel" -> nodename))
-			nodename
-		]
-	}
-
-	override timedFinalState(TimedFinalState timedFinalState) {
-		[ rep |
-			val nodename = timedState(timedFinalState).result(rep)
-			rep.addNode(nodename, newHashMap("shape" -> "box", "color" -> "green", "xlabel" -> nodename))
-			nodename
-		]
-	}
-
-	override timedTransition(TimedTransition timedTransition) {
-		[ rep |
-			rep.edges.
-				add('''«$(timedTransition.from).result(rep)» -> «$(timedTransition.to).result(rep)» [label="«timedTransition.event»«IF timedTransition.transitionguard != null»\n«$(timedTransition.transitionguard).result(rep)»«ENDIF»«IF timedTransition.clockresets != null && !timedTransition.clockresets.empty»\n«FOR reset:timedTransition.clockresets SEPARATOR '\n'»«$(reset).result(rep)»«ENDFOR»«ENDIF»"]''')
-			""
-		]
-	}
-
-	override timedState(TimedState timedState) {
-		[ rep |
-			val statename = this.state(timedState).result(rep)
-			val attrs = if (timedState.stateguard != null) {
-					val guard = $(timedState.stateguard).result(rep)
-					newHashMap("label" -> guard)
-				} else {
-					newHashMap("label" -> '')
-				}
-
-			rep.addNode(statename, attrs)
-			statename
-		]
+	override andClockConstraint(AndClockConstraint andClockConstraint) {
+		[rep|'''(«$(andClockConstraint.left).result(rep)» AND «$(andClockConstraint.right).result(rep)»)''']
 	}
 
 	override clock(Clock clock) {
@@ -79,12 +30,63 @@ interface GraphvizTFSMAlgebra extends GraphvizFSMAlgebra, TfsmAlgebra<RepGraphvi
 		['''«clockReset.clock.name» = 0''']
 	}
 
+	override fSM(FSM fsm) {
+		[ rep |
+			rep.name = fsm.name
+			fsm.transitions.forEach[e|$(e).result(rep)]
+			rep.show
+		]
+	}
+	
+	override finalState(FinalState finalState) {
+		[ rep |
+			val nodename = state(finalState).result(rep)
+			rep.addNode(nodename, newHashMap("shape" -> "box", "color" -> "green", "xlabel" -> nodename))
+			nodename
+		]
+	}
+	
+	override initialState(InitialState initialState) {
+		[ rep |
+			val nodename = state(initialState).result(rep)
+			rep.addNode(nodename, newHashMap("shape" -> "box", "color" -> "red", "xlabel" -> nodename))
+			nodename
+		]
+	}
+	
 	override lowerClockConstraint(LowerClockConstraint clockConstraint) {
 		['''«clockConstraint.threshold» > «clockConstraint.clock.name»''']
 	}
-
+	
 	override lowerEqualClockConstraint(LowerEqualClockConstraint lowerEqualClockConstraint) {
 		['''«lowerEqualClockConstraint.threshold» >= «lowerEqualClockConstraint.clock.name»''']
+	}
+	
+	override orClockConstraint(OrClockConstraint orClockConstraint) {
+		[rep|'''(«$(orClockConstraint.left).result(rep)» OR «$(orClockConstraint.right).result(rep)»)''']
+	}
+	
+	override state(State state) {
+		[ rep |
+			val statename = this.state(state).result(rep)
+			val attrs = if (state.stateguard != null) {
+					val guard = $(state.stateguard).result(rep)
+					newHashMap("label" -> guard)
+				} else {
+					newHashMap("label" -> '')
+				}
+
+			rep.addNode(statename, attrs)
+			statename
+		]
+	}
+	
+	override transition(Transition transition) {
+		[ rep |
+			rep.edges.
+				add('''«$(transition.from).result(rep)» -> «$(transition.to).result(rep)» [label="«transition.event»«IF transition.transitionguard != null»\n«$(transition.transitionguard).result(rep)»«ENDIF»«IF transition.clockresets != null && !transition.clockresets.empty»\n«FOR reset:transition.clockresets SEPARATOR '\n'»«$(reset).result(rep)»«ENDFOR»«ENDIF»"]''')
+			""
+		]
 	}
 
 	override upperClockConstraint(UpperClockConstraint upperClockConstraint) {
@@ -94,46 +96,4 @@ interface GraphvizTFSMAlgebra extends GraphvizFSMAlgebra, TfsmAlgebra<RepGraphvi
 	override upperEqualClockConstraint(UpperEqualClockConstraint upperEqualClockConstraint) {
 		['''«upperEqualClockConstraint.threshold» <= «upperEqualClockConstraint.clock.name»''']
 	}
-
-	override andClockConstraint(AndClockConstraint andClockConstraint) {
-		[rep|'''(«$(andClockConstraint.left).result(rep)» AND «$(andClockConstraint.right).result(rep)»)''']
-
-	}
-
-	override orClockConstraint(OrClockConstraint orClockConstraint) {
-		[rep|'''(«$(orClockConstraint.left).result(rep)» OR «$(orClockConstraint.right).result(rep)»)''']
-	}
-	
-	override $(FSM fSM) {
-		TfsmAlgebra.super.$(fSM)
-	}
-	
-	override $(State state) {
-		TfsmAlgebra.super.$(state)
-	}
-	
-	override $(Transition transition) {
-		TfsmAlgebra.super.$(transition)
-	}
-	
-	override fSM(FSM fsm) {
-		GraphvizFSMAlgebra.super.fSM(fsm)
-	}
-	
-	override finalState(FinalState finalState) {
-		GraphvizFSMAlgebra.super.finalState(finalState)
-	}
-	
-	override initialState(InitialState initialState) {
-		GraphvizFSMAlgebra.super.initialState(initialState)
-	}
-	
-	override state(State state) {
-		GraphvizFSMAlgebra.super.state(state)
-	}
-	
-	override transition(Transition transition) {
-		GraphvizFSMAlgebra.super.transition(transition)
-	}
-
 }

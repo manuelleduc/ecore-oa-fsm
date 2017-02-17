@@ -15,8 +15,7 @@ import fr.inria.diverse.fsm.algebra.exprs.ExecutableExp;
 import fr.inria.diverse.tfsm.algebra.impl.ExecutableTFSMAlgebra;
 import fr.inria.diverse.tfsm.algebra.impl.GraphvizTFSMAlgebra;
 import fr.inria.diverse.utils.GraphvizRep;
-import fsm.FSM;
-import fsm.State;
+import tfsm.FSM;
 import tfsm.TfsmPackage;
 import tfsm.algebra.TfsmAlgebra;
 
@@ -59,18 +58,6 @@ public class Program2 {
 			@Override
 			public Queue<String> getUserinput() {
 				throw new UnsupportedOperationException("TODO: auto-generated method stub");
-			}
-
-			State currentState;
-
-			@Override
-			public State getCurrentState() {
-				return this.currentState;
-			}
-
-			@Override
-			public void setCurrentState(final State state) {
-				this.currentState = state;
 			}
 
 		};
