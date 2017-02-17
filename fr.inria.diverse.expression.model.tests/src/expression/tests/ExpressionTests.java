@@ -20,8 +20,8 @@ public class ExpressionTests extends TestSuite {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
-		TestRunner.run(ExpressionTests.suite());
+	public static void main(String[] args) {
+		TestRunner.run(suite());
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class ExpressionTests extends TestSuite {
 	 * @generated
 	 */
 	public static Test suite() {
-		final TestSuite suite = new ExpressionTests("expression Tests");
+		TestSuite suite = new ExpressionTests("expression Tests");
 		return suite;
 	}
 
@@ -39,7 +39,7 @@ public class ExpressionTests extends TestSuite {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ExpressionTests(final String name) {
+	public ExpressionTests(String name) {
 		super(name);
 	}
 

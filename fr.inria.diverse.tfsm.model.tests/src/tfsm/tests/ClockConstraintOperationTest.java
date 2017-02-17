@@ -28,7 +28,7 @@ public abstract class ClockConstraintOperationTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ClockConstraintOperationTest(final String name) {
+	public ClockConstraintOperationTest(String name) {
 		super(name);
 	}
 
@@ -38,7 +38,7 @@ public abstract class ClockConstraintOperationTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void setFixture(final ClockConstraintOperation fixture) {
+	protected void setFixture(ClockConstraintOperation fixture) {
 		this.fixture = fixture;
 	}
 
@@ -49,7 +49,7 @@ public abstract class ClockConstraintOperationTest extends TestCase {
 	 * @generated
 	 */
 	protected ClockConstraintOperation getFixture() {
-		return this.fixture;
+		return fixture;
 	}
 
 } //ClockConstraintOperationTest

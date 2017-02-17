@@ -20,7 +20,7 @@ public class IntVarRefTest extends IntExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(IntVarRefTest.class);
 	}
 
@@ -30,7 +30,7 @@ public class IntVarRefTest extends IntExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IntVarRefTest(final String name) {
+	public IntVarRefTest(String name) {
 		super(name);
 	}
 
@@ -42,7 +42,7 @@ public class IntVarRefTest extends IntExpressionTest {
 	 */
 	@Override
 	protected IntVarRef getFixture() {
-		return (IntVarRef)this.fixture;
+		return (IntVarRef)fixture;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class IntVarRefTest extends IntExpressionTest {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(ExpressionFactory.eINSTANCE.createIntVarRef());
+		setFixture(ExpressionFactory.eINSTANCE.createIntVarRef());
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class IntVarRefTest extends IntExpressionTest {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //IntVarRefTest

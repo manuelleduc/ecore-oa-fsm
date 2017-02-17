@@ -20,7 +20,7 @@ public class LowerEqualClockConstraintTest extends ClockConstraintTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(LowerEqualClockConstraintTest.class);
 	}
 
@@ -30,7 +30,7 @@ public class LowerEqualClockConstraintTest extends ClockConstraintTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public LowerEqualClockConstraintTest(final String name) {
+	public LowerEqualClockConstraintTest(String name) {
 		super(name);
 	}
 
@@ -42,7 +42,7 @@ public class LowerEqualClockConstraintTest extends ClockConstraintTest {
 	 */
 	@Override
 	protected LowerEqualClockConstraint getFixture() {
-		return (LowerEqualClockConstraint)this.fixture;
+		return (LowerEqualClockConstraint)fixture;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class LowerEqualClockConstraintTest extends ClockConstraintTest {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(TfsmFactory.eINSTANCE.createLowerEqualClockConstraint());
+		setFixture(TfsmFactory.eINSTANCE.createLowerEqualClockConstraint());
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class LowerEqualClockConstraintTest extends ClockConstraintTest {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //LowerEqualClockConstraintTest

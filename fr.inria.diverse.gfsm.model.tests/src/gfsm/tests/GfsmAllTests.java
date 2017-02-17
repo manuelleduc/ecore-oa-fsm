@@ -20,8 +20,8 @@ public class GfsmAllTests extends TestSuite {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
-		TestRunner.run(GfsmAllTests.suite());
+	public static void main(String[] args) {
+		TestRunner.run(suite());
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class GfsmAllTests extends TestSuite {
 	 * @generated
 	 */
 	public static Test suite() {
-		final TestSuite suite = new GfsmAllTests("Gfsm Tests");
+		TestSuite suite = new GfsmAllTests("Gfsm Tests");
 		return suite;
 	}
 
@@ -39,7 +39,7 @@ public class GfsmAllTests extends TestSuite {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GfsmAllTests(final String name) {
+	public GfsmAllTests(String name) {
 		super(name);
 	}
 

@@ -31,7 +31,7 @@ public class IntVarAssignItemProvider extends IntOperationItemProvider {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IntVarAssignItemProvider(final AdapterFactory adapterFactory) {
+	public IntVarAssignItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -42,13 +42,13 @@ public class IntVarAssignItemProvider extends IntOperationItemProvider {
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
-		if (this.itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			this.addNamePropertyDescriptor(object);
+			addNamePropertyDescriptor(object);
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
@@ -57,13 +57,13 @@ public class IntVarAssignItemProvider extends IntOperationItemProvider {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add
-			(this.createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-				 this.getResourceLocator(),
-				 this.getString("_UI_IntVarAssign_name_feature"),
-				 this.getString("_UI_PropertyDescriptor_description", "_UI_IntVarAssign_name_feature", "_UI_IntVarAssign_type"),
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_IntVarAssign_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_IntVarAssign_name_feature", "_UI_IntVarAssign_type"),
 				 ExpressionPackage.Literals.INT_VAR_ASSIGN__NAME,
 				 true,
 				 false,
@@ -82,12 +82,12 @@ public class IntVarAssignItemProvider extends IntOperationItemProvider {
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(final Object object) {
-		if (this.childrenFeatures == null) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			this.childrenFeatures.add(ExpressionPackage.Literals.INT_VAR_ASSIGN__EXPRESSION);
+			childrenFeatures.add(ExpressionPackage.Literals.INT_VAR_ASSIGN__EXPRESSION);
 		}
-		return this.childrenFeatures;
+		return childrenFeatures;
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class IntVarAssignItemProvider extends IntOperationItemProvider {
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(final Object object, final Object child) {
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -110,8 +110,8 @@ public class IntVarAssignItemProvider extends IntOperationItemProvider {
 	 * @generated
 	 */
 	@Override
-	public Object getImage(final Object object) {
-		return this.overlayImage(object, this.getResourceLocator().getImage("full/obj16/IntVarAssign"));
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/IntVarAssign"));
 	}
 
 	/**
@@ -121,11 +121,11 @@ public class IntVarAssignItemProvider extends IntOperationItemProvider {
 	 * @generated
 	 */
 	@Override
-	public String getText(final Object object) {
-		final String label = ((IntVarAssign)object).getName();
+	public String getText(Object object) {
+		String label = ((IntVarAssign)object).getName();
 		return label == null || label.length() == 0 ?
-			this.getString("_UI_IntVarAssign_type") :
-			this.getString("_UI_IntVarAssign_type") + " " + label;
+			getString("_UI_IntVarAssign_type") :
+			getString("_UI_IntVarAssign_type") + " " + label;
 	}
 	
 
@@ -137,15 +137,15 @@ public class IntVarAssignItemProvider extends IntOperationItemProvider {
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(final Notification notification) {
-		this.updateChildren(notification);
+	public void notifyChanged(Notification notification) {
+		updateChildren(notification);
 
 		switch (notification.getFeatureID(IntVarAssign.class)) {
 			case ExpressionPackage.INT_VAR_ASSIGN__NAME:
-				this.fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case ExpressionPackage.INT_VAR_ASSIGN__EXPRESSION:
-				this.fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -159,31 +159,31 @@ public class IntVarAssignItemProvider extends IntOperationItemProvider {
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors, final Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.INT_VAR_ASSIGN__EXPRESSION,
 				 ExpressionFactory.eINSTANCE.createIntAdd()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.INT_VAR_ASSIGN__EXPRESSION,
 				 ExpressionFactory.eINSTANCE.createIntMult()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.INT_VAR_ASSIGN__EXPRESSION,
 				 ExpressionFactory.eINSTANCE.createIntNeg()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.INT_VAR_ASSIGN__EXPRESSION,
 				 ExpressionFactory.eINSTANCE.createIntVarRef()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.INT_VAR_ASSIGN__EXPRESSION,
 				 ExpressionFactory.eINSTANCE.createConstExpr()));
 	}

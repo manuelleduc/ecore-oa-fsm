@@ -28,7 +28,7 @@ public abstract class IntOperationTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IntOperationTest(final String name) {
+	public IntOperationTest(String name) {
 		super(name);
 	}
 
@@ -38,7 +38,7 @@ public abstract class IntOperationTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void setFixture(final IntOperation fixture) {
+	protected void setFixture(IntOperation fixture) {
 		this.fixture = fixture;
 	}
 
@@ -49,7 +49,7 @@ public abstract class IntOperationTest extends TestCase {
 	 * @generated
 	 */
 	protected IntOperation getFixture() {
-		return this.fixture;
+		return fixture;
 	}
 
 } //IntOperationTest

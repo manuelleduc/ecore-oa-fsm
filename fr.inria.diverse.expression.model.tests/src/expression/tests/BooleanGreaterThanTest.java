@@ -20,7 +20,7 @@ public class BooleanGreaterThanTest extends BooleanCompareExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(BooleanGreaterThanTest.class);
 	}
 
@@ -30,7 +30,7 @@ public class BooleanGreaterThanTest extends BooleanCompareExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public BooleanGreaterThanTest(final String name) {
+	public BooleanGreaterThanTest(String name) {
 		super(name);
 	}
 
@@ -42,7 +42,7 @@ public class BooleanGreaterThanTest extends BooleanCompareExpressionTest {
 	 */
 	@Override
 	protected BooleanGreaterThan getFixture() {
-		return (BooleanGreaterThan)this.fixture;
+		return (BooleanGreaterThan)fixture;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class BooleanGreaterThanTest extends BooleanCompareExpressionTest {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(ExpressionFactory.eINSTANCE.createBooleanGreaterThan());
+		setFixture(ExpressionFactory.eINSTANCE.createBooleanGreaterThan());
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class BooleanGreaterThanTest extends BooleanCompareExpressionTest {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //BooleanGreaterThanTest

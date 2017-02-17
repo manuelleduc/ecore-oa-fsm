@@ -8,14 +8,8 @@ Bundle-Activator: gfsm.provider.GfsmEditPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: expression.provider,
- fsm.provider,
- gfsm.provider
+Export-Package: gfsm.provider
 Require-Bundle: org.eclipse.core.runtime,
  fr.inria.diverse.gfsm.model;visibility:=reexport,
- org.eclipse.emf.edit;visibility:=reexport,
- fr.inria.diverse.expression.model;visibility:=reexport,
- fr.inria.diverse.expression.model.edit;visibility:=reexport,
- fr.inria.diverse.fsm.model;visibility:=reexport,
- fr.inria.diverse.fsm.model.edit;visibility:=reexport
+ org.eclipse.emf.edit;visibility:=reexport
 Bundle-ActivationPolicy: lazy

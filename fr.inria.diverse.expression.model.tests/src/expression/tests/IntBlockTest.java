@@ -20,7 +20,7 @@ public class IntBlockTest extends IntOperationTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(IntBlockTest.class);
 	}
 
@@ -30,7 +30,7 @@ public class IntBlockTest extends IntOperationTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IntBlockTest(final String name) {
+	public IntBlockTest(String name) {
 		super(name);
 	}
 
@@ -42,7 +42,7 @@ public class IntBlockTest extends IntOperationTest {
 	 */
 	@Override
 	protected IntBlock getFixture() {
-		return (IntBlock)this.fixture;
+		return (IntBlock)fixture;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class IntBlockTest extends IntOperationTest {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(ExpressionFactory.eINSTANCE.createIntBlock());
+		setFixture(ExpressionFactory.eINSTANCE.createIntBlock());
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class IntBlockTest extends IntOperationTest {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //IntBlockTest

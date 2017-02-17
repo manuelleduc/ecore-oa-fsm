@@ -2,8 +2,6 @@
  */
 package gfsm.presentation;
 
-import expression.provider.ExpressionEditPlugin;
-import fsm.provider.FsmEditPlugin;
 import org.eclipse.emf.common.EMFPlugin;
 
 import org.eclipse.emf.common.ui.EclipseUIPlugin;
@@ -42,8 +40,6 @@ public final class GfsmEditorPlugin extends EMFPlugin {
 	public GfsmEditorPlugin() {
 		super
 			(new ResourceLocator [] {
-				ExpressionEditPlugin.INSTANCE,
-				FsmEditPlugin.INSTANCE,
 			});
 	}
 
@@ -56,7 +52,7 @@ public final class GfsmEditorPlugin extends EMFPlugin {
 	 */
 	@Override
 	public ResourceLocator getPluginResourceLocator() {
-		return GfsmEditorPlugin.plugin;
+		return plugin;
 	}
 	
 	/**
@@ -67,7 +63,7 @@ public final class GfsmEditorPlugin extends EMFPlugin {
 	 * @generated
 	 */
 	public static Implementation getPlugin() {
-		return GfsmEditorPlugin.plugin;
+		return plugin;
 	}
 	
 	/**
@@ -88,7 +84,7 @@ public final class GfsmEditorPlugin extends EMFPlugin {
 	
 			// Remember the static instance.
 			//
-			GfsmEditorPlugin.plugin = this;
+			plugin = this;
 		}
 	}
 

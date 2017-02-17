@@ -20,7 +20,7 @@ public class BooleanEqualTest extends BooleanCompareExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(BooleanEqualTest.class);
 	}
 
@@ -30,7 +30,7 @@ public class BooleanEqualTest extends BooleanCompareExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public BooleanEqualTest(final String name) {
+	public BooleanEqualTest(String name) {
 		super(name);
 	}
 
@@ -42,7 +42,7 @@ public class BooleanEqualTest extends BooleanCompareExpressionTest {
 	 */
 	@Override
 	protected BooleanEqual getFixture() {
-		return (BooleanEqual)this.fixture;
+		return (BooleanEqual)fixture;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class BooleanEqualTest extends BooleanCompareExpressionTest {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(ExpressionFactory.eINSTANCE.createBooleanEqual());
+		setFixture(ExpressionFactory.eINSTANCE.createBooleanEqual());
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class BooleanEqualTest extends BooleanCompareExpressionTest {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //BooleanEqualTest

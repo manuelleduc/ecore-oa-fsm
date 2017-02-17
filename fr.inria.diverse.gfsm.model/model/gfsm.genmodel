@@ -3,7 +3,6 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/fr.inria.diverse.gfsm.model/src" modelPluginID="fr.inria.diverse.gfsm.model"
     modelName="Gfsm" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
-    usedGenPackages="../../fr.inria.diverse.expression.model/model/expression.genmodel#//expression ../../fr.inria.diverse.fsm.model/model/fsm.genmodel#//fsm"
     operationReflection="true" importOrganizing="true">
   <foreignModel>gfsm.ecore</foreignModel>
   <genPackages prefix="Gfsm" disposableProviderFactory="true" ecorePackage="gfsm.ecore#/">

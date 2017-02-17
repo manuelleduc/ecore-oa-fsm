@@ -64,11 +64,11 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 * @generated
 	 */
 	public ExpressionItemProviderAdapterFactory() {
-		this.supportedTypes.add(IEditingDomainItemProvider.class);
-		this.supportedTypes.add(IStructuredItemContentProvider.class);
-		this.supportedTypes.add(ITreeItemContentProvider.class);
-		this.supportedTypes.add(IItemLabelProvider.class);
-		this.supportedTypes.add(IItemPropertySource.class);
+		supportedTypes.add(IEditingDomainItemProvider.class);
+		supportedTypes.add(IStructuredItemContentProvider.class);
+		supportedTypes.add(ITreeItemContentProvider.class);
+		supportedTypes.add(IItemLabelProvider.class);
+		supportedTypes.add(IItemPropertySource.class);
 	}
 
 	/**
@@ -87,11 +87,11 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 */
 	@Override
 	public Adapter createIntAddAdapter() {
-		if (this.intAddItemProvider == null) {
-			this.intAddItemProvider = new IntAddItemProvider(this);
+		if (intAddItemProvider == null) {
+			intAddItemProvider = new IntAddItemProvider(this);
 		}
 
-		return this.intAddItemProvider;
+		return intAddItemProvider;
 	}
 
 	/**
@@ -110,11 +110,11 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 */
 	@Override
 	public Adapter createIntMultAdapter() {
-		if (this.intMultItemProvider == null) {
-			this.intMultItemProvider = new IntMultItemProvider(this);
+		if (intMultItemProvider == null) {
+			intMultItemProvider = new IntMultItemProvider(this);
 		}
 
-		return this.intMultItemProvider;
+		return intMultItemProvider;
 	}
 
 	/**
@@ -133,11 +133,11 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 */
 	@Override
 	public Adapter createIntNegAdapter() {
-		if (this.intNegItemProvider == null) {
-			this.intNegItemProvider = new IntNegItemProvider(this);
+		if (intNegItemProvider == null) {
+			intNegItemProvider = new IntNegItemProvider(this);
 		}
 
-		return this.intNegItemProvider;
+		return intNegItemProvider;
 	}
 
 	/**
@@ -156,11 +156,11 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 */
 	@Override
 	public Adapter createIntVarRefAdapter() {
-		if (this.intVarRefItemProvider == null) {
-			this.intVarRefItemProvider = new IntVarRefItemProvider(this);
+		if (intVarRefItemProvider == null) {
+			intVarRefItemProvider = new IntVarRefItemProvider(this);
 		}
 
-		return this.intVarRefItemProvider;
+		return intVarRefItemProvider;
 	}
 
 	/**
@@ -179,11 +179,11 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 */
 	@Override
 	public Adapter createConstExprAdapter() {
-		if (this.constExprItemProvider == null) {
-			this.constExprItemProvider = new ConstExprItemProvider(this);
+		if (constExprItemProvider == null) {
+			constExprItemProvider = new ConstExprItemProvider(this);
 		}
 
-		return this.constExprItemProvider;
+		return constExprItemProvider;
 	}
 
 	/**
@@ -202,11 +202,11 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 */
 	@Override
 	public Adapter createIntVarAssignAdapter() {
-		if (this.intVarAssignItemProvider == null) {
-			this.intVarAssignItemProvider = new IntVarAssignItemProvider(this);
+		if (intVarAssignItemProvider == null) {
+			intVarAssignItemProvider = new IntVarAssignItemProvider(this);
 		}
 
-		return this.intVarAssignItemProvider;
+		return intVarAssignItemProvider;
 	}
 
 	/**
@@ -225,11 +225,11 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 */
 	@Override
 	public Adapter createIntBlockAdapter() {
-		if (this.intBlockItemProvider == null) {
-			this.intBlockItemProvider = new IntBlockItemProvider(this);
+		if (intBlockItemProvider == null) {
+			intBlockItemProvider = new IntBlockItemProvider(this);
 		}
 
-		return this.intBlockItemProvider;
+		return intBlockItemProvider;
 	}
 
 	/**
@@ -248,11 +248,11 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 */
 	@Override
 	public Adapter createBooleanEqualAdapter() {
-		if (this.booleanEqualItemProvider == null) {
-			this.booleanEqualItemProvider = new BooleanEqualItemProvider(this);
+		if (booleanEqualItemProvider == null) {
+			booleanEqualItemProvider = new BooleanEqualItemProvider(this);
 		}
 
-		return this.booleanEqualItemProvider;
+		return booleanEqualItemProvider;
 	}
 
 	/**
@@ -271,11 +271,11 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 */
 	@Override
 	public Adapter createBooleanOrAdapter() {
-		if (this.booleanOrItemProvider == null) {
-			this.booleanOrItemProvider = new BooleanOrItemProvider(this);
+		if (booleanOrItemProvider == null) {
+			booleanOrItemProvider = new BooleanOrItemProvider(this);
 		}
 
-		return this.booleanOrItemProvider;
+		return booleanOrItemProvider;
 	}
 
 	/**
@@ -294,11 +294,11 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 */
 	@Override
 	public Adapter createBooleanAndAdapter() {
-		if (this.booleanAndItemProvider == null) {
-			this.booleanAndItemProvider = new BooleanAndItemProvider(this);
+		if (booleanAndItemProvider == null) {
+			booleanAndItemProvider = new BooleanAndItemProvider(this);
 		}
 
-		return this.booleanAndItemProvider;
+		return booleanAndItemProvider;
 	}
 
 	/**
@@ -317,11 +317,11 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 */
 	@Override
 	public Adapter createBooleanGreaterThanAdapter() {
-		if (this.booleanGreaterThanItemProvider == null) {
-			this.booleanGreaterThanItemProvider = new BooleanGreaterThanItemProvider(this);
+		if (booleanGreaterThanItemProvider == null) {
+			booleanGreaterThanItemProvider = new BooleanGreaterThanItemProvider(this);
 		}
 
-		return this.booleanGreaterThanItemProvider;
+		return booleanGreaterThanItemProvider;
 	}
 
 	/**
@@ -332,7 +332,7 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 */
 	@Override
 	public ComposeableAdapterFactory getRootAdapterFactory() {
-		return this.parentAdapterFactory == null ? this : this.parentAdapterFactory.getRootAdapterFactory();
+		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
 	}
 
 	/**
@@ -342,7 +342,7 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 * @generated
 	 */
 	@Override
-	public void setParentAdapterFactory(final ComposedAdapterFactory parentAdapterFactory) {
+	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
 		this.parentAdapterFactory = parentAdapterFactory;
 	}
 
@@ -352,8 +352,8 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(final Object type) {
-		return this.supportedTypes.contains(type) || super.isFactoryForType(type);
+	public boolean isFactoryForType(Object type) {
+		return supportedTypes.contains(type) || super.isFactoryForType(type);
 	}
 
 	/**
@@ -363,7 +363,7 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 * @generated
 	 */
 	@Override
-	public Adapter adapt(final Notifier notifier, final Object type) {
+	public Adapter adapt(Notifier notifier, Object type) {
 		return super.adapt(notifier, this);
 	}
 
@@ -373,10 +373,10 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 * @generated
 	 */
 	@Override
-	public Object adapt(final Object object, final Object type) {
-		if (this.isFactoryForType(type)) {
-			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter)) {
+	public Object adapt(Object object, Object type) {
+		if (isFactoryForType(type)) {
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
 				return adapter;
 			}
 		}
@@ -391,8 +391,8 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 * @generated
 	 */
 	@Override
-	public void addListener(final INotifyChangedListener notifyChangedListener) {
-		this.changeNotifier.addListener(notifyChangedListener);
+	public void addListener(INotifyChangedListener notifyChangedListener) {
+		changeNotifier.addListener(notifyChangedListener);
 	}
 
 	/**
@@ -402,8 +402,8 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 * @generated
 	 */
 	@Override
-	public void removeListener(final INotifyChangedListener notifyChangedListener) {
-		this.changeNotifier.removeListener(notifyChangedListener);
+	public void removeListener(INotifyChangedListener notifyChangedListener) {
+		changeNotifier.removeListener(notifyChangedListener);
 	}
 
 	/**
@@ -413,11 +413,11 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 * @generated
 	 */
 	@Override
-	public void fireNotifyChanged(final Notification notification) {
-		this.changeNotifier.fireNotifyChanged(notification);
+	public void fireNotifyChanged(Notification notification) {
+		changeNotifier.fireNotifyChanged(notification);
 
-		if (this.parentAdapterFactory != null) {
-			this.parentAdapterFactory.fireNotifyChanged(notification);
+		if (parentAdapterFactory != null) {
+			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
 
@@ -429,39 +429,17 @@ public class ExpressionItemProviderAdapterFactory extends ExpressionAdapterFacto
 	 */
 	@Override
 	public void dispose() {
-		if (this.intAddItemProvider != null) {
-			this.intAddItemProvider.dispose();
-		}
-		if (this.intMultItemProvider != null) {
-			this.intMultItemProvider.dispose();
-		}
-		if (this.intNegItemProvider != null) {
-			this.intNegItemProvider.dispose();
-		}
-		if (this.intVarRefItemProvider != null) {
-			this.intVarRefItemProvider.dispose();
-		}
-		if (this.constExprItemProvider != null) {
-			this.constExprItemProvider.dispose();
-		}
-		if (this.intVarAssignItemProvider != null) {
-			this.intVarAssignItemProvider.dispose();
-		}
-		if (this.intBlockItemProvider != null) {
-			this.intBlockItemProvider.dispose();
-		}
-		if (this.booleanEqualItemProvider != null) {
-			this.booleanEqualItemProvider.dispose();
-		}
-		if (this.booleanOrItemProvider != null) {
-			this.booleanOrItemProvider.dispose();
-		}
-		if (this.booleanAndItemProvider != null) {
-			this.booleanAndItemProvider.dispose();
-		}
-		if (this.booleanGreaterThanItemProvider != null) {
-			this.booleanGreaterThanItemProvider.dispose();
-		}
+		if (intAddItemProvider != null) intAddItemProvider.dispose();
+		if (intMultItemProvider != null) intMultItemProvider.dispose();
+		if (intNegItemProvider != null) intNegItemProvider.dispose();
+		if (intVarRefItemProvider != null) intVarRefItemProvider.dispose();
+		if (constExprItemProvider != null) constExprItemProvider.dispose();
+		if (intVarAssignItemProvider != null) intVarAssignItemProvider.dispose();
+		if (intBlockItemProvider != null) intBlockItemProvider.dispose();
+		if (booleanEqualItemProvider != null) booleanEqualItemProvider.dispose();
+		if (booleanOrItemProvider != null) booleanOrItemProvider.dispose();
+		if (booleanAndItemProvider != null) booleanAndItemProvider.dispose();
+		if (booleanGreaterThanItemProvider != null) booleanGreaterThanItemProvider.dispose();
 	}
 
 }

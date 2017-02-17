@@ -28,7 +28,7 @@ public class IntNegItemProvider extends IntExpressionItemProvider {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IntNegItemProvider(final AdapterFactory adapterFactory) {
+	public IntNegItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -39,12 +39,12 @@ public class IntNegItemProvider extends IntExpressionItemProvider {
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
-		if (this.itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
@@ -56,12 +56,12 @@ public class IntNegItemProvider extends IntExpressionItemProvider {
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(final Object object) {
-		if (this.childrenFeatures == null) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			this.childrenFeatures.add(ExpressionPackage.Literals.INT_NEG__EXPRESSION);
+			childrenFeatures.add(ExpressionPackage.Literals.INT_NEG__EXPRESSION);
 		}
-		return this.childrenFeatures;
+		return childrenFeatures;
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class IntNegItemProvider extends IntExpressionItemProvider {
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(final Object object, final Object child) {
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -84,8 +84,8 @@ public class IntNegItemProvider extends IntExpressionItemProvider {
 	 * @generated
 	 */
 	@Override
-	public Object getImage(final Object object) {
-		return this.overlayImage(object, this.getResourceLocator().getImage("full/obj16/IntNeg"));
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/IntNeg"));
 	}
 
 	/**
@@ -95,8 +95,8 @@ public class IntNegItemProvider extends IntExpressionItemProvider {
 	 * @generated
 	 */
 	@Override
-	public String getText(final Object object) {
-		return this.getString("_UI_IntNeg_type");
+	public String getText(Object object) {
+		return getString("_UI_IntNeg_type");
 	}
 	
 
@@ -108,12 +108,12 @@ public class IntNegItemProvider extends IntExpressionItemProvider {
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(final Notification notification) {
-		this.updateChildren(notification);
+	public void notifyChanged(Notification notification) {
+		updateChildren(notification);
 
 		switch (notification.getFeatureID(IntNeg.class)) {
 			case ExpressionPackage.INT_NEG__EXPRESSION:
-				this.fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -127,31 +127,31 @@ public class IntNegItemProvider extends IntExpressionItemProvider {
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors, final Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.INT_NEG__EXPRESSION,
 				 ExpressionFactory.eINSTANCE.createIntAdd()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.INT_NEG__EXPRESSION,
 				 ExpressionFactory.eINSTANCE.createIntMult()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.INT_NEG__EXPRESSION,
 				 ExpressionFactory.eINSTANCE.createIntNeg()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.INT_NEG__EXPRESSION,
 				 ExpressionFactory.eINSTANCE.createIntVarRef()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.INT_NEG__EXPRESSION,
 				 ExpressionFactory.eINSTANCE.createConstExpr()));
 	}

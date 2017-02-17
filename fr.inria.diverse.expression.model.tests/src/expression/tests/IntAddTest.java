@@ -20,7 +20,7 @@ public class IntAddTest extends IntBinaryExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(IntAddTest.class);
 	}
 
@@ -30,7 +30,7 @@ public class IntAddTest extends IntBinaryExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IntAddTest(final String name) {
+	public IntAddTest(String name) {
 		super(name);
 	}
 
@@ -42,7 +42,7 @@ public class IntAddTest extends IntBinaryExpressionTest {
 	 */
 	@Override
 	protected IntAdd getFixture() {
-		return (IntAdd)this.fixture;
+		return (IntAdd)fixture;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class IntAddTest extends IntBinaryExpressionTest {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(ExpressionFactory.eINSTANCE.createIntAdd());
+		setFixture(ExpressionFactory.eINSTANCE.createIntAdd());
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class IntAddTest extends IntBinaryExpressionTest {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //IntAddTest

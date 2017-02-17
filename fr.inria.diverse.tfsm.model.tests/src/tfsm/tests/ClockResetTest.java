@@ -30,7 +30,7 @@ public class ClockResetTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(ClockResetTest.class);
 	}
 
@@ -40,7 +40,7 @@ public class ClockResetTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ClockResetTest(final String name) {
+	public ClockResetTest(String name) {
 		super(name);
 	}
 
@@ -50,7 +50,7 @@ public class ClockResetTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void setFixture(final ClockReset fixture) {
+	protected void setFixture(ClockReset fixture) {
 		this.fixture = fixture;
 	}
 
@@ -61,7 +61,7 @@ public class ClockResetTest extends TestCase {
 	 * @generated
 	 */
 	protected ClockReset getFixture() {
-		return this.fixture;
+		return fixture;
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class ClockResetTest extends TestCase {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(TfsmFactory.eINSTANCE.createClockReset());
+		setFixture(TfsmFactory.eINSTANCE.createClockReset());
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class ClockResetTest extends TestCase {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //ClockResetTest

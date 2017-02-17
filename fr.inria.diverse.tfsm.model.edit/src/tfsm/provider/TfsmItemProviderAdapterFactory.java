@@ -64,80 +64,80 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 * @generated
 	 */
 	public TfsmItemProviderAdapterFactory() {
-		this.supportedTypes.add(IEditingDomainItemProvider.class);
-		this.supportedTypes.add(IStructuredItemContentProvider.class);
-		this.supportedTypes.add(ITreeItemContentProvider.class);
-		this.supportedTypes.add(IItemLabelProvider.class);
-		this.supportedTypes.add(IItemPropertySource.class);
+		supportedTypes.add(IEditingDomainItemProvider.class);
+		supportedTypes.add(IStructuredItemContentProvider.class);
+		supportedTypes.add(ITreeItemContentProvider.class);
+		supportedTypes.add(IItemLabelProvider.class);
+		supportedTypes.add(IItemPropertySource.class);
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link tfsm.TimedFSM} instances.
+	 * This keeps track of the one adapter used for all {@link tfsm.FSM} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected TimedFSMItemProvider timedFSMItemProvider;
+	protected FSMItemProvider fsmItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link tfsm.TimedFSM}.
+	 * This creates an adapter for a {@link tfsm.FSM}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createTimedFSMAdapter() {
-		if (this.timedFSMItemProvider == null) {
-			this.timedFSMItemProvider = new TimedFSMItemProvider(this);
+	public Adapter createFSMAdapter() {
+		if (fsmItemProvider == null) {
+			fsmItemProvider = new FSMItemProvider(this);
 		}
 
-		return this.timedFSMItemProvider;
+		return fsmItemProvider;
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link tfsm.TimedState} instances.
+	 * This keeps track of the one adapter used for all {@link tfsm.State} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected TimedStateItemProvider timedStateItemProvider;
+	protected StateItemProvider stateItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link tfsm.TimedState}.
+	 * This creates an adapter for a {@link tfsm.State}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createTimedStateAdapter() {
-		if (this.timedStateItemProvider == null) {
-			this.timedStateItemProvider = new TimedStateItemProvider(this);
+	public Adapter createStateAdapter() {
+		if (stateItemProvider == null) {
+			stateItemProvider = new StateItemProvider(this);
 		}
 
-		return this.timedStateItemProvider;
+		return stateItemProvider;
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link tfsm.TimedTransition} instances.
+	 * This keeps track of the one adapter used for all {@link tfsm.Transition} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected TimedTransitionItemProvider timedTransitionItemProvider;
+	protected TransitionItemProvider transitionItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link tfsm.TimedTransition}.
+	 * This creates an adapter for a {@link tfsm.Transition}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createTimedTransitionAdapter() {
-		if (this.timedTransitionItemProvider == null) {
-			this.timedTransitionItemProvider = new TimedTransitionItemProvider(this);
+	public Adapter createTransitionAdapter() {
+		if (transitionItemProvider == null) {
+			transitionItemProvider = new TransitionItemProvider(this);
 		}
 
-		return this.timedTransitionItemProvider;
+		return transitionItemProvider;
 	}
 
 	/**
@@ -156,11 +156,11 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 */
 	@Override
 	public Adapter createClockAdapter() {
-		if (this.clockItemProvider == null) {
-			this.clockItemProvider = new ClockItemProvider(this);
+		if (clockItemProvider == null) {
+			clockItemProvider = new ClockItemProvider(this);
 		}
 
-		return this.clockItemProvider;
+		return clockItemProvider;
 	}
 
 	/**
@@ -179,11 +179,11 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 */
 	@Override
 	public Adapter createClockResetAdapter() {
-		if (this.clockResetItemProvider == null) {
-			this.clockResetItemProvider = new ClockResetItemProvider(this);
+		if (clockResetItemProvider == null) {
+			clockResetItemProvider = new ClockResetItemProvider(this);
 		}
 
-		return this.clockResetItemProvider;
+		return clockResetItemProvider;
 	}
 
 	/**
@@ -202,11 +202,11 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 */
 	@Override
 	public Adapter createLowerClockConstraintAdapter() {
-		if (this.lowerClockConstraintItemProvider == null) {
-			this.lowerClockConstraintItemProvider = new LowerClockConstraintItemProvider(this);
+		if (lowerClockConstraintItemProvider == null) {
+			lowerClockConstraintItemProvider = new LowerClockConstraintItemProvider(this);
 		}
 
-		return this.lowerClockConstraintItemProvider;
+		return lowerClockConstraintItemProvider;
 	}
 
 	/**
@@ -225,11 +225,11 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 */
 	@Override
 	public Adapter createLowerEqualClockConstraintAdapter() {
-		if (this.lowerEqualClockConstraintItemProvider == null) {
-			this.lowerEqualClockConstraintItemProvider = new LowerEqualClockConstraintItemProvider(this);
+		if (lowerEqualClockConstraintItemProvider == null) {
+			lowerEqualClockConstraintItemProvider = new LowerEqualClockConstraintItemProvider(this);
 		}
 
-		return this.lowerEqualClockConstraintItemProvider;
+		return lowerEqualClockConstraintItemProvider;
 	}
 
 	/**
@@ -248,11 +248,11 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 */
 	@Override
 	public Adapter createUpperClockConstraintAdapter() {
-		if (this.upperClockConstraintItemProvider == null) {
-			this.upperClockConstraintItemProvider = new UpperClockConstraintItemProvider(this);
+		if (upperClockConstraintItemProvider == null) {
+			upperClockConstraintItemProvider = new UpperClockConstraintItemProvider(this);
 		}
 
-		return this.upperClockConstraintItemProvider;
+		return upperClockConstraintItemProvider;
 	}
 
 	/**
@@ -271,11 +271,11 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 */
 	@Override
 	public Adapter createUpperEqualClockConstraintAdapter() {
-		if (this.upperEqualClockConstraintItemProvider == null) {
-			this.upperEqualClockConstraintItemProvider = new UpperEqualClockConstraintItemProvider(this);
+		if (upperEqualClockConstraintItemProvider == null) {
+			upperEqualClockConstraintItemProvider = new UpperEqualClockConstraintItemProvider(this);
 		}
 
-		return this.upperEqualClockConstraintItemProvider;
+		return upperEqualClockConstraintItemProvider;
 	}
 
 	/**
@@ -294,11 +294,11 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 */
 	@Override
 	public Adapter createAndClockConstraintAdapter() {
-		if (this.andClockConstraintItemProvider == null) {
-			this.andClockConstraintItemProvider = new AndClockConstraintItemProvider(this);
+		if (andClockConstraintItemProvider == null) {
+			andClockConstraintItemProvider = new AndClockConstraintItemProvider(this);
 		}
 
-		return this.andClockConstraintItemProvider;
+		return andClockConstraintItemProvider;
 	}
 
 	/**
@@ -317,57 +317,57 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 */
 	@Override
 	public Adapter createOrClockConstraintAdapter() {
-		if (this.orClockConstraintItemProvider == null) {
-			this.orClockConstraintItemProvider = new OrClockConstraintItemProvider(this);
+		if (orClockConstraintItemProvider == null) {
+			orClockConstraintItemProvider = new OrClockConstraintItemProvider(this);
 		}
 
-		return this.orClockConstraintItemProvider;
+		return orClockConstraintItemProvider;
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link tfsm.TimedFinalState} instances.
+	 * This keeps track of the one adapter used for all {@link tfsm.FinalState} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected TimedFinalStateItemProvider timedFinalStateItemProvider;
+	protected FinalStateItemProvider finalStateItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link tfsm.TimedFinalState}.
+	 * This creates an adapter for a {@link tfsm.FinalState}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createTimedFinalStateAdapter() {
-		if (this.timedFinalStateItemProvider == null) {
-			this.timedFinalStateItemProvider = new TimedFinalStateItemProvider(this);
+	public Adapter createFinalStateAdapter() {
+		if (finalStateItemProvider == null) {
+			finalStateItemProvider = new FinalStateItemProvider(this);
 		}
 
-		return this.timedFinalStateItemProvider;
+		return finalStateItemProvider;
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link tfsm.TimedInitialState} instances.
+	 * This keeps track of the one adapter used for all {@link tfsm.InitialState} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected TimedInitialStateItemProvider timedInitialStateItemProvider;
+	protected InitialStateItemProvider initialStateItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link tfsm.TimedInitialState}.
+	 * This creates an adapter for a {@link tfsm.InitialState}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createTimedInitialStateAdapter() {
-		if (this.timedInitialStateItemProvider == null) {
-			this.timedInitialStateItemProvider = new TimedInitialStateItemProvider(this);
+	public Adapter createInitialStateAdapter() {
+		if (initialStateItemProvider == null) {
+			initialStateItemProvider = new InitialStateItemProvider(this);
 		}
 
-		return this.timedInitialStateItemProvider;
+		return initialStateItemProvider;
 	}
 
 	/**
@@ -376,9 +376,8 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public ComposeableAdapterFactory getRootAdapterFactory() {
-		return this.parentAdapterFactory == null ? this : this.parentAdapterFactory.getRootAdapterFactory();
+		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
 	}
 
 	/**
@@ -387,8 +386,7 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void setParentAdapterFactory(final ComposedAdapterFactory parentAdapterFactory) {
+	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
 		this.parentAdapterFactory = parentAdapterFactory;
 	}
 
@@ -398,8 +396,8 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(final Object type) {
-		return this.supportedTypes.contains(type) || super.isFactoryForType(type);
+	public boolean isFactoryForType(Object type) {
+		return supportedTypes.contains(type) || super.isFactoryForType(type);
 	}
 
 	/**
@@ -409,7 +407,7 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 * @generated
 	 */
 	@Override
-	public Adapter adapt(final Notifier notifier, final Object type) {
+	public Adapter adapt(Notifier notifier, Object type) {
 		return super.adapt(notifier, this);
 	}
 
@@ -419,10 +417,10 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 * @generated
 	 */
 	@Override
-	public Object adapt(final Object object, final Object type) {
-		if (this.isFactoryForType(type)) {
-			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter)) {
+	public Object adapt(Object object, Object type) {
+		if (isFactoryForType(type)) {
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
 				return adapter;
 			}
 		}
@@ -436,9 +434,8 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void addListener(final INotifyChangedListener notifyChangedListener) {
-		this.changeNotifier.addListener(notifyChangedListener);
+	public void addListener(INotifyChangedListener notifyChangedListener) {
+		changeNotifier.addListener(notifyChangedListener);
 	}
 
 	/**
@@ -447,9 +444,8 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void removeListener(final INotifyChangedListener notifyChangedListener) {
-		this.changeNotifier.removeListener(notifyChangedListener);
+	public void removeListener(INotifyChangedListener notifyChangedListener) {
+		changeNotifier.removeListener(notifyChangedListener);
 	}
 
 	/**
@@ -458,12 +454,11 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void fireNotifyChanged(final Notification notification) {
-		this.changeNotifier.fireNotifyChanged(notification);
+	public void fireNotifyChanged(Notification notification) {
+		changeNotifier.fireNotifyChanged(notification);
 
-		if (this.parentAdapterFactory != null) {
-			this.parentAdapterFactory.fireNotifyChanged(notification);
+		if (parentAdapterFactory != null) {
+			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
 
@@ -473,47 +468,20 @@ public class TfsmItemProviderAdapterFactory extends TfsmAdapterFactory implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public void dispose() {
-		if (this.timedFSMItemProvider != null) {
-			this.timedFSMItemProvider.dispose();
-		}
-		if (this.timedStateItemProvider != null) {
-			this.timedStateItemProvider.dispose();
-		}
-		if (this.timedTransitionItemProvider != null) {
-			this.timedTransitionItemProvider.dispose();
-		}
-		if (this.clockItemProvider != null) {
-			this.clockItemProvider.dispose();
-		}
-		if (this.clockResetItemProvider != null) {
-			this.clockResetItemProvider.dispose();
-		}
-		if (this.lowerClockConstraintItemProvider != null) {
-			this.lowerClockConstraintItemProvider.dispose();
-		}
-		if (this.lowerEqualClockConstraintItemProvider != null) {
-			this.lowerEqualClockConstraintItemProvider.dispose();
-		}
-		if (this.upperClockConstraintItemProvider != null) {
-			this.upperClockConstraintItemProvider.dispose();
-		}
-		if (this.upperEqualClockConstraintItemProvider != null) {
-			this.upperEqualClockConstraintItemProvider.dispose();
-		}
-		if (this.andClockConstraintItemProvider != null) {
-			this.andClockConstraintItemProvider.dispose();
-		}
-		if (this.orClockConstraintItemProvider != null) {
-			this.orClockConstraintItemProvider.dispose();
-		}
-		if (this.timedFinalStateItemProvider != null) {
-			this.timedFinalStateItemProvider.dispose();
-		}
-		if (this.timedInitialStateItemProvider != null) {
-			this.timedInitialStateItemProvider.dispose();
-		}
+		if (fsmItemProvider != null) fsmItemProvider.dispose();
+		if (stateItemProvider != null) stateItemProvider.dispose();
+		if (transitionItemProvider != null) transitionItemProvider.dispose();
+		if (clockItemProvider != null) clockItemProvider.dispose();
+		if (clockResetItemProvider != null) clockResetItemProvider.dispose();
+		if (lowerClockConstraintItemProvider != null) lowerClockConstraintItemProvider.dispose();
+		if (lowerEqualClockConstraintItemProvider != null) lowerEqualClockConstraintItemProvider.dispose();
+		if (upperClockConstraintItemProvider != null) upperClockConstraintItemProvider.dispose();
+		if (upperEqualClockConstraintItemProvider != null) upperEqualClockConstraintItemProvider.dispose();
+		if (andClockConstraintItemProvider != null) andClockConstraintItemProvider.dispose();
+		if (orClockConstraintItemProvider != null) orClockConstraintItemProvider.dispose();
+		if (finalStateItemProvider != null) finalStateItemProvider.dispose();
+		if (initialStateItemProvider != null) initialStateItemProvider.dispose();
 	}
 
 }

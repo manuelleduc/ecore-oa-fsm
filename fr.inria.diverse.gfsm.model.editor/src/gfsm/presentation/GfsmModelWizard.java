@@ -50,6 +50,7 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
@@ -122,7 +123,7 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected GfsmFactory gfsmFactory = this.gfsmPackage.getGfsmFactory();
+	protected GfsmFactory gfsmFactory = gfsmPackage.getGfsmFactory();
 
 	/**
 	 * This is the file creation page.
@@ -171,11 +172,11 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 	 * @generated
 	 */
 	@Override
-	public void init(final IWorkbench workbench, final IStructuredSelection selection) {
+	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.workbench = workbench;
 		this.selection = selection;
-		this.setWindowTitle(GfsmEditorPlugin.INSTANCE.getString("_UI_Wizard_label"));
-		this.setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(GfsmEditorPlugin.INSTANCE.getImage("full/wizban/NewGfsm")));
+		setWindowTitle(GfsmEditorPlugin.INSTANCE.getString("_UI_Wizard_label"));
+		setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(GfsmEditorPlugin.INSTANCE.getImage("full/wizban/NewGfsm")));
 	}
 
 	/**
@@ -185,19 +186,19 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 	 * @generated
 	 */
 	protected Collection<String> getInitialObjectNames() {
-		if (this.initialObjectNames == null) {
-			this.initialObjectNames = new ArrayList<String>();
-			for (final EClassifier eClassifier : this.gfsmPackage.getEClassifiers()) {
+		if (initialObjectNames == null) {
+			initialObjectNames = new ArrayList<String>();
+			for (EClassifier eClassifier : gfsmPackage.getEClassifiers()) {
 				if (eClassifier instanceof EClass) {
-					final EClass eClass = (EClass)eClassifier;
+					EClass eClass = (EClass)eClassifier;
 					if (!eClass.isAbstract()) {
-						this.initialObjectNames.add(eClass.getName());
+						initialObjectNames.add(eClass.getName());
 					}
 				}
 			}
-			Collections.sort(this.initialObjectNames, CommonPlugin.INSTANCE.getComparator());
+			Collections.sort(initialObjectNames, CommonPlugin.INSTANCE.getComparator());
 		}
-		return this.initialObjectNames;
+		return initialObjectNames;
 	}
 
 	/**
@@ -207,8 +208,8 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 	 * @generated
 	 */
 	protected EObject createInitialModel() {
-		final EClass eClass = (EClass)this.gfsmPackage.getEClassifier(this.initialObjectCreationPage.getInitialObjectName());
-		final EObject rootObject = this.gfsmFactory.create(eClass);
+		EClass eClass = (EClass)gfsmPackage.getEClassifier(initialObjectCreationPage.getInitialObjectName());
+		EObject rootObject = gfsmFactory.create(eClass);
 		return rootObject;
 	}
 
@@ -223,41 +224,41 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 		try {
 			// Remember the file.
 			//
-			final IFile modelFile = this.getModelFile();
+			final IFile modelFile = getModelFile();
 
 			// Do the work within an operation.
 			//
-			final WorkspaceModifyOperation operation =
+			WorkspaceModifyOperation operation =
 				new WorkspaceModifyOperation() {
 					@Override
-					protected void execute(final IProgressMonitor progressMonitor) {
+					protected void execute(IProgressMonitor progressMonitor) {
 						try {
 							// Create a resource set
 							//
-							final ResourceSet resourceSet = new ResourceSetImpl();
+							ResourceSet resourceSet = new ResourceSetImpl();
 
 							// Get the URI of the model file.
 							//
-							final URI fileURI = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
+							URI fileURI = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
 
 							// Create a resource for this file.
 							//
-							final Resource resource = resourceSet.createResource(fileURI);
+							Resource resource = resourceSet.createResource(fileURI);
 
 							// Add the initial model object to the contents.
 							//
-							final EObject rootObject = GfsmModelWizard.this.createInitialModel();
+							EObject rootObject = createInitialModel();
 							if (rootObject != null) {
 								resource.getContents().add(rootObject);
 							}
 
 							// Save the contents of the resource to the file system.
 							//
-							final Map<Object, Object> options = new HashMap<Object, Object>();
-							options.put(XMLResource.OPTION_ENCODING, GfsmModelWizard.this.initialObjectCreationPage.getEncoding());
+							Map<Object, Object> options = new HashMap<Object, Object>();
+							options.put(XMLResource.OPTION_ENCODING, initialObjectCreationPage.getEncoding());
 							resource.save(options);
 						}
-						catch (final Exception exception) {
+						catch (Exception exception) {
 							GfsmEditorPlugin.INSTANCE.log(exception);
 						}
 						finally {
@@ -266,17 +267,21 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 					}
 				};
 
-			this.getContainer().run(false, false, operation);
+			getContainer().run(false, false, operation);
 
 			// Select the new file resource in the current view.
 			//
-			final IWorkbenchWindow workbenchWindow = this.workbench.getActiveWorkbenchWindow();
-			final IWorkbenchPage page = workbenchWindow.getActivePage();
+			IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
+			IWorkbenchPage page = workbenchWindow.getActivePage();
 			final IWorkbenchPart activePart = page.getActivePart();
 			if (activePart instanceof ISetSelectionTarget) {
 				final ISelection targetSelection = new StructuredSelection(modelFile);
-				this.getShell().getDisplay().asyncExec
-					(() -> ((ISetSelectionTarget)activePart).selectReveal(targetSelection));
+				getShell().getDisplay().asyncExec
+					(new Runnable() {
+						 public void run() {
+							 ((ISetSelectionTarget)activePart).selectReveal(targetSelection);
+						 }
+					 });
 			}
 
 			// Open an editor on the new file.
@@ -284,16 +289,16 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 			try {
 				page.openEditor
 					(new FileEditorInput(modelFile),
-					 this.workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());					 	 
+					 workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());					 	 
 			}
-			catch (final PartInitException exception) {
+			catch (PartInitException exception) {
 				MessageDialog.openError(workbenchWindow.getShell(), GfsmEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
 				return false;
 			}
 
 			return true;
 		}
-		catch (final Exception exception) {
+		catch (Exception exception) {
 			GfsmEditorPlugin.INSTANCE.log(exception);
 			return false;
 		}
@@ -312,7 +317,7 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public GfsmModelWizardNewFileCreationPage(final String pageId, final IStructuredSelection selection) {
+		public GfsmModelWizardNewFileCreationPage(String pageId, IStructuredSelection selection) {
 			super(pageId, selection);
 		}
 
@@ -325,10 +330,10 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 		@Override
 		protected boolean validatePage() {
 			if (super.validatePage()) {
-				final String extension = new Path(this.getFileName()).getFileExtension();
-				if (extension == null || !GfsmModelWizard.FILE_EXTENSIONS.contains(extension)) {
-					final String key = GfsmModelWizard.FILE_EXTENSIONS.size() > 1 ? "_WARN_FilenameExtensions" : "_WARN_FilenameExtension";
-					this.setErrorMessage(GfsmEditorPlugin.INSTANCE.getString(key, new Object [] { GfsmModelWizard.FORMATTED_FILE_EXTENSIONS }));
+				String extension = new Path(getFileName()).getFileExtension();
+				if (extension == null || !FILE_EXTENSIONS.contains(extension)) {
+					String key = FILE_EXTENSIONS.size() > 1 ? "_WARN_FilenameExtensions" : "_WARN_FilenameExtension";
+					setErrorMessage(GfsmEditorPlugin.INSTANCE.getString(key, new Object [] { FORMATTED_FILE_EXTENSIONS }));
 					return false;
 				}
 				return true;
@@ -342,7 +347,7 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 		 * @generated
 		 */
 		public IFile getModelFile() {
-			return ResourcesPlugin.getWorkspace().getRoot().getFile(this.getContainerFullPath().append(this.getFileName()));
+			return ResourcesPlugin.getWorkspace().getRoot().getFile(getContainerFullPath().append(getFileName()));
 		}
 	}
 
@@ -380,7 +385,7 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public GfsmModelWizardInitialObjectCreationPage(final String pageId) {
+		public GfsmModelWizardInitialObjectCreationPage(String pageId) {
 			super(pageId);
 		}
 
@@ -390,71 +395,71 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 		 * @generated
 		 */
 		@Override
-		public void createControl(final Composite parent) {
-			final Composite composite = new Composite(parent, SWT.NONE); {
-				final GridLayout layout = new GridLayout();
+		public void createControl(Composite parent) {
+			Composite composite = new Composite(parent, SWT.NONE); {
+				GridLayout layout = new GridLayout();
 				layout.numColumns = 1;
 				layout.verticalSpacing = 12;
 				composite.setLayout(layout);
 
-				final GridData data = new GridData();
+				GridData data = new GridData();
 				data.verticalAlignment = GridData.FILL;
 				data.grabExcessVerticalSpace = true;
 				data.horizontalAlignment = GridData.FILL;
 				composite.setLayoutData(data);
 			}
 
-			final Label containerLabel = new Label(composite, SWT.LEFT);
+			Label containerLabel = new Label(composite, SWT.LEFT);
 			{
 				containerLabel.setText(GfsmEditorPlugin.INSTANCE.getString("_UI_ModelObject"));
 
-				final GridData data = new GridData();
+				GridData data = new GridData();
 				data.horizontalAlignment = GridData.FILL;
 				containerLabel.setLayoutData(data);
 			}
 
-			this.initialObjectField = new Combo(composite, SWT.BORDER);
+			initialObjectField = new Combo(composite, SWT.BORDER);
 			{
-				final GridData data = new GridData();
+				GridData data = new GridData();
 				data.horizontalAlignment = GridData.FILL;
 				data.grabExcessHorizontalSpace = true;
-				this.initialObjectField.setLayoutData(data);
+				initialObjectField.setLayoutData(data);
 			}
 
-			for (final String objectName : GfsmModelWizard.this.getInitialObjectNames()) {
-				this.initialObjectField.add(this.getLabel(objectName));
+			for (String objectName : getInitialObjectNames()) {
+				initialObjectField.add(getLabel(objectName));
 			}
 
-			if (this.initialObjectField.getItemCount() == 1) {
-				this.initialObjectField.select(0);
+			if (initialObjectField.getItemCount() == 1) {
+				initialObjectField.select(0);
 			}
-			this.initialObjectField.addModifyListener(this.validator);
+			initialObjectField.addModifyListener(validator);
 
-			final Label encodingLabel = new Label(composite, SWT.LEFT);
+			Label encodingLabel = new Label(composite, SWT.LEFT);
 			{
 				encodingLabel.setText(GfsmEditorPlugin.INSTANCE.getString("_UI_XMLEncoding"));
 
-				final GridData data = new GridData();
+				GridData data = new GridData();
 				data.horizontalAlignment = GridData.FILL;
 				encodingLabel.setLayoutData(data);
 			}
-			this.encodingField = new Combo(composite, SWT.BORDER);
+			encodingField = new Combo(composite, SWT.BORDER);
 			{
-				final GridData data = new GridData();
+				GridData data = new GridData();
 				data.horizontalAlignment = GridData.FILL;
 				data.grabExcessHorizontalSpace = true;
-				this.encodingField.setLayoutData(data);
+				encodingField.setLayoutData(data);
 			}
 
-			for (final String encoding : this.getEncodings()) {
-				this.encodingField.add(encoding);
+			for (String encoding : getEncodings()) {
+				encodingField.add(encoding);
 			}
 
-			this.encodingField.select(0);
-			this.encodingField.addModifyListener(this.validator);
+			encodingField.select(0);
+			encodingField.addModifyListener(validator);
 
-			this.setPageComplete(this.validatePage());
-			this.setControl(composite);
+			setPageComplete(validatePage());
+			setControl(composite);
 		}
 
 		/**
@@ -463,7 +468,11 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 		 * @generated
 		 */
 		protected ModifyListener validator =
-			e -> GfsmModelWizardInitialObjectCreationPage.this.setPageComplete(GfsmModelWizardInitialObjectCreationPage.this.validatePage());
+			new ModifyListener() {
+				public void modifyText(ModifyEvent e) {
+					setPageComplete(validatePage());
+				}
+			};
 
 		/**
 		 * <!-- begin-user-doc -->
@@ -471,7 +480,7 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 		 * @generated
 		 */
 		protected boolean validatePage() {
-			return this.getInitialObjectName() != null && this.getEncodings().contains(this.encodingField.getText());
+			return getInitialObjectName() != null && getEncodings().contains(encodingField.getText());
 		}
 
 		/**
@@ -480,16 +489,16 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 		 * @generated
 		 */
 		@Override
-		public void setVisible(final boolean visible) {
+		public void setVisible(boolean visible) {
 			super.setVisible(visible);
 			if (visible) {
-				if (this.initialObjectField.getItemCount() == 1) {
-					this.initialObjectField.clearSelection();
-					this.encodingField.setFocus();
+				if (initialObjectField.getItemCount() == 1) {
+					initialObjectField.clearSelection();
+					encodingField.setFocus();
 				}
 				else {
-					this.encodingField.clearSelection();
-					this.initialObjectField.setFocus();
+					encodingField.clearSelection();
+					initialObjectField.setFocus();
 				}
 			}
 		}
@@ -500,10 +509,10 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 		 * @generated
 		 */
 		public String getInitialObjectName() {
-			final String label = this.initialObjectField.getText();
+			String label = initialObjectField.getText();
 
-			for (final String name : GfsmModelWizard.this.getInitialObjectNames()) {
-				if (this.getLabel(name).equals(label)) {
+			for (String name : getInitialObjectNames()) {
+				if (getLabel(name).equals(label)) {
 					return name;
 				}
 			}
@@ -516,7 +525,7 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 		 * @generated
 		 */
 		public String getEncoding() {
-			return this.encodingField.getText();
+			return encodingField.getText();
 		}
 
 		/**
@@ -525,11 +534,11 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		protected String getLabel(final String typeName) {
+		protected String getLabel(String typeName) {
 			try {
 				return GfsmEditPlugin.INSTANCE.getString("_UI_" + typeName + "_type");
 			}
-			catch(final MissingResourceException mre) {
+			catch(MissingResourceException mre) {
 				GfsmEditorPlugin.INSTANCE.log(mre);
 			}
 			return typeName;
@@ -541,13 +550,13 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 		 * @generated
 		 */
 		protected Collection<String> getEncodings() {
-			if (this.encodings == null) {
-				this.encodings = new ArrayList<String>();
-				for (final StringTokenizer stringTokenizer = new StringTokenizer(GfsmEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens(); ) {
-					this.encodings.add(stringTokenizer.nextToken());
+			if (encodings == null) {
+				encodings = new ArrayList<String>();
+				for (StringTokenizer stringTokenizer = new StringTokenizer(GfsmEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens(); ) {
+					encodings.add(stringTokenizer.nextToken());
 				}
 			}
-			return this.encodings;
+			return encodings;
 		}
 	}
 
@@ -561,18 +570,18 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 	public void addPages() {
 		// Create a page, set the title, and the initial model file name.
 		//
-		this.newFileCreationPage = new GfsmModelWizardNewFileCreationPage("Whatever", this.selection);
-		this.newFileCreationPage.setTitle(GfsmEditorPlugin.INSTANCE.getString("_UI_GfsmModelWizard_label"));
-		this.newFileCreationPage.setDescription(GfsmEditorPlugin.INSTANCE.getString("_UI_GfsmModelWizard_description"));
-		this.newFileCreationPage.setFileName(GfsmEditorPlugin.INSTANCE.getString("_UI_GfsmEditorFilenameDefaultBase") + "." + GfsmModelWizard.FILE_EXTENSIONS.get(0));
-		this.addPage(this.newFileCreationPage);
+		newFileCreationPage = new GfsmModelWizardNewFileCreationPage("Whatever", selection);
+		newFileCreationPage.setTitle(GfsmEditorPlugin.INSTANCE.getString("_UI_GfsmModelWizard_label"));
+		newFileCreationPage.setDescription(GfsmEditorPlugin.INSTANCE.getString("_UI_GfsmModelWizard_description"));
+		newFileCreationPage.setFileName(GfsmEditorPlugin.INSTANCE.getString("_UI_GfsmEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0));
+		addPage(newFileCreationPage);
 
 		// Try and get the resource selection to determine a current directory for the file dialog.
 		//
-		if (this.selection != null && !this.selection.isEmpty()) {
+		if (selection != null && !selection.isEmpty()) {
 			// Get the resource...
 			//
-			final Object selectedElement = this.selection.iterator().next();
+			Object selectedElement = selection.iterator().next();
 			if (selectedElement instanceof IResource) {
 				// Get the resource parent, if its a file.
 				//
@@ -586,24 +595,24 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 				if (selectedResource instanceof IFolder || selectedResource instanceof IProject) {
 					// Set this for the container.
 					//
-					this.newFileCreationPage.setContainerFullPath(selectedResource.getFullPath());
+					newFileCreationPage.setContainerFullPath(selectedResource.getFullPath());
 
 					// Make up a unique new name here.
 					//
-					final String defaultModelBaseFilename = GfsmEditorPlugin.INSTANCE.getString("_UI_GfsmEditorFilenameDefaultBase");
-					final String defaultModelFilenameExtension = GfsmModelWizard.FILE_EXTENSIONS.get(0);
+					String defaultModelBaseFilename = GfsmEditorPlugin.INSTANCE.getString("_UI_GfsmEditorFilenameDefaultBase");
+					String defaultModelFilenameExtension = FILE_EXTENSIONS.get(0);
 					String modelFilename = defaultModelBaseFilename + "." + defaultModelFilenameExtension;
 					for (int i = 1; ((IContainer)selectedResource).findMember(modelFilename) != null; ++i) {
 						modelFilename = defaultModelBaseFilename + i + "." + defaultModelFilenameExtension;
 					}
-					this.newFileCreationPage.setFileName(modelFilename);
+					newFileCreationPage.setFileName(modelFilename);
 				}
 			}
 		}
-		this.initialObjectCreationPage = new GfsmModelWizardInitialObjectCreationPage("Whatever2");
-		this.initialObjectCreationPage.setTitle(GfsmEditorPlugin.INSTANCE.getString("_UI_GfsmModelWizard_label"));
-		this.initialObjectCreationPage.setDescription(GfsmEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
-		this.addPage(this.initialObjectCreationPage);
+		initialObjectCreationPage = new GfsmModelWizardInitialObjectCreationPage("Whatever2");
+		initialObjectCreationPage.setTitle(GfsmEditorPlugin.INSTANCE.getString("_UI_GfsmModelWizard_label"));
+		initialObjectCreationPage.setDescription(GfsmEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
+		addPage(initialObjectCreationPage);
 	}
 
 	/**
@@ -613,7 +622,7 @@ public class GfsmModelWizard extends Wizard implements INewWizard {
 	 * @generated
 	 */
 	public IFile getModelFile() {
-		return this.newFileCreationPage.getModelFile();
+		return newFileCreationPage.getModelFile();
 	}
 
 }

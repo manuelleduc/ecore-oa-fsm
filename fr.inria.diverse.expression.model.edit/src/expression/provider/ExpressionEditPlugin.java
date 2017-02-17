@@ -50,7 +50,7 @@ public final class ExpressionEditPlugin extends EMFPlugin {
 	 */
 	@Override
 	public ResourceLocator getPluginResourceLocator() {
-		return ExpressionEditPlugin.plugin;
+		return plugin;
 	}
 
 	/**
@@ -61,7 +61,7 @@ public final class ExpressionEditPlugin extends EMFPlugin {
 	 * @generated
 	 */
 	public static Implementation getPlugin() {
-		return ExpressionEditPlugin.plugin;
+		return plugin;
 	}
 
 	/**
@@ -82,7 +82,7 @@ public final class ExpressionEditPlugin extends EMFPlugin {
 
 			// Remember the static instance.
 			//
-			ExpressionEditPlugin.plugin = this;
+			plugin = this;
 		}
 	}
 

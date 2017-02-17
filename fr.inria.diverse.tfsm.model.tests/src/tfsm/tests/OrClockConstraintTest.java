@@ -20,7 +20,7 @@ public class OrClockConstraintTest extends BinaryClockConstraintTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(OrClockConstraintTest.class);
 	}
 
@@ -30,7 +30,7 @@ public class OrClockConstraintTest extends BinaryClockConstraintTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public OrClockConstraintTest(final String name) {
+	public OrClockConstraintTest(String name) {
 		super(name);
 	}
 
@@ -42,7 +42,7 @@ public class OrClockConstraintTest extends BinaryClockConstraintTest {
 	 */
 	@Override
 	protected OrClockConstraint getFixture() {
-		return (OrClockConstraint)this.fixture;
+		return (OrClockConstraint)fixture;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class OrClockConstraintTest extends BinaryClockConstraintTest {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(TfsmFactory.eINSTANCE.createOrClockConstraint());
+		setFixture(TfsmFactory.eINSTANCE.createOrClockConstraint());
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class OrClockConstraintTest extends BinaryClockConstraintTest {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //OrClockConstraintTest

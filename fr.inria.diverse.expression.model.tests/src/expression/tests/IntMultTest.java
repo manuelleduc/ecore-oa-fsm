@@ -20,7 +20,7 @@ public class IntMultTest extends IntBinaryExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(IntMultTest.class);
 	}
 
@@ -30,7 +30,7 @@ public class IntMultTest extends IntBinaryExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IntMultTest(final String name) {
+	public IntMultTest(String name) {
 		super(name);
 	}
 
@@ -42,7 +42,7 @@ public class IntMultTest extends IntBinaryExpressionTest {
 	 */
 	@Override
 	protected IntMult getFixture() {
-		return (IntMult)this.fixture;
+		return (IntMult)fixture;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class IntMultTest extends IntBinaryExpressionTest {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(ExpressionFactory.eINSTANCE.createIntMult());
+		setFixture(ExpressionFactory.eINSTANCE.createIntMult());
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class IntMultTest extends IntBinaryExpressionTest {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //IntMultTest

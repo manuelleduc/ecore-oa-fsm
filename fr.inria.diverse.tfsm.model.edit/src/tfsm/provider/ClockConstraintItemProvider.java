@@ -30,7 +30,7 @@ public class ClockConstraintItemProvider extends ClockConstraintOperationItemPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ClockConstraintItemProvider(final AdapterFactory adapterFactory) {
+	public ClockConstraintItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -41,14 +41,14 @@ public class ClockConstraintItemProvider extends ClockConstraintOperationItemPro
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
-		if (this.itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			this.addThresholdPropertyDescriptor(object);
-			this.addClockPropertyDescriptor(object);
+			addThresholdPropertyDescriptor(object);
+			addClockPropertyDescriptor(object);
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
@@ -57,13 +57,13 @@ public class ClockConstraintItemProvider extends ClockConstraintOperationItemPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addThresholdPropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add
-			(this.createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-				 this.getResourceLocator(),
-				 this.getString("_UI_ClockConstraint_threshold_feature"),
-				 this.getString("_UI_PropertyDescriptor_description", "_UI_ClockConstraint_threshold_feature", "_UI_ClockConstraint_type"),
+	protected void addThresholdPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ClockConstraint_threshold_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ClockConstraint_threshold_feature", "_UI_ClockConstraint_type"),
 				 TfsmPackage.Literals.CLOCK_CONSTRAINT__THRESHOLD,
 				 true,
 				 false,
@@ -79,13 +79,13 @@ public class ClockConstraintItemProvider extends ClockConstraintOperationItemPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addClockPropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add
-			(this.createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-				 this.getResourceLocator(),
-				 this.getString("_UI_ClockConstraint_clock_feature"),
-				 this.getString("_UI_PropertyDescriptor_description", "_UI_ClockConstraint_clock_feature", "_UI_ClockConstraint_type"),
+	protected void addClockPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ClockConstraint_clock_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ClockConstraint_clock_feature", "_UI_ClockConstraint_type"),
 				 TfsmPackage.Literals.CLOCK_CONSTRAINT__CLOCK,
 				 true,
 				 false,
@@ -102,9 +102,9 @@ public class ClockConstraintItemProvider extends ClockConstraintOperationItemPro
 	 * @generated
 	 */
 	@Override
-	public String getText(final Object object) {
-		final ClockConstraint clockConstraint = (ClockConstraint)object;
-		return this.getString("_UI_ClockConstraint_type") + " " + clockConstraint.getThreshold();
+	public String getText(Object object) {
+		ClockConstraint clockConstraint = (ClockConstraint)object;
+		return getString("_UI_ClockConstraint_type") + " " + clockConstraint.getThreshold();
 	}
 	
 
@@ -116,12 +116,12 @@ public class ClockConstraintItemProvider extends ClockConstraintOperationItemPro
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(final Notification notification) {
-		this.updateChildren(notification);
+	public void notifyChanged(Notification notification) {
+		updateChildren(notification);
 
 		switch (notification.getFeatureID(ClockConstraint.class)) {
 			case TfsmPackage.CLOCK_CONSTRAINT__THRESHOLD:
-				this.fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -135,7 +135,7 @@ public class ClockConstraintItemProvider extends ClockConstraintOperationItemPro
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors, final Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 

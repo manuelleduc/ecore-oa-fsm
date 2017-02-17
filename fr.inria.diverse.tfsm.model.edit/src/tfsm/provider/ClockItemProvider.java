@@ -45,7 +45,7 @@ public class ClockItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ClockItemProvider(final AdapterFactory adapterFactory) {
+	public ClockItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -56,14 +56,14 @@ public class ClockItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
-		if (this.itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			this.addNamePropertyDescriptor(object);
-			this.addTickPropertyDescriptor(object);
+			addNamePropertyDescriptor(object);
+			addTickPropertyDescriptor(object);
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
@@ -72,13 +72,13 @@ public class ClockItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add
-			(this.createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-				 this.getResourceLocator(),
-				 this.getString("_UI_Clock_name_feature"),
-				 this.getString("_UI_PropertyDescriptor_description", "_UI_Clock_name_feature", "_UI_Clock_type"),
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Clock_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Clock_name_feature", "_UI_Clock_type"),
 				 TfsmPackage.Literals.CLOCK__NAME,
 				 true,
 				 false,
@@ -94,13 +94,13 @@ public class ClockItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addTickPropertyDescriptor(final Object object) {
-		this.itemPropertyDescriptors.add
-			(this.createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)this.adapterFactory).getRootAdapterFactory(),
-				 this.getResourceLocator(),
-				 this.getString("_UI_Clock_tick_feature"),
-				 this.getString("_UI_PropertyDescriptor_description", "_UI_Clock_tick_feature", "_UI_Clock_type"),
+	protected void addTickPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Clock_tick_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Clock_tick_feature", "_UI_Clock_type"),
 				 TfsmPackage.Literals.CLOCK__TICK,
 				 true,
 				 false,
@@ -117,8 +117,8 @@ public class ClockItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(final Object object) {
-		return this.overlayImage(object, this.getResourceLocator().getImage("full/obj16/Clock"));
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Clock"));
 	}
 
 	/**
@@ -128,11 +128,11 @@ public class ClockItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(final Object object) {
-		final String label = ((Clock)object).getName();
+	public String getText(Object object) {
+		String label = ((Clock)object).getName();
 		return label == null || label.length() == 0 ?
-			this.getString("_UI_Clock_type") :
-			this.getString("_UI_Clock_type") + " " + label;
+			getString("_UI_Clock_type") :
+			getString("_UI_Clock_type") + " " + label;
 	}
 	
 
@@ -144,13 +144,13 @@ public class ClockItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(final Notification notification) {
-		this.updateChildren(notification);
+	public void notifyChanged(Notification notification) {
+		updateChildren(notification);
 
 		switch (notification.getFeatureID(Clock.class)) {
 			case TfsmPackage.CLOCK__NAME:
 			case TfsmPackage.CLOCK__TICK:
-				this.fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -164,7 +164,7 @@ public class ClockItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors, final Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 

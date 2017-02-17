@@ -18,7 +18,7 @@ public abstract class BooleanBinaryExpressionTest extends BooleanExpressionTest 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public BooleanBinaryExpressionTest(final String name) {
+	public BooleanBinaryExpressionTest(String name) {
 		super(name);
 	}
 
@@ -30,7 +30,7 @@ public abstract class BooleanBinaryExpressionTest extends BooleanExpressionTest 
 	 */
 	@Override
 	protected BooleanBinaryExpression getFixture() {
-		return (BooleanBinaryExpression)this.fixture;
+		return (BooleanBinaryExpression)fixture;
 	}
 
 } //BooleanBinaryExpressionTest

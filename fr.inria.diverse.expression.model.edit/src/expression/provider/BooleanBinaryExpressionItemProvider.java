@@ -31,7 +31,7 @@ public class BooleanBinaryExpressionItemProvider extends BooleanExpressionItemPr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public BooleanBinaryExpressionItemProvider(final AdapterFactory adapterFactory) {
+	public BooleanBinaryExpressionItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -42,12 +42,12 @@ public class BooleanBinaryExpressionItemProvider extends BooleanExpressionItemPr
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
-		if (this.itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
@@ -59,13 +59,13 @@ public class BooleanBinaryExpressionItemProvider extends BooleanExpressionItemPr
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(final Object object) {
-		if (this.childrenFeatures == null) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			this.childrenFeatures.add(ExpressionPackage.Literals.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION1);
-			this.childrenFeatures.add(ExpressionPackage.Literals.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION2);
+			childrenFeatures.add(ExpressionPackage.Literals.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION1);
+			childrenFeatures.add(ExpressionPackage.Literals.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION2);
 		}
-		return this.childrenFeatures;
+		return childrenFeatures;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class BooleanBinaryExpressionItemProvider extends BooleanExpressionItemPr
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(final Object object, final Object child) {
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -88,8 +88,8 @@ public class BooleanBinaryExpressionItemProvider extends BooleanExpressionItemPr
 	 * @generated
 	 */
 	@Override
-	public Object getImage(final Object object) {
-		return this.overlayImage(object, this.getResourceLocator().getImage("full/obj16/BooleanBinaryExpression"));
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/BooleanBinaryExpression"));
 	}
 
 	/**
@@ -99,8 +99,8 @@ public class BooleanBinaryExpressionItemProvider extends BooleanExpressionItemPr
 	 * @generated
 	 */
 	@Override
-	public String getText(final Object object) {
-		return this.getString("_UI_BooleanBinaryExpression_type");
+	public String getText(Object object) {
+		return getString("_UI_BooleanBinaryExpression_type");
 	}
 	
 
@@ -112,13 +112,13 @@ public class BooleanBinaryExpressionItemProvider extends BooleanExpressionItemPr
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(final Notification notification) {
-		this.updateChildren(notification);
+	public void notifyChanged(Notification notification) {
+		updateChildren(notification);
 
 		switch (notification.getFeatureID(BooleanBinaryExpression.class)) {
 			case ExpressionPackage.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION1:
 			case ExpressionPackage.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION2:
-				this.fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -132,36 +132,46 @@ public class BooleanBinaryExpressionItemProvider extends BooleanExpressionItemPr
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors, final Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION1,
 				 ExpressionFactory.eINSTANCE.createBooleanEqual()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION1,
 				 ExpressionFactory.eINSTANCE.createBooleanOr()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION1,
 				 ExpressionFactory.eINSTANCE.createBooleanAnd()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION1,
 				 ExpressionFactory.eINSTANCE.createBooleanGreaterThan()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION2,
 				 ExpressionFactory.eINSTANCE.createBooleanEqual()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
+				(ExpressionPackage.Literals.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION2,
+				 ExpressionFactory.eINSTANCE.createBooleanOr()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ExpressionPackage.Literals.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION2,
+				 ExpressionFactory.eINSTANCE.createBooleanAnd()));
+
+		newChildDescriptors.add
+			(createChildParameter
 				(ExpressionPackage.Literals.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION2,
 				 ExpressionFactory.eINSTANCE.createBooleanGreaterThan()));
 	}
@@ -173,18 +183,18 @@ public class BooleanBinaryExpressionItemProvider extends BooleanExpressionItemPr
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(final Object owner, final Object feature, final Object child, final Collection<?> selection) {
-		final Object childFeature = feature;
-		final Object childObject = child;
+	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
+		Object childFeature = feature;
+		Object childObject = child;
 
-		final boolean qualify =
+		boolean qualify =
 			childFeature == ExpressionPackage.Literals.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION1 ||
 			childFeature == ExpressionPackage.Literals.BOOLEAN_BINARY_EXPRESSION__BOOL_EXPRESSION2;
 
 		if (qualify) {
-			return this.getString
+			return getString
 				("_UI_CreateChild_text2",
-				 new Object[] { this.getTypeText(childObject), this.getFeatureText(childFeature), this.getTypeText(owner) });
+				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);
 	}

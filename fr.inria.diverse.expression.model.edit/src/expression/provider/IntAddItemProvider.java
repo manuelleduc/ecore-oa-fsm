@@ -25,7 +25,7 @@ public class IntAddItemProvider extends IntBinaryExpressionItemProvider {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IntAddItemProvider(final AdapterFactory adapterFactory) {
+	public IntAddItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -36,12 +36,12 @@ public class IntAddItemProvider extends IntBinaryExpressionItemProvider {
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
-		if (this.itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
@@ -51,8 +51,8 @@ public class IntAddItemProvider extends IntBinaryExpressionItemProvider {
 	 * @generated
 	 */
 	@Override
-	public Object getImage(final Object object) {
-		return this.overlayImage(object, this.getResourceLocator().getImage("full/obj16/IntAdd"));
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/IntAdd"));
 	}
 
 	/**
@@ -62,8 +62,8 @@ public class IntAddItemProvider extends IntBinaryExpressionItemProvider {
 	 * @generated
 	 */
 	@Override
-	public String getText(final Object object) {
-		return this.getString("_UI_IntAdd_type");
+	public String getText(Object object) {
+		return getString("_UI_IntAdd_type");
 	}
 	
 
@@ -75,8 +75,8 @@ public class IntAddItemProvider extends IntBinaryExpressionItemProvider {
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(final Notification notification) {
-		this.updateChildren(notification);
+	public void notifyChanged(Notification notification) {
+		updateChildren(notification);
 		super.notifyChanged(notification);
 	}
 
@@ -88,7 +88,7 @@ public class IntAddItemProvider extends IntBinaryExpressionItemProvider {
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors, final Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
@@ -99,18 +99,18 @@ public class IntAddItemProvider extends IntBinaryExpressionItemProvider {
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(final Object owner, final Object feature, final Object child, final Collection<?> selection) {
-		final Object childFeature = feature;
-		final Object childObject = child;
+	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
+		Object childFeature = feature;
+		Object childObject = child;
 
-		final boolean qualify =
+		boolean qualify =
 			childFeature == ExpressionPackage.Literals.INT_BINARY_EXPRESSION__EXPRESSION1 ||
 			childFeature == ExpressionPackage.Literals.INT_BINARY_EXPRESSION__EXPRESSION2;
 
 		if (qualify) {
-			return this.getString
+			return getString
 				("_UI_CreateChild_text2",
-				 new Object[] { this.getTypeText(childObject), this.getFeatureText(childFeature), this.getTypeText(owner) });
+				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);
 	}

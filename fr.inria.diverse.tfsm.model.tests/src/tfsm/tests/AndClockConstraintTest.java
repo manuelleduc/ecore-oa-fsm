@@ -20,7 +20,7 @@ public class AndClockConstraintTest extends BinaryClockConstraintTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(AndClockConstraintTest.class);
 	}
 
@@ -30,7 +30,7 @@ public class AndClockConstraintTest extends BinaryClockConstraintTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AndClockConstraintTest(final String name) {
+	public AndClockConstraintTest(String name) {
 		super(name);
 	}
 
@@ -42,7 +42,7 @@ public class AndClockConstraintTest extends BinaryClockConstraintTest {
 	 */
 	@Override
 	protected AndClockConstraint getFixture() {
-		return (AndClockConstraint)this.fixture;
+		return (AndClockConstraint)fixture;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class AndClockConstraintTest extends BinaryClockConstraintTest {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(TfsmFactory.eINSTANCE.createAndClockConstraint());
+		setFixture(TfsmFactory.eINSTANCE.createAndClockConstraint());
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class AndClockConstraintTest extends BinaryClockConstraintTest {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //AndClockConstraintTest

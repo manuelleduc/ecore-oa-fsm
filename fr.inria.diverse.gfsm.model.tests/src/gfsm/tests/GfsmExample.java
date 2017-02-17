@@ -2,9 +2,9 @@
  */
 package gfsm.tests;
 
-import gfsm.GTransition;
 import gfsm.GfsmFactory;
 import gfsm.GfsmPackage;
+import gfsm.Transition;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,10 +37,10 @@ public class GfsmExample {
 	 * @param args the file paths or URIs.
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		// Create a resource set to hold the resources.
 		//
-		final ResourceSet resourceSet = new ResourceSetImpl();
+		ResourceSet resourceSet = new ResourceSetImpl();
 		
 		// Register the appropriate resource factory to handle all file extensions.
 		//
@@ -59,42 +59,42 @@ public class GfsmExample {
 		if (args.length == 0) {
 			System.out.println("Enter a list of file paths or URIs that have content like this:");
 			try {
-				final Resource resource = resourceSet.createResource(URI.createURI("http:///My.gfsm"));
-				final GTransition root = GfsmFactory.eINSTANCE.createGTransition();
+				Resource resource = resourceSet.createResource(URI.createURI("http:///My.gfsm"));
+				Transition root = GfsmFactory.eINSTANCE.createTransition();
 				resource.getContents().add(root);
 				resource.save(System.out, null);
 			}
-			catch (final IOException exception) {
+			catch (IOException exception) {
 				exception.printStackTrace();
 			}
 		}
 		else {
 			// Iterate over all the arguments.
 			//
-			for (final String arg : args) {
+			for (int i = 0; i < args.length; ++i) {
 				// Construct the URI for the instance file.
 				// The argument is treated as a file path only if it denotes an existing file.
 				// Otherwise, it's directly treated as a URL.
 				//
-				final File file = new File(arg);
-				final URI uri = file.isFile() ? URI.createFileURI(file.getAbsolutePath()): URI.createURI(arg);
+				File file = new File(args[i]);
+				URI uri = file.isFile() ? URI.createFileURI(file.getAbsolutePath()): URI.createURI(args[i]);
 
 				try {
 					// Demand load resource for this file.
 					//
-					final Resource resource = resourceSet.getResource(uri, true);
+					Resource resource = resourceSet.getResource(uri, true);
 					System.out.println("Loaded " + uri);
 
 					// Validate the contents of the loaded resource.
 					//
-					for (final EObject eObject : resource.getContents()) {
-						final Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject);
+					for (EObject eObject : resource.getContents()) {
+						Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject);
 						if (diagnostic.getSeverity() != Diagnostic.OK) {
-							GfsmExample.printDiagnostic(diagnostic, "");
+							printDiagnostic(diagnostic, "");
 						}
 					}
 				}
-				catch (final RuntimeException exception) {
+				catch (RuntimeException exception) {
 					System.out.println("Problem loading " + uri);
 					exception.printStackTrace();
 				}
@@ -110,11 +110,11 @@ public class GfsmExample {
 	 * @param indent the indentation for printing.
 	 * @generated
 	 */
-	protected static void printDiagnostic(final Diagnostic diagnostic, final String indent) {
+	protected static void printDiagnostic(Diagnostic diagnostic, String indent) {
 		System.out.print(indent);
 		System.out.println(diagnostic.getMessage());
-		for (final Diagnostic child : diagnostic.getChildren()) {
-			GfsmExample.printDiagnostic(child, indent + "  ");
+		for (Diagnostic child : diagnostic.getChildren()) {
+			printDiagnostic(child, indent + "  ");
 		}
 	}
 

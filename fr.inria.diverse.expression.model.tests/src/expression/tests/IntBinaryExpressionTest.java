@@ -18,7 +18,7 @@ public abstract class IntBinaryExpressionTest extends IntExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IntBinaryExpressionTest(final String name) {
+	public IntBinaryExpressionTest(String name) {
 		super(name);
 	}
 
@@ -30,7 +30,7 @@ public abstract class IntBinaryExpressionTest extends IntExpressionTest {
 	 */
 	@Override
 	protected IntBinaryExpression getFixture() {
-		return (IntBinaryExpression)this.fixture;
+		return (IntBinaryExpression)fixture;
 	}
 
 } //IntBinaryExpressionTest

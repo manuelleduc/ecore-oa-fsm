@@ -19,7 +19,7 @@ public class ConstExprTest extends IntExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(ConstExprTest.class);
 	}
 
@@ -29,7 +29,7 @@ public class ConstExprTest extends IntExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ConstExprTest(final String name) {
+	public ConstExprTest(String name) {
 		super(name);
 	}
 
@@ -41,7 +41,7 @@ public class ConstExprTest extends IntExpressionTest {
 	 */
 	@Override
 	protected ConstExpr getFixture() {
-		return (ConstExpr)this.fixture;
+		return (ConstExpr)fixture;
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class ConstExprTest extends IntExpressionTest {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(ExpressionFactory.eINSTANCE.createConstExpr());
+		setFixture(ExpressionFactory.eINSTANCE.createConstExpr());
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class ConstExprTest extends IntExpressionTest {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //ConstExprTest

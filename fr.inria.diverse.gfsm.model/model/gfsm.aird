@@ -524,22 +524,6 @@
           <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_u3L3zPUOEeahcdXGooyFUA" id="(0.5,0.5)"/>
           <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_u3L3zfUOEeahcdXGooyFUA" id="(0.5,0.5)"/>
         </edges>
-        <edges xmi:type="notation:Edge" xmi:id="_u3L3zvUOEeahcdXGooyFUA" type="4001" element="_u3ARl_UOEeahcdXGooyFUA" source="_u3HmUPUOEeahcdXGooyFUA" target="_u3HmV_UOEeahcdXGooyFUA">
-          <children xmi:type="notation:Node" xmi:id="_u3L30vUOEeahcdXGooyFUA" type="6001">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_u3L30_UOEeahcdXGooyFUA" x="13" y="-10"/>
-          </children>
-          <children xmi:type="notation:Node" xmi:id="_u3L31PUOEeahcdXGooyFUA" type="6002">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_u3L31fUOEeahcdXGooyFUA" x="4" y="10"/>
-          </children>
-          <children xmi:type="notation:Node" xmi:id="_u3L31vUOEeahcdXGooyFUA" type="6003">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_u3L31_UOEeahcdXGooyFUA" y="10"/>
-          </children>
-          <styles xmi:type="notation:ConnectorStyle" xmi:id="_u3L3z_UOEeahcdXGooyFUA" routing="Rectilinear"/>
-          <styles xmi:type="notation:FontStyle" xmi:id="_u3L30PUOEeahcdXGooyFUA" fontColor="7490599" fontName="Cantarell" fontHeight="8"/>
-          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_u3L30fUOEeahcdXGooyFUA" points="[70, -25, -573, -25]$[566, -25, -77, -25]"/>
-          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_u3L32PUOEeahcdXGooyFUA" id="(0.5,0.5)"/>
-          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_u3L32fUOEeahcdXGooyFUA" id="(0.5,0.5)"/>
-        </edges>
         <edges xmi:type="notation:Edge" xmi:id="_u3L32vUOEeahcdXGooyFUA" type="4001" element="_u3BfsPUOEeahcdXGooyFUA" source="_u3EjAPUOEeahcdXGooyFUA" target="_u3HmXvUOEeahcdXGooyFUA">
           <children xmi:type="notation:Node" xmi:id="_u3Me0PUOEeahcdXGooyFUA" type="6001">
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_u3Me0fUOEeahcdXGooyFUA" y="-10"/>
@@ -844,6 +828,21 @@
           <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_7sJ_EPUOEeahcdXGooyFUA" id="(0.5,0.5)"/>
           <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_7sJ_EfUOEeahcdXGooyFUA" id="(0.4975845410628019,0.4977168949771689)"/>
         </edges>
+        <edges xmi:type="notation:Edge" xmi:id="_TwSRAPUQEeahcdXGooyFUA" type="4001" element="_u3ARl_UOEeahcdXGooyFUA" source="_u3HmUPUOEeahcdXGooyFUA" target="_u3FxMfUOEeahcdXGooyFUA">
+          <children xmi:type="notation:Node" xmi:id="_TwSRBPUQEeahcdXGooyFUA" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_TwSRBfUQEeahcdXGooyFUA" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_TwSRBvUQEeahcdXGooyFUA" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_TwSRB_UQEeahcdXGooyFUA" y="10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_TwSRCPUQEeahcdXGooyFUA" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_TwSRCfUQEeahcdXGooyFUA" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_TwSRAfUQEeahcdXGooyFUA" routing="Rectilinear"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_TwSRAvUQEeahcdXGooyFUA" fontColor="7490599" fontName="Cantarell" fontHeight="8"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_TwSRA_UQEeahcdXGooyFUA" points="[25, -49, -14, 203]$[25, -203, -14, 49]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TwSRCvUQEeahcdXGooyFUA" id="(0.5,0.5)"/>
+        </edges>
       </data>
     </ownedAnnotationEntries>
     <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_RCHaEL4nEeaJ8tWB1IUhmg" name="Transition" tooltipText="&#xA;ERROR : The opposite of the opposite may not be a reference different from this one" outgoingEdges="_RUv_0MBkEeafAeNLvc8muA _Z_E14PUNEeahcdXGooyFUA _cYe9QPUNEeahcdXGooyFUA _4uIHsPUOEeahcdXGooyFUA" width="12" height="10">
@@ -1112,7 +1111,7 @@
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
       </ownedElements>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_u20EUvUOEeahcdXGooyFUA" name="BooleanExpression" tooltipText="" incomingEdges="_u3ARk_UOEeahcdXGooyFUA _u3Ct3PUOEeahcdXGooyFUA _u3Ct4PUOEeahcdXGooyFUA _RUv_0MBkEeafAeNLvc8muA" width="12" height="10">
+    <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_u20EUvUOEeahcdXGooyFUA" name="BooleanExpression" tooltipText="" incomingEdges="_u3ARk_UOEeahcdXGooyFUA _u3Ct3PUOEeahcdXGooyFUA _u3Ct4PUOEeahcdXGooyFUA _RUv_0MBkEeafAeNLvc8muA _u3ARl_UOEeahcdXGooyFUA" width="12" height="10">
       <target xmi:type="ecore:EClass" href="gfsm.ecore#//BooleanExpression"/>
       <semanticElements xmi:type="ecore:EClass" href="gfsm.ecore#//BooleanExpression"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
@@ -1222,7 +1221,7 @@
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_u23usPUOEeahcdXGooyFUA" name="BooleanCompareExpression" tooltipText="" outgoingEdges="_u2_qh_UOEeahcdXGooyFUA _u2_qi_UOEeahcdXGooyFUA _u3Ct4PUOEeahcdXGooyFUA" incomingEdges="_u3ARl_UOEeahcdXGooyFUA _u3CG0PUOEeahcdXGooyFUA _u3Ct2PUOEeahcdXGooyFUA" width="12" height="10">
+    <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_u23usPUOEeahcdXGooyFUA" name="BooleanCompareExpression" tooltipText="" outgoingEdges="_u2_qh_UOEeahcdXGooyFUA _u2_qi_UOEeahcdXGooyFUA _u3Ct4PUOEeahcdXGooyFUA" incomingEdges="_u3CG0PUOEeahcdXGooyFUA _u3Ct2PUOEeahcdXGooyFUA" width="12" height="10">
       <target xmi:type="ecore:EClass" href="gfsm.ecore#//BooleanCompareExpression"/>
       <semanticElements xmi:type="ecore:EClass" href="gfsm.ecore#//BooleanCompareExpression"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
@@ -1357,7 +1356,7 @@
       </ownedStyle>
       <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@edgeMappings[name='EC_EReference']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_u3ARl_UOEeahcdXGooyFUA" name="[1..1] boolExpression2" sourceNode="_u23HoPUOEeahcdXGooyFUA" targetNode="_u23usPUOEeahcdXGooyFUA">
+    <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_u3ARl_UOEeahcdXGooyFUA" name="[1..1] boolExpression2" sourceNode="_u23HoPUOEeahcdXGooyFUA" targetNode="_u20EUvUOEeahcdXGooyFUA">
       <target xmi:type="ecore:EReference" href="gfsm.ecore#//BooleanBinaryExpression/boolExpression2"/>
       <semanticElements xmi:type="ecore:EReference" href="gfsm.ecore#//BooleanBinaryExpression/boolExpression2"/>
       <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_u3ARmPUOEeahcdXGooyFUA" description="_RUwm4MBkEeafAeNLvc8muA" sourceArrow="FillDiamond" routingStyle="manhattan" strokeColor="0,0,0">

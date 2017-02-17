@@ -18,7 +18,7 @@ public abstract class BinaryClockConstraintTest extends ClockConstraintOperation
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public BinaryClockConstraintTest(final String name) {
+	public BinaryClockConstraintTest(String name) {
 		super(name);
 	}
 
@@ -30,7 +30,7 @@ public abstract class BinaryClockConstraintTest extends ClockConstraintOperation
 	 */
 	@Override
 	protected BinaryClockConstraint getFixture() {
-		return (BinaryClockConstraint)this.fixture;
+		return (BinaryClockConstraint)fixture;
 	}
 
 } //BinaryClockConstraintTest

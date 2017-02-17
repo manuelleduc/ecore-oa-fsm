@@ -31,7 +31,7 @@ public class IntBlockItemProvider extends IntOperationItemProvider {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IntBlockItemProvider(final AdapterFactory adapterFactory) {
+	public IntBlockItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -42,12 +42,12 @@ public class IntBlockItemProvider extends IntOperationItemProvider {
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
-		if (this.itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
@@ -59,12 +59,12 @@ public class IntBlockItemProvider extends IntOperationItemProvider {
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(final Object object) {
-		if (this.childrenFeatures == null) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			this.childrenFeatures.add(ExpressionPackage.Literals.INT_BLOCK__OPERATIONS);
+			childrenFeatures.add(ExpressionPackage.Literals.INT_BLOCK__OPERATIONS);
 		}
-		return this.childrenFeatures;
+		return childrenFeatures;
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class IntBlockItemProvider extends IntOperationItemProvider {
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(final Object object, final Object child) {
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -87,8 +87,8 @@ public class IntBlockItemProvider extends IntOperationItemProvider {
 	 * @generated
 	 */
 	@Override
-	public Object getImage(final Object object) {
-		return this.overlayImage(object, this.getResourceLocator().getImage("full/obj16/IntBlock"));
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/IntBlock"));
 	}
 
 	/**
@@ -98,8 +98,8 @@ public class IntBlockItemProvider extends IntOperationItemProvider {
 	 * @generated
 	 */
 	@Override
-	public String getText(final Object object) {
-		return this.getString("_UI_IntBlock_type");
+	public String getText(Object object) {
+		return getString("_UI_IntBlock_type");
 	}
 	
 
@@ -111,12 +111,12 @@ public class IntBlockItemProvider extends IntOperationItemProvider {
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(final Notification notification) {
-		this.updateChildren(notification);
+	public void notifyChanged(Notification notification) {
+		updateChildren(notification);
 
 		switch (notification.getFeatureID(IntBlock.class)) {
 			case ExpressionPackage.INT_BLOCK__OPERATIONS:
-				this.fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -130,11 +130,11 @@ public class IntBlockItemProvider extends IntOperationItemProvider {
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors, final Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(ExpressionPackage.Literals.INT_BLOCK__OPERATIONS,
 				 ExpressionFactory.eINSTANCE.createIntVarAssign()));
 	}

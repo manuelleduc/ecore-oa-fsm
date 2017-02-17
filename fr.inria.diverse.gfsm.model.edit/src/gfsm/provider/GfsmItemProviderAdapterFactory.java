@@ -64,126 +64,379 @@ public class GfsmItemProviderAdapterFactory extends GfsmAdapterFactory implement
 	 * @generated
 	 */
 	public GfsmItemProviderAdapterFactory() {
-		this.supportedTypes.add(IEditingDomainItemProvider.class);
-		this.supportedTypes.add(IStructuredItemContentProvider.class);
-		this.supportedTypes.add(ITreeItemContentProvider.class);
-		this.supportedTypes.add(IItemLabelProvider.class);
-		this.supportedTypes.add(IItemPropertySource.class);
+		supportedTypes.add(IEditingDomainItemProvider.class);
+		supportedTypes.add(IStructuredItemContentProvider.class);
+		supportedTypes.add(ITreeItemContentProvider.class);
+		supportedTypes.add(IItemLabelProvider.class);
+		supportedTypes.add(IItemPropertySource.class);
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link gfsm.GTransition} instances.
+	 * This keeps track of the one adapter used for all {@link gfsm.Transition} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected GTransitionItemProvider gTransitionItemProvider;
+	protected TransitionItemProvider transitionItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link gfsm.GTransition}.
+	 * This creates an adapter for a {@link gfsm.Transition}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createGTransitionAdapter() {
-		if (this.gTransitionItemProvider == null) {
-			this.gTransitionItemProvider = new GTransitionItemProvider(this);
+	public Adapter createTransitionAdapter() {
+		if (transitionItemProvider == null) {
+			transitionItemProvider = new TransitionItemProvider(this);
 		}
 
-		return this.gTransitionItemProvider;
+		return transitionItemProvider;
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link gfsm.GState} instances.
+	 * This keeps track of the one adapter used for all {@link gfsm.State} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected GStateItemProvider gStateItemProvider;
+	protected StateItemProvider stateItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link gfsm.GState}.
+	 * This creates an adapter for a {@link gfsm.State}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createGStateAdapter() {
-		if (this.gStateItemProvider == null) {
-			this.gStateItemProvider = new GStateItemProvider(this);
+	public Adapter createStateAdapter() {
+		if (stateItemProvider == null) {
+			stateItemProvider = new StateItemProvider(this);
 		}
 
-		return this.gStateItemProvider;
+		return stateItemProvider;
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link gfsm.GInitialState} instances.
+	 * This keeps track of the one adapter used for all {@link gfsm.FinalState} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected GInitialStateItemProvider gInitialStateItemProvider;
+	protected FinalStateItemProvider finalStateItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link gfsm.GInitialState}.
+	 * This creates an adapter for a {@link gfsm.FinalState}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createGInitialStateAdapter() {
-		if (this.gInitialStateItemProvider == null) {
-			this.gInitialStateItemProvider = new GInitialStateItemProvider(this);
+	public Adapter createFinalStateAdapter() {
+		if (finalStateItemProvider == null) {
+			finalStateItemProvider = new FinalStateItemProvider(this);
 		}
 
-		return this.gInitialStateItemProvider;
+		return finalStateItemProvider;
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link gfsm.GFinalState} instances.
+	 * This keeps track of the one adapter used for all {@link gfsm.InitialState} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected GFinalStateItemProvider gFinalStateItemProvider;
+	protected InitialStateItemProvider initialStateItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link gfsm.GFinalState}.
+	 * This creates an adapter for a {@link gfsm.InitialState}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createGFinalStateAdapter() {
-		if (this.gFinalStateItemProvider == null) {
-			this.gFinalStateItemProvider = new GFinalStateItemProvider(this);
+	public Adapter createInitialStateAdapter() {
+		if (initialStateItemProvider == null) {
+			initialStateItemProvider = new InitialStateItemProvider(this);
 		}
 
-		return this.gFinalStateItemProvider;
+		return initialStateItemProvider;
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link gfsm.GFSM} instances.
+	 * This keeps track of the one adapter used for all {@link gfsm.FSM} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected GFSMItemProvider gfsmItemProvider;
+	protected FSMItemProvider fsmItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link gfsm.GFSM}.
+	 * This creates an adapter for a {@link gfsm.FSM}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createGFSMAdapter() {
-		if (this.gfsmItemProvider == null) {
-			this.gfsmItemProvider = new GFSMItemProvider(this);
+	public Adapter createFSMAdapter() {
+		if (fsmItemProvider == null) {
+			fsmItemProvider = new FSMItemProvider(this);
 		}
 
-		return this.gfsmItemProvider;
+		return fsmItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link gfsm.IntAdd} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected IntAddItemProvider intAddItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link gfsm.IntAdd}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createIntAddAdapter() {
+		if (intAddItemProvider == null) {
+			intAddItemProvider = new IntAddItemProvider(this);
+		}
+
+		return intAddItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link gfsm.IntMult} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected IntMultItemProvider intMultItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link gfsm.IntMult}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createIntMultAdapter() {
+		if (intMultItemProvider == null) {
+			intMultItemProvider = new IntMultItemProvider(this);
+		}
+
+		return intMultItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link gfsm.IntNeg} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected IntNegItemProvider intNegItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link gfsm.IntNeg}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createIntNegAdapter() {
+		if (intNegItemProvider == null) {
+			intNegItemProvider = new IntNegItemProvider(this);
+		}
+
+		return intNegItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link gfsm.IntVarRef} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected IntVarRefItemProvider intVarRefItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link gfsm.IntVarRef}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createIntVarRefAdapter() {
+		if (intVarRefItemProvider == null) {
+			intVarRefItemProvider = new IntVarRefItemProvider(this);
+		}
+
+		return intVarRefItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link gfsm.ConstExpr} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ConstExprItemProvider constExprItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link gfsm.ConstExpr}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createConstExprAdapter() {
+		if (constExprItemProvider == null) {
+			constExprItemProvider = new ConstExprItemProvider(this);
+		}
+
+		return constExprItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link gfsm.IntVarAssign} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected IntVarAssignItemProvider intVarAssignItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link gfsm.IntVarAssign}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createIntVarAssignAdapter() {
+		if (intVarAssignItemProvider == null) {
+			intVarAssignItemProvider = new IntVarAssignItemProvider(this);
+		}
+
+		return intVarAssignItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link gfsm.IntBlock} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected IntBlockItemProvider intBlockItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link gfsm.IntBlock}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createIntBlockAdapter() {
+		if (intBlockItemProvider == null) {
+			intBlockItemProvider = new IntBlockItemProvider(this);
+		}
+
+		return intBlockItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link gfsm.BooleanEqual} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected BooleanEqualItemProvider booleanEqualItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link gfsm.BooleanEqual}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createBooleanEqualAdapter() {
+		if (booleanEqualItemProvider == null) {
+			booleanEqualItemProvider = new BooleanEqualItemProvider(this);
+		}
+
+		return booleanEqualItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link gfsm.BooleanOr} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected BooleanOrItemProvider booleanOrItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link gfsm.BooleanOr}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createBooleanOrAdapter() {
+		if (booleanOrItemProvider == null) {
+			booleanOrItemProvider = new BooleanOrItemProvider(this);
+		}
+
+		return booleanOrItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link gfsm.BooleanAnd} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected BooleanAndItemProvider booleanAndItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link gfsm.BooleanAnd}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createBooleanAndAdapter() {
+		if (booleanAndItemProvider == null) {
+			booleanAndItemProvider = new BooleanAndItemProvider(this);
+		}
+
+		return booleanAndItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link gfsm.BooleanGreaterThan} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected BooleanGreaterThanItemProvider booleanGreaterThanItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link gfsm.BooleanGreaterThan}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createBooleanGreaterThanAdapter() {
+		if (booleanGreaterThanItemProvider == null) {
+			booleanGreaterThanItemProvider = new BooleanGreaterThanItemProvider(this);
+		}
+
+		return booleanGreaterThanItemProvider;
 	}
 
 	/**
@@ -192,9 +445,8 @@ public class GfsmItemProviderAdapterFactory extends GfsmAdapterFactory implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public ComposeableAdapterFactory getRootAdapterFactory() {
-		return this.parentAdapterFactory == null ? this : this.parentAdapterFactory.getRootAdapterFactory();
+		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
 	}
 
 	/**
@@ -203,8 +455,7 @@ public class GfsmItemProviderAdapterFactory extends GfsmAdapterFactory implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void setParentAdapterFactory(final ComposedAdapterFactory parentAdapterFactory) {
+	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
 		this.parentAdapterFactory = parentAdapterFactory;
 	}
 
@@ -214,8 +465,8 @@ public class GfsmItemProviderAdapterFactory extends GfsmAdapterFactory implement
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(final Object type) {
-		return this.supportedTypes.contains(type) || super.isFactoryForType(type);
+	public boolean isFactoryForType(Object type) {
+		return supportedTypes.contains(type) || super.isFactoryForType(type);
 	}
 
 	/**
@@ -225,7 +476,7 @@ public class GfsmItemProviderAdapterFactory extends GfsmAdapterFactory implement
 	 * @generated
 	 */
 	@Override
-	public Adapter adapt(final Notifier notifier, final Object type) {
+	public Adapter adapt(Notifier notifier, Object type) {
 		return super.adapt(notifier, this);
 	}
 
@@ -235,10 +486,10 @@ public class GfsmItemProviderAdapterFactory extends GfsmAdapterFactory implement
 	 * @generated
 	 */
 	@Override
-	public Object adapt(final Object object, final Object type) {
-		if (this.isFactoryForType(type)) {
-			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter)) {
+	public Object adapt(Object object, Object type) {
+		if (isFactoryForType(type)) {
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
 				return adapter;
 			}
 		}
@@ -252,9 +503,8 @@ public class GfsmItemProviderAdapterFactory extends GfsmAdapterFactory implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void addListener(final INotifyChangedListener notifyChangedListener) {
-		this.changeNotifier.addListener(notifyChangedListener);
+	public void addListener(INotifyChangedListener notifyChangedListener) {
+		changeNotifier.addListener(notifyChangedListener);
 	}
 
 	/**
@@ -263,9 +513,8 @@ public class GfsmItemProviderAdapterFactory extends GfsmAdapterFactory implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void removeListener(final INotifyChangedListener notifyChangedListener) {
-		this.changeNotifier.removeListener(notifyChangedListener);
+	public void removeListener(INotifyChangedListener notifyChangedListener) {
+		changeNotifier.removeListener(notifyChangedListener);
 	}
 
 	/**
@@ -274,12 +523,11 @@ public class GfsmItemProviderAdapterFactory extends GfsmAdapterFactory implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void fireNotifyChanged(final Notification notification) {
-		this.changeNotifier.fireNotifyChanged(notification);
+	public void fireNotifyChanged(Notification notification) {
+		changeNotifier.fireNotifyChanged(notification);
 
-		if (this.parentAdapterFactory != null) {
-			this.parentAdapterFactory.fireNotifyChanged(notification);
+		if (parentAdapterFactory != null) {
+			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
 
@@ -289,23 +537,23 @@ public class GfsmItemProviderAdapterFactory extends GfsmAdapterFactory implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public void dispose() {
-		if (this.gTransitionItemProvider != null) {
-			this.gTransitionItemProvider.dispose();
-		}
-		if (this.gStateItemProvider != null) {
-			this.gStateItemProvider.dispose();
-		}
-		if (this.gInitialStateItemProvider != null) {
-			this.gInitialStateItemProvider.dispose();
-		}
-		if (this.gFinalStateItemProvider != null) {
-			this.gFinalStateItemProvider.dispose();
-		}
-		if (this.gfsmItemProvider != null) {
-			this.gfsmItemProvider.dispose();
-		}
+		if (transitionItemProvider != null) transitionItemProvider.dispose();
+		if (stateItemProvider != null) stateItemProvider.dispose();
+		if (finalStateItemProvider != null) finalStateItemProvider.dispose();
+		if (initialStateItemProvider != null) initialStateItemProvider.dispose();
+		if (fsmItemProvider != null) fsmItemProvider.dispose();
+		if (intAddItemProvider != null) intAddItemProvider.dispose();
+		if (intMultItemProvider != null) intMultItemProvider.dispose();
+		if (intNegItemProvider != null) intNegItemProvider.dispose();
+		if (intVarRefItemProvider != null) intVarRefItemProvider.dispose();
+		if (constExprItemProvider != null) constExprItemProvider.dispose();
+		if (intVarAssignItemProvider != null) intVarAssignItemProvider.dispose();
+		if (intBlockItemProvider != null) intBlockItemProvider.dispose();
+		if (booleanEqualItemProvider != null) booleanEqualItemProvider.dispose();
+		if (booleanOrItemProvider != null) booleanOrItemProvider.dispose();
+		if (booleanAndItemProvider != null) booleanAndItemProvider.dispose();
+		if (booleanGreaterThanItemProvider != null) booleanGreaterThanItemProvider.dispose();
 	}
 
 }

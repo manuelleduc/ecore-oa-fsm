@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -103,6 +104,7 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
+import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
@@ -152,9 +154,6 @@ import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 
 import tfsm.provider.TfsmItemProviderAdapterFactory;
-
-import fsm.provider.FsmItemProviderAdapterFactory;
-
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
 
@@ -323,39 +322,34 @@ public class TfsmEditor
 	 */
 	protected IPartListener partListener =
 		new IPartListener() {
-			@Override
-			public void partActivated(final IWorkbenchPart p) {
+			public void partActivated(IWorkbenchPart p) {
 				if (p instanceof ContentOutline) {
-					if (((ContentOutline)p).getCurrentPage() == TfsmEditor.this.contentOutlinePage) {
-						TfsmEditor.this.getActionBarContributor().setActiveEditor(TfsmEditor.this);
+					if (((ContentOutline)p).getCurrentPage() == contentOutlinePage) {
+						getActionBarContributor().setActiveEditor(TfsmEditor.this);
 
-						TfsmEditor.this.setCurrentViewer(TfsmEditor.this.contentOutlineViewer);
+						setCurrentViewer(contentOutlineViewer);
 					}
 				}
 				else if (p instanceof PropertySheet) {
-					if (TfsmEditor.this.propertySheetPages.contains(((PropertySheet)p).getCurrentPage())) {
-						TfsmEditor.this.getActionBarContributor().setActiveEditor(TfsmEditor.this);
-						TfsmEditor.this.handleActivate();
+					if (propertySheetPages.contains(((PropertySheet)p).getCurrentPage())) {
+						getActionBarContributor().setActiveEditor(TfsmEditor.this);
+						handleActivate();
 					}
 				}
 				else if (p == TfsmEditor.this) {
-					TfsmEditor.this.handleActivate();
+					handleActivate();
 				}
 			}
-			@Override
-			public void partBroughtToTop(final IWorkbenchPart p) {
+			public void partBroughtToTop(IWorkbenchPart p) {
 				// Ignore.
 			}
-			@Override
-			public void partClosed(final IWorkbenchPart p) {
+			public void partClosed(IWorkbenchPart p) {
 				// Ignore.
 			}
-			@Override
-			public void partDeactivated(final IWorkbenchPart p) {
+			public void partDeactivated(IWorkbenchPart p) {
 				// Ignore.
 			}
-			@Override
-			public void partOpened(final IWorkbenchPart p) {
+			public void partOpened(IWorkbenchPart p) {
 				// Ignore.
 			}
 		};
@@ -409,24 +403,28 @@ public class TfsmEditor
 	protected EContentAdapter problemIndicationAdapter =
 		new EContentAdapter() {
 			@Override
-			public void notifyChanged(final Notification notification) {
+			public void notifyChanged(Notification notification) {
 				if (notification.getNotifier() instanceof Resource) {
 					switch (notification.getFeatureID(Resource.class)) {
 						case Resource.RESOURCE__IS_LOADED:
 						case Resource.RESOURCE__ERRORS:
 						case Resource.RESOURCE__WARNINGS: {
-							final Resource resource = (Resource)notification.getNotifier();
-							final Diagnostic diagnostic = TfsmEditor.this.analyzeResourceProblems(resource, null);
+							Resource resource = (Resource)notification.getNotifier();
+							Diagnostic diagnostic = analyzeResourceProblems(resource, null);
 							if (diagnostic.getSeverity() != Diagnostic.OK) {
-								TfsmEditor.this.resourceToDiagnosticMap.put(resource, diagnostic);
+								resourceToDiagnosticMap.put(resource, diagnostic);
 							}
 							else {
-								TfsmEditor.this.resourceToDiagnosticMap.remove(resource);
+								resourceToDiagnosticMap.remove(resource);
 							}
 
-							if (TfsmEditor.this.updateProblemIndication) {
-								TfsmEditor.this.getSite().getShell().getDisplay().asyncExec
-									(() -> TfsmEditor.this.updateProblemIndication());
+							if (updateProblemIndication) {
+								getSite().getShell().getDisplay().asyncExec
+									(new Runnable() {
+										 public void run() {
+											 updateProblemIndication();
+										 }
+									 });
 							}
 							break;
 						}
@@ -438,17 +436,21 @@ public class TfsmEditor
 			}
 
 			@Override
-			protected void setTarget(final Resource target) {
-				this.basicSetTarget(target);
+			protected void setTarget(Resource target) {
+				basicSetTarget(target);
 			}
 
 			@Override
-			protected void unsetTarget(final Resource target) {
-				this.basicUnsetTarget(target);
-				TfsmEditor.this.resourceToDiagnosticMap.remove(target);
-				if (TfsmEditor.this.updateProblemIndication) {
-					TfsmEditor.this.getSite().getShell().getDisplay().asyncExec
-						(() -> TfsmEditor.this.updateProblemIndication());
+			protected void unsetTarget(Resource target) {
+				basicUnsetTarget(target);
+				resourceToDiagnosticMap.remove(target);
+				if (updateProblemIndication) {
+					getSite().getShell().getDisplay().asyncExec
+						(new Runnable() {
+							 public void run() {
+								 updateProblemIndication();
+							 }
+						 });
 				}
 			}
 		};
@@ -460,71 +462,76 @@ public class TfsmEditor
 	 * @generated
 	 */
 	protected IResourceChangeListener resourceChangeListener =
-		event -> {
-		final IResourceDelta delta = event.getDelta();
-		try {
-			class ResourceDeltaVisitor implements IResourceDeltaVisitor {
-				protected ResourceSet resourceSet = TfsmEditor.this.editingDomain.getResourceSet();
-				protected Collection<Resource> changedResources = new ArrayList<Resource>();
-				protected Collection<Resource> removedResources = new ArrayList<Resource>();
+		new IResourceChangeListener() {
+			public void resourceChanged(IResourceChangeEvent event) {
+				IResourceDelta delta = event.getDelta();
+				try {
+					class ResourceDeltaVisitor implements IResourceDeltaVisitor {
+						protected ResourceSet resourceSet = editingDomain.getResourceSet();
+						protected Collection<Resource> changedResources = new ArrayList<Resource>();
+						protected Collection<Resource> removedResources = new ArrayList<Resource>();
 
-				@Override
-				public boolean visit(final IResourceDelta delta) {
-					if (delta.getResource().getType() == IResource.FILE) {
-						if (delta.getKind() == IResourceDelta.REMOVED ||
-						    delta.getKind() == IResourceDelta.CHANGED && delta.getFlags() != IResourceDelta.MARKERS) {
-							final Resource resource = this.resourceSet.getResource(URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
-							if (resource != null) {
-								if (delta.getKind() == IResourceDelta.REMOVED) {
-									this.removedResources.add(resource);
+						public boolean visit(IResourceDelta delta) {
+							if (delta.getResource().getType() == IResource.FILE) {
+								if (delta.getKind() == IResourceDelta.REMOVED ||
+								    delta.getKind() == IResourceDelta.CHANGED && delta.getFlags() != IResourceDelta.MARKERS) {
+									Resource resource = resourceSet.getResource(URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
+									if (resource != null) {
+										if (delta.getKind() == IResourceDelta.REMOVED) {
+											removedResources.add(resource);
+										}
+										else if (!savedResources.remove(resource)) {
+											changedResources.add(resource);
+										}
+									}
 								}
-								else if (!TfsmEditor.this.savedResources.remove(resource)) {
-									this.changedResources.add(resource);
-								}
+								return false;
 							}
+
+							return true;
 						}
-						return false;
+
+						public Collection<Resource> getChangedResources() {
+							return changedResources;
+						}
+
+						public Collection<Resource> getRemovedResources() {
+							return removedResources;
+						}
 					}
 
-					return true;
-				}
+					final ResourceDeltaVisitor visitor = new ResourceDeltaVisitor();
+					delta.accept(visitor);
 
-				public Collection<Resource> getChangedResources() {
-					return this.changedResources;
-				}
+					if (!visitor.getRemovedResources().isEmpty()) {
+						getSite().getShell().getDisplay().asyncExec
+							(new Runnable() {
+								 public void run() {
+									 removedResources.addAll(visitor.getRemovedResources());
+									 if (!isDirty()) {
+										 getSite().getPage().closeEditor(TfsmEditor.this, false);
+									 }
+								 }
+							 });
+					}
 
-				public Collection<Resource> getRemovedResources() {
-					return this.removedResources;
+					if (!visitor.getChangedResources().isEmpty()) {
+						getSite().getShell().getDisplay().asyncExec
+							(new Runnable() {
+								 public void run() {
+									 changedResources.addAll(visitor.getChangedResources());
+									 if (getSite().getPage().getActiveEditor() == TfsmEditor.this) {
+										 handleActivate();
+									 }
+								 }
+							 });
+					}
+				}
+				catch (CoreException exception) {
+					TfsmEditorPlugin.INSTANCE.log(exception);
 				}
 			}
-
-			final ResourceDeltaVisitor visitor = new ResourceDeltaVisitor();
-			delta.accept(visitor);
-
-			if (!visitor.getRemovedResources().isEmpty()) {
-				TfsmEditor.this.getSite().getShell().getDisplay().asyncExec
-					(() -> {
-						 TfsmEditor.this.removedResources.addAll(visitor.getRemovedResources());
-						 if (!TfsmEditor.this.isDirty()) {
-							 TfsmEditor.this.getSite().getPage().closeEditor(TfsmEditor.this, false);
-						 }
-					 });
-			}
-
-			if (!visitor.getChangedResources().isEmpty()) {
-				TfsmEditor.this.getSite().getShell().getDisplay().asyncExec
-					(() -> {
-						 TfsmEditor.this.changedResources.addAll(visitor.getChangedResources());
-						 if (TfsmEditor.this.getSite().getPage().getActiveEditor() == TfsmEditor.this) {
-							 TfsmEditor.this.handleActivate();
-						 }
-					 });
-			}
-		}
-		catch (final CoreException exception) {
-			TfsmEditorPlugin.INSTANCE.log(exception);
-		}
-	};
+		};
 
 	/**
 	 * Handles activation of the editor or it's associated views.
@@ -535,29 +542,29 @@ public class TfsmEditor
 	protected void handleActivate() {
 		// Recompute the read only state.
 		//
-		if (this.editingDomain.getResourceToReadOnlyMap() != null) {
-		  this.editingDomain.getResourceToReadOnlyMap().clear();
+		if (editingDomain.getResourceToReadOnlyMap() != null) {
+		  editingDomain.getResourceToReadOnlyMap().clear();
 
 		  // Refresh any actions that may become enabled or disabled.
 		  //
-		  this.setSelection(this.getSelection());
+		  setSelection(getSelection());
 		}
 
-		if (!this.removedResources.isEmpty()) {
-			if (this.handleDirtyConflict()) {
-				this.getSite().getPage().closeEditor(TfsmEditor.this, false);
+		if (!removedResources.isEmpty()) {
+			if (handleDirtyConflict()) {
+				getSite().getPage().closeEditor(TfsmEditor.this, false);
 			}
 			else {
-				this.removedResources.clear();
-				this.changedResources.clear();
-				this.savedResources.clear();
+				removedResources.clear();
+				changedResources.clear();
+				savedResources.clear();
 			}
 		}
-		else if (!this.changedResources.isEmpty()) {
-			this.changedResources.removeAll(this.savedResources);
-			this.handleChangedResources();
-			this.changedResources.clear();
-			this.savedResources.clear();
+		else if (!changedResources.isEmpty()) {
+			changedResources.removeAll(savedResources);
+			handleChangedResources();
+			changedResources.clear();
+			savedResources.clear();
 		}
 	}
 
@@ -568,33 +575,33 @@ public class TfsmEditor
 	 * @generated
 	 */
 	protected void handleChangedResources() {
-		if (!this.changedResources.isEmpty() && (!this.isDirty() || this.handleDirtyConflict())) {
-			if (this.isDirty()) {
-				this.changedResources.addAll(this.editingDomain.getResourceSet().getResources());
+		if (!changedResources.isEmpty() && (!isDirty() || handleDirtyConflict())) {
+			if (isDirty()) {
+				changedResources.addAll(editingDomain.getResourceSet().getResources());
 			}
-			this.editingDomain.getCommandStack().flush();
+			editingDomain.getCommandStack().flush();
 
-			this.updateProblemIndication = false;
-			for (final Resource resource : this.changedResources) {
+			updateProblemIndication = false;
+			for (Resource resource : changedResources) {
 				if (resource.isLoaded()) {
 					resource.unload();
 					try {
 						resource.load(Collections.EMPTY_MAP);
 					}
-					catch (final IOException exception) {
-						if (!this.resourceToDiagnosticMap.containsKey(resource)) {
-							this.resourceToDiagnosticMap.put(resource, this.analyzeResourceProblems(resource, exception));
+					catch (IOException exception) {
+						if (!resourceToDiagnosticMap.containsKey(resource)) {
+							resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
 						}
 					}
 				}
 			}
 
-			if (AdapterFactoryEditingDomain.isStale(this.editorSelection)) {
-				this.setSelection(StructuredSelection.EMPTY);
+			if (AdapterFactoryEditingDomain.isStale(editorSelection)) {
+				setSelection(StructuredSelection.EMPTY);
 			}
 
-			this.updateProblemIndication = true;
-			this.updateProblemIndication();
+			updateProblemIndication = true;
+			updateProblemIndication();
 		}
 	}
 
@@ -605,49 +612,49 @@ public class TfsmEditor
 	 * @generated
 	 */
 	protected void updateProblemIndication() {
-		if (this.updateProblemIndication) {
-			final BasicDiagnostic diagnostic =
+		if (updateProblemIndication) {
+			BasicDiagnostic diagnostic =
 				new BasicDiagnostic
 					(Diagnostic.OK,
 					 "fr.inria.diverse.tfsm.model.editor",
 					 0,
 					 null,
-					 new Object [] { this.editingDomain.getResourceSet() });
-			for (final Diagnostic childDiagnostic : this.resourceToDiagnosticMap.values()) {
+					 new Object [] { editingDomain.getResourceSet() });
+			for (Diagnostic childDiagnostic : resourceToDiagnosticMap.values()) {
 				if (childDiagnostic.getSeverity() != Diagnostic.OK) {
 					diagnostic.add(childDiagnostic);
 				}
 			}
 
-			int lastEditorPage = this.getPageCount() - 1;
-			if (lastEditorPage >= 0 && this.getEditor(lastEditorPage) instanceof ProblemEditorPart) {
-				((ProblemEditorPart)this.getEditor(lastEditorPage)).setDiagnostic(diagnostic);
+			int lastEditorPage = getPageCount() - 1;
+			if (lastEditorPage >= 0 && getEditor(lastEditorPage) instanceof ProblemEditorPart) {
+				((ProblemEditorPart)getEditor(lastEditorPage)).setDiagnostic(diagnostic);
 				if (diagnostic.getSeverity() != Diagnostic.OK) {
-					this.setActivePage(lastEditorPage);
+					setActivePage(lastEditorPage);
 				}
 			}
 			else if (diagnostic.getSeverity() != Diagnostic.OK) {
-				final ProblemEditorPart problemEditorPart = new ProblemEditorPart();
+				ProblemEditorPart problemEditorPart = new ProblemEditorPart();
 				problemEditorPart.setDiagnostic(diagnostic);
-				problemEditorPart.setMarkerHelper(this.markerHelper);
+				problemEditorPart.setMarkerHelper(markerHelper);
 				try {
-					this.addPage(++lastEditorPage, problemEditorPart, this.getEditorInput());
-					this.setPageText(lastEditorPage, problemEditorPart.getPartName());
-					this.setActivePage(lastEditorPage);
-					this.showTabs();
+					addPage(++lastEditorPage, problemEditorPart, getEditorInput());
+					setPageText(lastEditorPage, problemEditorPart.getPartName());
+					setActivePage(lastEditorPage);
+					showTabs();
 				}
-				catch (final PartInitException exception) {
+				catch (PartInitException exception) {
 					TfsmEditorPlugin.INSTANCE.log(exception);
 				}
 			}
 
-			if (this.markerHelper.hasMarkers(this.editingDomain.getResourceSet())) {
-				this.markerHelper.deleteMarkers(this.editingDomain.getResourceSet());
+			if (markerHelper.hasMarkers(editingDomain.getResourceSet())) {
+				markerHelper.deleteMarkers(editingDomain.getResourceSet());
 				if (diagnostic.getSeverity() != Diagnostic.OK) {
 					try {
-						this.markerHelper.createMarkers(diagnostic);
+						markerHelper.createMarkers(diagnostic);
 					}
-					catch (final CoreException exception) {
+					catch (CoreException exception) {
 						TfsmEditorPlugin.INSTANCE.log(exception);
 					}
 				}
@@ -664,9 +671,9 @@ public class TfsmEditor
 	protected boolean handleDirtyConflict() {
 		return
 			MessageDialog.openQuestion
-				(this.getSite().getShell(),
-				 TfsmEditor.getString("_UI_FileConflict_label"),
-				 TfsmEditor.getString("_WARN_FileConflict"));
+				(getSite().getShell(),
+				 getString("_UI_FileConflict_label"),
+				 getString("_WARN_FileConflict"));
 	}
 
 	/**
@@ -677,7 +684,7 @@ public class TfsmEditor
 	 */
 	public TfsmEditor() {
 		super();
-		this.initializeEditingDomain();
+		initializeEditingDomain();
 	}
 
 	/**
@@ -689,44 +696,49 @@ public class TfsmEditor
 	protected void initializeEditingDomain() {
 		// Create an adapter factory that yields item providers.
 		//
-		this.adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
-		this.adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
-		this.adapterFactory.addAdapterFactory(new TfsmItemProviderAdapterFactory());
-		this.adapterFactory.addAdapterFactory(new FsmItemProviderAdapterFactory());
-		this.adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new TfsmItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
 		// Create the command stack that will notify this editor as commands are executed.
 		//
-		final BasicCommandStack commandStack = new BasicCommandStack();
+		BasicCommandStack commandStack = new BasicCommandStack();
 
 		// Add a listener to set the most recent command's affected objects to be the selection of the viewer with focus.
 		//
 		commandStack.addCommandStackListener
-			(event -> TfsmEditor.this.getContainer().getDisplay().asyncExec
-				 (() -> {
-					  TfsmEditor.this.firePropertyChange(IEditorPart.PROP_DIRTY);
+			(new CommandStackListener() {
+				 public void commandStackChanged(final EventObject event) {
+					 getContainer().getDisplay().asyncExec
+						 (new Runnable() {
+							  public void run() {
+								  firePropertyChange(IEditorPart.PROP_DIRTY);
 
-					  // Try to select the affected objects.
-					  //
-					  final Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
-					  if (mostRecentCommand != null) {
-						  TfsmEditor.this.setSelectionToViewer(mostRecentCommand.getAffectedObjects());
-					  }
-					  for (final Iterator<PropertySheetPage> i = TfsmEditor.this.propertySheetPages.iterator(); i.hasNext(); ) {
-						  final PropertySheetPage propertySheetPage = i.next();
-						  if (propertySheetPage.getControl().isDisposed()) {
-							  i.remove();
-						  }
-						  else {
-							  propertySheetPage.refresh();
-						  }
-					  }
-				  }));
+								  // Try to select the affected objects.
+								  //
+								  Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
+								  if (mostRecentCommand != null) {
+									  setSelectionToViewer(mostRecentCommand.getAffectedObjects());
+								  }
+								  for (Iterator<PropertySheetPage> i = propertySheetPages.iterator(); i.hasNext(); ) {
+									  PropertySheetPage propertySheetPage = i.next();
+									  if (propertySheetPage.getControl().isDisposed()) {
+										  i.remove();
+									  }
+									  else {
+										  propertySheetPage.refresh();
+									  }
+								  }
+							  }
+						  });
+				 }
+			 });
 
 		// Create the editing domain with a special command stack.
 		//
-		this.editingDomain = new AdapterFactoryEditingDomain(this.adapterFactory, commandStack, new HashMap<Resource, Boolean>());
+		editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
 	}
 
 	/**
@@ -736,7 +748,7 @@ public class TfsmEditor
 	 * @generated
 	 */
 			@Override
-	protected void firePropertyChange(final int action) {
+	protected void firePropertyChange(int action) {
 		super.firePropertyChange(action);
 	}
 
@@ -746,20 +758,22 @@ public class TfsmEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setSelectionToViewer(final Collection<?> collection) {
+	public void setSelectionToViewer(Collection<?> collection) {
 		final Collection<?> theSelection = collection;
 		// Make sure it's okay.
 		//
 		if (theSelection != null && !theSelection.isEmpty()) {
-			final Runnable runnable =
-				() -> {
-				// Try to select the items in the current content viewer of the editor.
-				//
-				if (TfsmEditor.this.currentViewer != null) {
-					TfsmEditor.this.currentViewer.setSelection(new StructuredSelection(theSelection.toArray()), true);
-				}
-			};
-			this.getSite().getShell().getDisplay().asyncExec(runnable);
+			Runnable runnable =
+				new Runnable() {
+					public void run() {
+						// Try to select the items in the current content viewer of the editor.
+						//
+						if (currentViewer != null) {
+							currentViewer.setSelection(new StructuredSelection(theSelection.toArray()), true);
+						}
+					}
+				};
+			getSite().getShell().getDisplay().asyncExec(runnable);
 		}
 	}
 
@@ -773,7 +787,7 @@ public class TfsmEditor
 	 */
 	@Override
 	public EditingDomain getEditingDomain() {
-		return this.editingDomain;
+		return editingDomain;
 	}
 
 	/**
@@ -787,7 +801,7 @@ public class TfsmEditor
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public ReverseAdapterFactoryContentProvider(final AdapterFactory adapterFactory) {
+		public ReverseAdapterFactoryContentProvider(AdapterFactory adapterFactory) {
 			super(adapterFactory);
 		}
 
@@ -797,8 +811,8 @@ public class TfsmEditor
 		 * @generated
 		 */
 		@Override
-		public Object [] getElements(final Object object) {
-			final Object parent = super.getParent(object);
+		public Object [] getElements(Object object) {
+			Object parent = super.getParent(object);
 			return (parent == null ? Collections.EMPTY_SET : Collections.singleton(parent)).toArray();
 		}
 
@@ -808,8 +822,8 @@ public class TfsmEditor
 		 * @generated
 		 */
 		@Override
-		public Object [] getChildren(final Object object) {
-			final Object parent = super.getParent(object);
+		public Object [] getChildren(Object object) {
+			Object parent = super.getParent(object);
 			return (parent == null ? Collections.EMPTY_SET : Collections.singleton(parent)).toArray();
 		}
 
@@ -819,8 +833,8 @@ public class TfsmEditor
 		 * @generated
 		 */
 		@Override
-		public boolean hasChildren(final Object object) {
-			final Object parent = super.getParent(object);
+		public boolean hasChildren(Object object) {
+			Object parent = super.getParent(object);
 			return parent != null;
 		}
 
@@ -830,7 +844,7 @@ public class TfsmEditor
 		 * @generated
 		 */
 		@Override
-		public Object getParent(final Object object) {
+		public Object getParent(Object object) {
 			return null;
 		}
 	}
@@ -840,14 +854,14 @@ public class TfsmEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setCurrentViewerPane(final ViewerPane viewerPane) {
-		if (this.currentViewerPane != viewerPane) {
-			if (this.currentViewerPane != null) {
-				this.currentViewerPane.showFocus(false);
+	public void setCurrentViewerPane(ViewerPane viewerPane) {
+		if (currentViewerPane != viewerPane) {
+			if (currentViewerPane != null) {
+				currentViewerPane.showFocus(false);
 			}
-			this.currentViewerPane = viewerPane;
+			currentViewerPane = viewerPane;
 		}
-		this.setCurrentViewer(this.currentViewerPane.getViewer());
+		setCurrentViewer(currentViewerPane.getViewer());
 	}
 
 	/**
@@ -857,36 +871,42 @@ public class TfsmEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setCurrentViewer(final Viewer viewer) {
+	public void setCurrentViewer(Viewer viewer) {
 		// If it is changing...
 		//
-		if (this.currentViewer != viewer) {
-			if (this.selectionChangedListener == null) {
+		if (currentViewer != viewer) {
+			if (selectionChangedListener == null) {
 				// Create the listener on demand.
 				//
-				this.selectionChangedListener =
-					selectionChangedEvent -> TfsmEditor.this.setSelection(selectionChangedEvent.getSelection());
+				selectionChangedListener =
+					new ISelectionChangedListener() {
+						// This just notifies those things that are affected by the section.
+						//
+						public void selectionChanged(SelectionChangedEvent selectionChangedEvent) {
+							setSelection(selectionChangedEvent.getSelection());
+						}
+					};
 			}
 
 			// Stop listening to the old one.
 			//
-			if (this.currentViewer != null) {
-				this.currentViewer.removeSelectionChangedListener(this.selectionChangedListener);
+			if (currentViewer != null) {
+				currentViewer.removeSelectionChangedListener(selectionChangedListener);
 			}
 
 			// Start listening to the new one.
 			//
 			if (viewer != null) {
-				viewer.addSelectionChangedListener(this.selectionChangedListener);
+				viewer.addSelectionChangedListener(selectionChangedListener);
 			}
 
 			// Remember it.
 			//
-			this.currentViewer = viewer;
+			currentViewer = viewer;
 
 			// Set the editors selection based on the current viewer's selection.
 			//
-			this.setSelection(this.currentViewer == null ? StructuredSelection.EMPTY : this.currentViewer.getSelection());
+			setSelection(currentViewer == null ? StructuredSelection.EMPTY : currentViewer.getSelection());
 		}
 	}
 
@@ -898,7 +918,7 @@ public class TfsmEditor
 	 */
 	@Override
 	public Viewer getViewer() {
-		return this.currentViewer;
+		return currentViewer;
 	}
 
 	/**
@@ -907,19 +927,19 @@ public class TfsmEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void createContextMenuFor(final StructuredViewer viewer) {
-		final MenuManager contextMenu = new MenuManager("#PopUp");
+	protected void createContextMenuFor(StructuredViewer viewer) {
+		MenuManager contextMenu = new MenuManager("#PopUp");
 		contextMenu.add(new Separator("additions"));
 		contextMenu.setRemoveAllWhenShown(true);
 		contextMenu.addMenuListener(this);
-		final Menu menu= contextMenu.createContextMenu(viewer.getControl());
+		Menu menu= contextMenu.createContextMenu(viewer.getControl());
 		viewer.getControl().setMenu(menu);
-		this.getSite().registerContextMenu(contextMenu, new UnwrappingSelectionProvider(viewer));
+		getSite().registerContextMenu(contextMenu, new UnwrappingSelectionProvider(viewer));
 
-		final int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
-		final Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance(), LocalSelectionTransfer.getTransfer(), FileTransfer.getInstance() };
+		int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
+		Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance(), LocalSelectionTransfer.getTransfer(), FileTransfer.getInstance() };
 		viewer.addDragSupport(dndOperations, transfers, new ViewerDragAdapter(viewer));
-		viewer.addDropSupport(dndOperations, transfers, new EditingDomainViewerDropAdapter(this.editingDomain, viewer));
+		viewer.addDropSupport(dndOperations, transfers, new EditingDomainViewerDropAdapter(editingDomain, viewer));
 	}
 
 	/**
@@ -929,24 +949,24 @@ public class TfsmEditor
 	 * @generated
 	 */
 	public void createModel() {
-		final URI resourceURI = EditUIUtil.getURI(this.getEditorInput(), this.editingDomain.getResourceSet().getURIConverter());
+		URI resourceURI = EditUIUtil.getURI(getEditorInput(), editingDomain.getResourceSet().getURIConverter());
 		Exception exception = null;
 		Resource resource = null;
 		try {
 			// Load the resource through the editing domain.
 			//
-			resource = this.editingDomain.getResourceSet().getResource(resourceURI, true);
+			resource = editingDomain.getResourceSet().getResource(resourceURI, true);
 		}
-		catch (final Exception e) {
+		catch (Exception e) {
 			exception = e;
-			resource = this.editingDomain.getResourceSet().getResource(resourceURI, false);
+			resource = editingDomain.getResourceSet().getResource(resourceURI, false);
 		}
 
-		final Diagnostic diagnostic = this.analyzeResourceProblems(resource, exception);
+		Diagnostic diagnostic = analyzeResourceProblems(resource, exception);
 		if (diagnostic.getSeverity() != Diagnostic.OK) {
-			this.resourceToDiagnosticMap.put(resource,  this.analyzeResourceProblems(resource, exception));
+			resourceToDiagnosticMap.put(resource,  analyzeResourceProblems(resource, exception));
 		}
-		this.editingDomain.getResourceSet().eAdapters().add(this.problemIndicationAdapter);
+		editingDomain.getResourceSet().eAdapters().add(problemIndicationAdapter);
 	}
 
 	/**
@@ -956,15 +976,15 @@ public class TfsmEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Diagnostic analyzeResourceProblems(final Resource resource, final Exception exception) {
-		final boolean hasErrors = !resource.getErrors().isEmpty();
+	public Diagnostic analyzeResourceProblems(Resource resource, Exception exception) {
+		boolean hasErrors = !resource.getErrors().isEmpty();
 		if (hasErrors || !resource.getWarnings().isEmpty()) {
-			final BasicDiagnostic basicDiagnostic =
+			BasicDiagnostic basicDiagnostic =
 				new BasicDiagnostic
 					(hasErrors ? Diagnostic.ERROR : Diagnostic.WARNING,
 					 "fr.inria.diverse.tfsm.model.editor",
 					 0,
-					 TfsmEditor.getString("_UI_CreateModelError_message", resource.getURI()),
+					 getString("_UI_CreateModelError_message", resource.getURI()),
 					 new Object [] { exception == null ? (Object)resource : exception });
 			basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
 			return basicDiagnostic;
@@ -975,7 +995,7 @@ public class TfsmEditor
 					(Diagnostic.ERROR,
 					 "fr.inria.diverse.tfsm.model.editor",
 					 0,
-					 TfsmEditor.getString("_UI_CreateModelError_message", resource.getURI()),
+					 getString("_UI_CreateModelError_message", resource.getURI()),
 					 new Object[] { exception });
 		}
 		else {
@@ -993,234 +1013,242 @@ public class TfsmEditor
 	public void createPages() {
 		// Creates the model from the editor input
 		//
-		this.createModel();
+		createModel();
 
 		// Only creates the other pages if there is something that can be edited
 		//
-		if (!this.getEditingDomain().getResourceSet().getResources().isEmpty()) {
+		if (!getEditingDomain().getResourceSet().getResources().isEmpty()) {
 			// Create a page for the selection tree view.
 			//
 			{
-				final ViewerPane viewerPane =
-					new ViewerPane(this.getSite().getPage(), TfsmEditor.this) {
+				ViewerPane viewerPane =
+					new ViewerPane(getSite().getPage(), TfsmEditor.this) {
 						@Override
-						public Viewer createViewer(final Composite composite) {
-							final Tree tree = new Tree(composite, SWT.MULTI);
-							final TreeViewer newTreeViewer = new TreeViewer(tree);
+						public Viewer createViewer(Composite composite) {
+							Tree tree = new Tree(composite, SWT.MULTI);
+							TreeViewer newTreeViewer = new TreeViewer(tree);
 							return newTreeViewer;
 						}
 						@Override
 						public void requestActivation() {
 							super.requestActivation();
-							TfsmEditor.this.setCurrentViewerPane(this);
+							setCurrentViewerPane(this);
 						}
 					};
-				viewerPane.createControl(this.getContainer());
+				viewerPane.createControl(getContainer());
 
-				this.selectionViewer = (TreeViewer)viewerPane.getViewer();
-				this.selectionViewer.setContentProvider(new AdapterFactoryContentProvider(this.adapterFactory));
+				selectionViewer = (TreeViewer)viewerPane.getViewer();
+				selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
 
-				this.selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(this.adapterFactory));
-				this.selectionViewer.setInput(this.editingDomain.getResourceSet());
-				this.selectionViewer.setSelection(new StructuredSelection(this.editingDomain.getResourceSet().getResources().get(0)), true);
-				viewerPane.setTitle(this.editingDomain.getResourceSet());
+				selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+				selectionViewer.setInput(editingDomain.getResourceSet());
+				selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
+				viewerPane.setTitle(editingDomain.getResourceSet());
 
-				new AdapterFactoryTreeEditor(this.selectionViewer.getTree(), this.adapterFactory);
+				new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
 
-				this.createContextMenuFor(this.selectionViewer);
-				final int pageIndex = this.addPage(viewerPane.getControl());
-				this.setPageText(pageIndex, TfsmEditor.getString("_UI_SelectionPage_label"));
+				createContextMenuFor(selectionViewer);
+				int pageIndex = addPage(viewerPane.getControl());
+				setPageText(pageIndex, getString("_UI_SelectionPage_label"));
 			}
 
 			// Create a page for the parent tree view.
 			//
 			{
-				final ViewerPane viewerPane =
-					new ViewerPane(this.getSite().getPage(), TfsmEditor.this) {
+				ViewerPane viewerPane =
+					new ViewerPane(getSite().getPage(), TfsmEditor.this) {
 						@Override
-						public Viewer createViewer(final Composite composite) {
-							final Tree tree = new Tree(composite, SWT.MULTI);
-							final TreeViewer newTreeViewer = new TreeViewer(tree);
+						public Viewer createViewer(Composite composite) {
+							Tree tree = new Tree(composite, SWT.MULTI);
+							TreeViewer newTreeViewer = new TreeViewer(tree);
 							return newTreeViewer;
 						}
 						@Override
 						public void requestActivation() {
 							super.requestActivation();
-							TfsmEditor.this.setCurrentViewerPane(this);
+							setCurrentViewerPane(this);
 						}
 					};
-				viewerPane.createControl(this.getContainer());
+				viewerPane.createControl(getContainer());
 
-				this.parentViewer = (TreeViewer)viewerPane.getViewer();
-				this.parentViewer.setAutoExpandLevel(30);
-				this.parentViewer.setContentProvider(new ReverseAdapterFactoryContentProvider(this.adapterFactory));
-				this.parentViewer.setLabelProvider(new AdapterFactoryLabelProvider(this.adapterFactory));
+				parentViewer = (TreeViewer)viewerPane.getViewer();
+				parentViewer.setAutoExpandLevel(30);
+				parentViewer.setContentProvider(new ReverseAdapterFactoryContentProvider(adapterFactory));
+				parentViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
 
-				this.createContextMenuFor(this.parentViewer);
-				final int pageIndex = this.addPage(viewerPane.getControl());
-				this.setPageText(pageIndex, TfsmEditor.getString("_UI_ParentPage_label"));
+				createContextMenuFor(parentViewer);
+				int pageIndex = addPage(viewerPane.getControl());
+				setPageText(pageIndex, getString("_UI_ParentPage_label"));
 			}
 
 			// This is the page for the list viewer
 			//
 			{
-				final ViewerPane viewerPane =
-					new ViewerPane(this.getSite().getPage(), TfsmEditor.this) {
+				ViewerPane viewerPane =
+					new ViewerPane(getSite().getPage(), TfsmEditor.this) {
 						@Override
-						public Viewer createViewer(final Composite composite) {
+						public Viewer createViewer(Composite composite) {
 							return new ListViewer(composite);
 						}
 						@Override
 						public void requestActivation() {
 							super.requestActivation();
-							TfsmEditor.this.setCurrentViewerPane(this);
+							setCurrentViewerPane(this);
 						}
 					};
-				viewerPane.createControl(this.getContainer());
-				this.listViewer = (ListViewer)viewerPane.getViewer();
-				this.listViewer.setContentProvider(new AdapterFactoryContentProvider(this.adapterFactory));
-				this.listViewer.setLabelProvider(new AdapterFactoryLabelProvider(this.adapterFactory));
+				viewerPane.createControl(getContainer());
+				listViewer = (ListViewer)viewerPane.getViewer();
+				listViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+				listViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
 
-				this.createContextMenuFor(this.listViewer);
-				final int pageIndex = this.addPage(viewerPane.getControl());
-				this.setPageText(pageIndex, TfsmEditor.getString("_UI_ListPage_label"));
+				createContextMenuFor(listViewer);
+				int pageIndex = addPage(viewerPane.getControl());
+				setPageText(pageIndex, getString("_UI_ListPage_label"));
 			}
 
 			// This is the page for the tree viewer
 			//
 			{
-				final ViewerPane viewerPane =
-					new ViewerPane(this.getSite().getPage(), TfsmEditor.this) {
+				ViewerPane viewerPane =
+					new ViewerPane(getSite().getPage(), TfsmEditor.this) {
 						@Override
-						public Viewer createViewer(final Composite composite) {
+						public Viewer createViewer(Composite composite) {
 							return new TreeViewer(composite);
 						}
 						@Override
 						public void requestActivation() {
 							super.requestActivation();
-							TfsmEditor.this.setCurrentViewerPane(this);
+							setCurrentViewerPane(this);
 						}
 					};
-				viewerPane.createControl(this.getContainer());
-				this.treeViewer = (TreeViewer)viewerPane.getViewer();
-				this.treeViewer.setContentProvider(new AdapterFactoryContentProvider(this.adapterFactory));
-				this.treeViewer.setLabelProvider(new AdapterFactoryLabelProvider(this.adapterFactory));
+				viewerPane.createControl(getContainer());
+				treeViewer = (TreeViewer)viewerPane.getViewer();
+				treeViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+				treeViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
 
-				new AdapterFactoryTreeEditor(this.treeViewer.getTree(), this.adapterFactory);
+				new AdapterFactoryTreeEditor(treeViewer.getTree(), adapterFactory);
 
-				this.createContextMenuFor(this.treeViewer);
-				final int pageIndex = this.addPage(viewerPane.getControl());
-				this.setPageText(pageIndex, TfsmEditor.getString("_UI_TreePage_label"));
+				createContextMenuFor(treeViewer);
+				int pageIndex = addPage(viewerPane.getControl());
+				setPageText(pageIndex, getString("_UI_TreePage_label"));
 			}
 
 			// This is the page for the table viewer.
 			//
 			{
-				final ViewerPane viewerPane =
-					new ViewerPane(this.getSite().getPage(), TfsmEditor.this) {
+				ViewerPane viewerPane =
+					new ViewerPane(getSite().getPage(), TfsmEditor.this) {
 						@Override
-						public Viewer createViewer(final Composite composite) {
+						public Viewer createViewer(Composite composite) {
 							return new TableViewer(composite);
 						}
 						@Override
 						public void requestActivation() {
 							super.requestActivation();
-							TfsmEditor.this.setCurrentViewerPane(this);
+							setCurrentViewerPane(this);
 						}
 					};
-				viewerPane.createControl(this.getContainer());
-				this.tableViewer = (TableViewer)viewerPane.getViewer();
+				viewerPane.createControl(getContainer());
+				tableViewer = (TableViewer)viewerPane.getViewer();
 
-				final Table table = this.tableViewer.getTable();
-				final TableLayout layout = new TableLayout();
+				Table table = tableViewer.getTable();
+				TableLayout layout = new TableLayout();
 				table.setLayout(layout);
 				table.setHeaderVisible(true);
 				table.setLinesVisible(true);
 
-				final TableColumn objectColumn = new TableColumn(table, SWT.NONE);
+				TableColumn objectColumn = new TableColumn(table, SWT.NONE);
 				layout.addColumnData(new ColumnWeightData(3, 100, true));
-				objectColumn.setText(TfsmEditor.getString("_UI_ObjectColumn_label"));
+				objectColumn.setText(getString("_UI_ObjectColumn_label"));
 				objectColumn.setResizable(true);
 
-				final TableColumn selfColumn = new TableColumn(table, SWT.NONE);
+				TableColumn selfColumn = new TableColumn(table, SWT.NONE);
 				layout.addColumnData(new ColumnWeightData(2, 100, true));
-				selfColumn.setText(TfsmEditor.getString("_UI_SelfColumn_label"));
+				selfColumn.setText(getString("_UI_SelfColumn_label"));
 				selfColumn.setResizable(true);
 
-				this.tableViewer.setColumnProperties(new String [] {"a", "b"});
-				this.tableViewer.setContentProvider(new AdapterFactoryContentProvider(this.adapterFactory));
-				this.tableViewer.setLabelProvider(new AdapterFactoryLabelProvider(this.adapterFactory));
+				tableViewer.setColumnProperties(new String [] {"a", "b"});
+				tableViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+				tableViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
 
-				this.createContextMenuFor(this.tableViewer);
-				final int pageIndex = this.addPage(viewerPane.getControl());
-				this.setPageText(pageIndex, TfsmEditor.getString("_UI_TablePage_label"));
+				createContextMenuFor(tableViewer);
+				int pageIndex = addPage(viewerPane.getControl());
+				setPageText(pageIndex, getString("_UI_TablePage_label"));
 			}
 
 			// This is the page for the table tree viewer.
 			//
 			{
-				final ViewerPane viewerPane =
-					new ViewerPane(this.getSite().getPage(), TfsmEditor.this) {
+				ViewerPane viewerPane =
+					new ViewerPane(getSite().getPage(), TfsmEditor.this) {
 						@Override
-						public Viewer createViewer(final Composite composite) {
+						public Viewer createViewer(Composite composite) {
 							return new TreeViewer(composite);
 						}
 						@Override
 						public void requestActivation() {
 							super.requestActivation();
-							TfsmEditor.this.setCurrentViewerPane(this);
+							setCurrentViewerPane(this);
 						}
 					};
-				viewerPane.createControl(this.getContainer());
+				viewerPane.createControl(getContainer());
 
-				this.treeViewerWithColumns = (TreeViewer)viewerPane.getViewer();
+				treeViewerWithColumns = (TreeViewer)viewerPane.getViewer();
 
-				final Tree tree = this.treeViewerWithColumns.getTree();
+				Tree tree = treeViewerWithColumns.getTree();
 				tree.setLayoutData(new FillLayout());
 				tree.setHeaderVisible(true);
 				tree.setLinesVisible(true);
 
-				final TreeColumn objectColumn = new TreeColumn(tree, SWT.NONE);
-				objectColumn.setText(TfsmEditor.getString("_UI_ObjectColumn_label"));
+				TreeColumn objectColumn = new TreeColumn(tree, SWT.NONE);
+				objectColumn.setText(getString("_UI_ObjectColumn_label"));
 				objectColumn.setResizable(true);
 				objectColumn.setWidth(250);
 
-				final TreeColumn selfColumn = new TreeColumn(tree, SWT.NONE);
-				selfColumn.setText(TfsmEditor.getString("_UI_SelfColumn_label"));
+				TreeColumn selfColumn = new TreeColumn(tree, SWT.NONE);
+				selfColumn.setText(getString("_UI_SelfColumn_label"));
 				selfColumn.setResizable(true);
 				selfColumn.setWidth(200);
 
-				this.treeViewerWithColumns.setColumnProperties(new String [] {"a", "b"});
-				this.treeViewerWithColumns.setContentProvider(new AdapterFactoryContentProvider(this.adapterFactory));
-				this.treeViewerWithColumns.setLabelProvider(new AdapterFactoryLabelProvider(this.adapterFactory));
+				treeViewerWithColumns.setColumnProperties(new String [] {"a", "b"});
+				treeViewerWithColumns.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+				treeViewerWithColumns.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
 
-				this.createContextMenuFor(this.treeViewerWithColumns);
-				final int pageIndex = this.addPage(viewerPane.getControl());
-				this.setPageText(pageIndex, TfsmEditor.getString("_UI_TreeWithColumnsPage_label"));
+				createContextMenuFor(treeViewerWithColumns);
+				int pageIndex = addPage(viewerPane.getControl());
+				setPageText(pageIndex, getString("_UI_TreeWithColumnsPage_label"));
 			}
 
-			this.getSite().getShell().getDisplay().asyncExec
-				(() -> TfsmEditor.this.setActivePage(0));
+			getSite().getShell().getDisplay().asyncExec
+				(new Runnable() {
+					 public void run() {
+						 setActivePage(0);
+					 }
+				 });
 		}
 
 		// Ensures that this editor will only display the page's tab
 		// area if there are more than one page
 		//
-		this.getContainer().addControlListener
+		getContainer().addControlListener
 			(new ControlAdapter() {
 				boolean guard = false;
 				@Override
-				public void controlResized(final ControlEvent event) {
-					if (!this.guard) {
-						this.guard = true;
-						TfsmEditor.this.hideTabs();
-						this.guard = false;
+				public void controlResized(ControlEvent event) {
+					if (!guard) {
+						guard = true;
+						hideTabs();
+						guard = false;
 					}
 				}
 			 });
 
-		this.getSite().getShell().getDisplay().asyncExec
-			(() -> TfsmEditor.this.updateProblemIndication());
+		getSite().getShell().getDisplay().asyncExec
+			(new Runnable() {
+				 public void run() {
+					 updateProblemIndication();
+				 }
+			 });
 	}
 
 	/**
@@ -1231,12 +1259,12 @@ public class TfsmEditor
 	 * @generated
 	 */
 	protected void hideTabs() {
-		if (this.getPageCount() <= 1) {
-			this.setPageText(0, "");
-			if (this.getContainer() instanceof CTabFolder) {
-				((CTabFolder)this.getContainer()).setTabHeight(1);
-				final Point point = this.getContainer().getSize();
-				this.getContainer().setSize(point.x, point.y + 6);
+		if (getPageCount() <= 1) {
+			setPageText(0, "");
+			if (getContainer() instanceof CTabFolder) {
+				((CTabFolder)getContainer()).setTabHeight(1);
+				Point point = getContainer().getSize();
+				getContainer().setSize(point.x, point.y + 6);
 			}
 		}
 	}
@@ -1249,12 +1277,12 @@ public class TfsmEditor
 	 * @generated
 	 */
 	protected void showTabs() {
-		if (this.getPageCount() > 1) {
-			this.setPageText(0, TfsmEditor.getString("_UI_SelectionPage_label"));
-			if (this.getContainer() instanceof CTabFolder) {
-				((CTabFolder)this.getContainer()).setTabHeight(SWT.DEFAULT);
-				final Point point = this.getContainer().getSize();
-				this.getContainer().setSize(point.x, point.y - 6);
+		if (getPageCount() > 1) {
+			setPageText(0, getString("_UI_SelectionPage_label"));
+			if (getContainer() instanceof CTabFolder) {
+				((CTabFolder)getContainer()).setTabHeight(SWT.DEFAULT);
+				Point point = getContainer().getSize();
+				getContainer().setSize(point.x, point.y - 6);
 			}
 		}
 	}
@@ -1266,11 +1294,11 @@ public class TfsmEditor
 	 * @generated
 	 */
 	@Override
-	protected void pageChange(final int pageIndex) {
+	protected void pageChange(int pageIndex) {
 		super.pageChange(pageIndex);
 
-		if (this.contentOutlinePage != null) {
-			this.handleContentOutlineSelection(this.contentOutlinePage.getSelection());
+		if (contentOutlinePage != null) {
+			handleContentOutlineSelection(contentOutlinePage.getSelection());
 		}
 	}
 
@@ -1282,12 +1310,12 @@ public class TfsmEditor
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
-	public Object getAdapter(final Class key) {
+	public Object getAdapter(Class key) {
 		if (key.equals(IContentOutlinePage.class)) {
-			return this.showOutlineView() ? this.getContentOutlinePage() : null;
+			return showOutlineView() ? getContentOutlinePage() : null;
 		}
 		else if (key.equals(IPropertySheetPage.class)) {
-			return this.getPropertySheetPage();
+			return getPropertySheetPage();
 		}
 		else if (key.equals(IGotoMarker.class)) {
 			return this;
@@ -1304,55 +1332,61 @@ public class TfsmEditor
 	 * @generated
 	 */
 	public IContentOutlinePage getContentOutlinePage() {
-		if (this.contentOutlinePage == null) {
+		if (contentOutlinePage == null) {
 			// The content outline is just a tree.
 			//
 			class MyContentOutlinePage extends ContentOutlinePage {
 				@Override
-				public void createControl(final Composite parent) {
+				public void createControl(Composite parent) {
 					super.createControl(parent);
-					TfsmEditor.this.contentOutlineViewer = this.getTreeViewer();
-					TfsmEditor.this.contentOutlineViewer.addSelectionChangedListener(this);
+					contentOutlineViewer = getTreeViewer();
+					contentOutlineViewer.addSelectionChangedListener(this);
 
 					// Set up the tree viewer.
 					//
-					TfsmEditor.this.contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(TfsmEditor.this.adapterFactory));
-					TfsmEditor.this.contentOutlineViewer.setLabelProvider(new AdapterFactoryLabelProvider(TfsmEditor.this.adapterFactory));
-					TfsmEditor.this.contentOutlineViewer.setInput(TfsmEditor.this.editingDomain.getResourceSet());
+					contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+					contentOutlineViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+					contentOutlineViewer.setInput(editingDomain.getResourceSet());
 
 					// Make sure our popups work.
 					//
-					TfsmEditor.this.createContextMenuFor(TfsmEditor.this.contentOutlineViewer);
+					createContextMenuFor(contentOutlineViewer);
 
-					if (!TfsmEditor.this.editingDomain.getResourceSet().getResources().isEmpty()) {
+					if (!editingDomain.getResourceSet().getResources().isEmpty()) {
 					  // Select the root object in the view.
 					  //
-					  TfsmEditor.this.contentOutlineViewer.setSelection(new StructuredSelection(TfsmEditor.this.editingDomain.getResourceSet().getResources().get(0)), true);
+					  contentOutlineViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
 					}
 				}
 
 				@Override
-				public void makeContributions(final IMenuManager menuManager, final IToolBarManager toolBarManager, final IStatusLineManager statusLineManager) {
+				public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager, IStatusLineManager statusLineManager) {
 					super.makeContributions(menuManager, toolBarManager, statusLineManager);
-					TfsmEditor.this.contentOutlineStatusLineManager = statusLineManager;
+					contentOutlineStatusLineManager = statusLineManager;
 				}
 
 				@Override
-				public void setActionBars(final IActionBars actionBars) {
+				public void setActionBars(IActionBars actionBars) {
 					super.setActionBars(actionBars);
-					TfsmEditor.this.getActionBarContributor().shareGlobalActions(this, actionBars);
+					getActionBarContributor().shareGlobalActions(this, actionBars);
 				}
 			}
 
-			this.contentOutlinePage = new MyContentOutlinePage();
+			contentOutlinePage = new MyContentOutlinePage();
 
 			// Listen to selection so that we can handle it is a special way.
 			//
-			this.contentOutlinePage.addSelectionChangedListener
-				(event -> TfsmEditor.this.handleContentOutlineSelection(event.getSelection()));
+			contentOutlinePage.addSelectionChangedListener
+				(new ISelectionChangedListener() {
+					 // This ensures that we handle selections correctly.
+					 //
+					 public void selectionChanged(SelectionChangedEvent event) {
+						 handleContentOutlineSelection(event.getSelection());
+					 }
+				 });
 		}
 
-		return this.contentOutlinePage;
+		return contentOutlinePage;
 	}
 
 	/**
@@ -1362,22 +1396,22 @@ public class TfsmEditor
 	 * @generated
 	 */
 	public IPropertySheetPage getPropertySheetPage() {
-		final PropertySheetPage propertySheetPage =
-			new ExtendedPropertySheetPage(this.editingDomain) {
+		PropertySheetPage propertySheetPage =
+			new ExtendedPropertySheetPage(editingDomain) {
 				@Override
-				public void setSelectionToViewer(final List<?> selection) {
+				public void setSelectionToViewer(List<?> selection) {
 					TfsmEditor.this.setSelectionToViewer(selection);
 					TfsmEditor.this.setFocus();
 				}
 
 				@Override
-				public void setActionBars(final IActionBars actionBars) {
+				public void setActionBars(IActionBars actionBars) {
 					super.setActionBars(actionBars);
-					TfsmEditor.this.getActionBarContributor().shareGlobalActions(this, actionBars);
+					getActionBarContributor().shareGlobalActions(this, actionBars);
 				}
 			};
-		propertySheetPage.setPropertySourceProvider(new AdapterFactoryContentProvider(this.adapterFactory));
-		this.propertySheetPages.add(propertySheetPage);
+		propertySheetPage.setPropertySourceProvider(new AdapterFactoryContentProvider(adapterFactory));
+		propertySheetPages.add(propertySheetPage);
 
 		return propertySheetPage;
 	}
@@ -1388,18 +1422,18 @@ public class TfsmEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void handleContentOutlineSelection(final ISelection selection) {
-		if (this.currentViewerPane != null && !selection.isEmpty() && selection instanceof IStructuredSelection) {
-			final Iterator<?> selectedElements = ((IStructuredSelection)selection).iterator();
+	public void handleContentOutlineSelection(ISelection selection) {
+		if (currentViewerPane != null && !selection.isEmpty() && selection instanceof IStructuredSelection) {
+			Iterator<?> selectedElements = ((IStructuredSelection)selection).iterator();
 			if (selectedElements.hasNext()) {
 				// Get the first selected element.
 				//
-				final Object selectedElement = selectedElements.next();
+				Object selectedElement = selectedElements.next();
 
 				// If it's the selection viewer, then we want it to select the same selection as this selection.
 				//
-				if (this.currentViewerPane.getViewer() == this.selectionViewer) {
-					final ArrayList<Object> selectionList = new ArrayList<Object>();
+				if (currentViewerPane.getViewer() == selectionViewer) {
+					ArrayList<Object> selectionList = new ArrayList<Object>();
 					selectionList.add(selectedElement);
 					while (selectedElements.hasNext()) {
 						selectionList.add(selectedElements.next());
@@ -1407,14 +1441,14 @@ public class TfsmEditor
 
 					// Set the selection to the widget.
 					//
-					this.selectionViewer.setSelection(new StructuredSelection(selectionList));
+					selectionViewer.setSelection(new StructuredSelection(selectionList));
 				}
 				else {
 					// Set the input to the widget.
 					//
-					if (this.currentViewerPane.getViewer().getInput() != selectedElement) {
-						this.currentViewerPane.getViewer().setInput(selectedElement);
-						this.currentViewerPane.setTitle(selectedElement);
+					if (currentViewerPane.getViewer().getInput() != selectedElement) {
+						currentViewerPane.getViewer().setInput(selectedElement);
+						currentViewerPane.setTitle(selectedElement);
 					}
 				}
 			}
@@ -1429,7 +1463,7 @@ public class TfsmEditor
 	 */
 	@Override
 	public boolean isDirty() {
-		return ((BasicCommandStack)this.editingDomain.getCommandStack()).isSaveNeeded();
+		return ((BasicCommandStack)editingDomain.getCommandStack()).isSaveNeeded();
 	}
 
 	/**
@@ -1439,7 +1473,7 @@ public class TfsmEditor
 	 * @generated
 	 */
 	@Override
-	public void doSave(final IProgressMonitor progressMonitor) {
+	public void doSave(IProgressMonitor progressMonitor) {
 		// Save only resources that have actually changed.
 		//
 		final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
@@ -1448,26 +1482,26 @@ public class TfsmEditor
 
 		// Do the work within an operation because this is a long running activity that modifies the workbench.
 		//
-		final WorkspaceModifyOperation operation =
+		WorkspaceModifyOperation operation =
 			new WorkspaceModifyOperation() {
 				// This is the method that gets invoked when the operation runs.
 				//
 				@Override
-				public void execute(final IProgressMonitor monitor) {
+				public void execute(IProgressMonitor monitor) {
 					// Save the resources to the file system.
 					//
 					boolean first = true;
-					for (final Resource resource : TfsmEditor.this.editingDomain.getResourceSet().getResources()) {
-						if ((first || !resource.getContents().isEmpty() || TfsmEditor.this.isPersisted(resource)) && !TfsmEditor.this.editingDomain.isReadOnly(resource)) {
+					for (Resource resource : editingDomain.getResourceSet().getResources()) {
+						if ((first || !resource.getContents().isEmpty() || isPersisted(resource)) && !editingDomain.isReadOnly(resource)) {
 							try {
-								final long timeStamp = resource.getTimeStamp();
+								long timeStamp = resource.getTimeStamp();
 								resource.save(saveOptions);
 								if (resource.getTimeStamp() != timeStamp) {
-									TfsmEditor.this.savedResources.add(resource);
+									savedResources.add(resource);
 								}
 							}
-							catch (final Exception exception) {
-								TfsmEditor.this.resourceToDiagnosticMap.put(resource, TfsmEditor.this.analyzeResourceProblems(resource, exception));
+							catch (Exception exception) {
+								resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
 							}
 							first = false;
 						}
@@ -1475,24 +1509,24 @@ public class TfsmEditor
 				}
 			};
 
-		this.updateProblemIndication = false;
+		updateProblemIndication = false;
 		try {
 			// This runs the options, and shows progress.
 			//
-			new ProgressMonitorDialog(this.getSite().getShell()).run(true, false, operation);
+			new ProgressMonitorDialog(getSite().getShell()).run(true, false, operation);
 
 			// Refresh the necessary state.
 			//
-			((BasicCommandStack)this.editingDomain.getCommandStack()).saveIsDone();
-			this.firePropertyChange(IEditorPart.PROP_DIRTY);
+			((BasicCommandStack)editingDomain.getCommandStack()).saveIsDone();
+			firePropertyChange(IEditorPart.PROP_DIRTY);
 		}
-		catch (final Exception exception) {
+		catch (Exception exception) {
 			// Something went wrong that shouldn't.
 			//
 			TfsmEditorPlugin.INSTANCE.log(exception);
 		}
-		this.updateProblemIndication = true;
-		this.updateProblemIndication();
+		updateProblemIndication = true;
+		updateProblemIndication();
 	}
 
 	/**
@@ -1502,16 +1536,16 @@ public class TfsmEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected boolean isPersisted(final Resource resource) {
+	protected boolean isPersisted(Resource resource) {
 		boolean result = false;
 		try {
-			final InputStream stream = this.editingDomain.getResourceSet().getURIConverter().createInputStream(resource.getURI());
+			InputStream stream = editingDomain.getResourceSet().getURIConverter().createInputStream(resource.getURI());
 			if (stream != null) {
 				result = true;
 				stream.close();
 			}
 		}
-		catch (final IOException e) {
+		catch (IOException e) {
 			// Ignore
 		}
 		return result;
@@ -1536,13 +1570,13 @@ public class TfsmEditor
 	 */
 	@Override
 	public void doSaveAs() {
-		final SaveAsDialog saveAsDialog = new SaveAsDialog(this.getSite().getShell());
+		SaveAsDialog saveAsDialog = new SaveAsDialog(getSite().getShell());
 		saveAsDialog.open();
-		final IPath path = saveAsDialog.getResult();
+		IPath path = saveAsDialog.getResult();
 		if (path != null) {
-			final IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 			if (file != null) {
-				this.doSaveAs(URI.createPlatformResourceURI(file.getFullPath().toString(), true), new FileEditorInput(file));
+				doSaveAs(URI.createPlatformResourceURI(file.getFullPath().toString(), true), new FileEditorInput(file));
 			}
 		}
 	}
@@ -1552,15 +1586,15 @@ public class TfsmEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void doSaveAs(final URI uri, final IEditorInput editorInput) {
-		this.editingDomain.getResourceSet().getResources().get(0).setURI(uri);
-		this.setInputWithNotify(editorInput);
-		this.setPartName(editorInput.getName());
-		final IProgressMonitor progressMonitor =
-			this.getActionBars().getStatusLineManager() != null ?
-				this.getActionBars().getStatusLineManager().getProgressMonitor() :
+	protected void doSaveAs(URI uri, IEditorInput editorInput) {
+		(editingDomain.getResourceSet().getResources().get(0)).setURI(uri);
+		setInputWithNotify(editorInput);
+		setPartName(editorInput.getName());
+		IProgressMonitor progressMonitor =
+			getActionBars().getStatusLineManager() != null ?
+				getActionBars().getStatusLineManager().getProgressMonitor() :
 				new NullProgressMonitor();
-		this.doSave(progressMonitor);
+		doSave(progressMonitor);
 	}
 
 	/**
@@ -1569,10 +1603,10 @@ public class TfsmEditor
 	 * @generated
 	 */
 	@Override
-	public void gotoMarker(final IMarker marker) {
-		final List<?> targetObjects = this.markerHelper.getTargetObjects(this.editingDomain, marker);
+	public void gotoMarker(IMarker marker) {
+		List<?> targetObjects = markerHelper.getTargetObjects(editingDomain, marker);
 		if (!targetObjects.isEmpty()) {
-			this.setSelectionToViewer(targetObjects);
+			setSelectionToViewer(targetObjects);
 		}
 	}
 
@@ -1583,13 +1617,13 @@ public class TfsmEditor
 	 * @generated
 	 */
 	@Override
-	public void init(final IEditorSite site, final IEditorInput editorInput) {
-		this.setSite(site);
-		this.setInputWithNotify(editorInput);
-		this.setPartName(editorInput.getName());
+	public void init(IEditorSite site, IEditorInput editorInput) {
+		setSite(site);
+		setInputWithNotify(editorInput);
+		setPartName(editorInput.getName());
 		site.setSelectionProvider(this);
-		site.getPage().addPartListener(this.partListener);
-		ResourcesPlugin.getWorkspace().addResourceChangeListener(this.resourceChangeListener, IResourceChangeEvent.POST_CHANGE);
+		site.getPage().addPartListener(partListener);
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener, IResourceChangeEvent.POST_CHANGE);
 	}
 
 	/**
@@ -1599,11 +1633,11 @@ public class TfsmEditor
 	 */
 	@Override
 	public void setFocus() {
-		if (this.currentViewerPane != null) {
-			this.currentViewerPane.setFocus();
+		if (currentViewerPane != null) {
+			currentViewerPane.setFocus();
 		}
 		else {
-			this.getControl(this.getActivePage()).setFocus();
+			getControl(getActivePage()).setFocus();
 		}
 	}
 
@@ -1614,8 +1648,8 @@ public class TfsmEditor
 	 * @generated
 	 */
 	@Override
-	public void addSelectionChangedListener(final ISelectionChangedListener listener) {
-		this.selectionChangedListeners.add(listener);
+	public void addSelectionChangedListener(ISelectionChangedListener listener) {
+		selectionChangedListeners.add(listener);
 	}
 
 	/**
@@ -1625,8 +1659,8 @@ public class TfsmEditor
 	 * @generated
 	 */
 	@Override
-	public void removeSelectionChangedListener(final ISelectionChangedListener listener) {
-		this.selectionChangedListeners.remove(listener);
+	public void removeSelectionChangedListener(ISelectionChangedListener listener) {
+		selectionChangedListeners.remove(listener);
 	}
 
 	/**
@@ -1637,7 +1671,7 @@ public class TfsmEditor
 	 */
 	@Override
 	public ISelection getSelection() {
-		return this.editorSelection;
+		return editorSelection;
 	}
 
 	/**
@@ -1648,13 +1682,13 @@ public class TfsmEditor
 	 * @generated
 	 */
 	@Override
-	public void setSelection(final ISelection selection) {
-		this.editorSelection = selection;
+	public void setSelection(ISelection selection) {
+		editorSelection = selection;
 
-		for (final ISelectionChangedListener listener : this.selectionChangedListeners) {
+		for (ISelectionChangedListener listener : selectionChangedListeners) {
 			listener.selectionChanged(new SelectionChangedEvent(this, selection));
 		}
-		this.setStatusLineManager(selection);
+		setStatusLineManager(selection);
 	}
 
 	/**
@@ -1662,25 +1696,25 @@ public class TfsmEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setStatusLineManager(final ISelection selection) {
-		final IStatusLineManager statusLineManager = this.currentViewer != null && this.currentViewer == this.contentOutlineViewer ?
-			this.contentOutlineStatusLineManager : this.getActionBars().getStatusLineManager();
+	public void setStatusLineManager(ISelection selection) {
+		IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer ?
+			contentOutlineStatusLineManager : getActionBars().getStatusLineManager();
 
 		if (statusLineManager != null) {
 			if (selection instanceof IStructuredSelection) {
-				final Collection<?> collection = ((IStructuredSelection)selection).toList();
+				Collection<?> collection = ((IStructuredSelection)selection).toList();
 				switch (collection.size()) {
 					case 0: {
-						statusLineManager.setMessage(TfsmEditor.getString("_UI_NoObjectSelected"));
+						statusLineManager.setMessage(getString("_UI_NoObjectSelected"));
 						break;
 					}
 					case 1: {
-						final String text = new AdapterFactoryItemDelegator(this.adapterFactory).getText(collection.iterator().next());
-						statusLineManager.setMessage(TfsmEditor.getString("_UI_SingleObjectSelected", text));
+						String text = new AdapterFactoryItemDelegator(adapterFactory).getText(collection.iterator().next());
+						statusLineManager.setMessage(getString("_UI_SingleObjectSelected", text));
 						break;
 					}
 					default: {
-						statusLineManager.setMessage(TfsmEditor.getString("_UI_MultiObjectSelected", Integer.toString(collection.size())));
+						statusLineManager.setMessage(getString("_UI_MultiObjectSelected", Integer.toString(collection.size())));
 						break;
 					}
 				}
@@ -1697,7 +1731,7 @@ public class TfsmEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static String getString(final String key) {
+	private static String getString(String key) {
 		return TfsmEditorPlugin.INSTANCE.getString(key);
 	}
 
@@ -1707,7 +1741,7 @@ public class TfsmEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static String getString(final String key, final Object s1) {
+	private static String getString(String key, Object s1) {
 		return TfsmEditorPlugin.INSTANCE.getString(key, new Object [] { s1 });
 	}
 
@@ -1718,8 +1752,8 @@ public class TfsmEditor
 	 * @generated
 	 */
 	@Override
-	public void menuAboutToShow(final IMenuManager menuManager) {
-		((IMenuListener)this.getEditorSite().getActionBarContributor()).menuAboutToShow(menuManager);
+	public void menuAboutToShow(IMenuManager menuManager) {
+		((IMenuListener)getEditorSite().getActionBarContributor()).menuAboutToShow(menuManager);
 	}
 
 	/**
@@ -1728,7 +1762,7 @@ public class TfsmEditor
 	 * @generated
 	 */
 	public EditingDomainActionBarContributor getActionBarContributor() {
-		return (EditingDomainActionBarContributor)this.getEditorSite().getActionBarContributor();
+		return (EditingDomainActionBarContributor)getEditorSite().getActionBarContributor();
 	}
 
 	/**
@@ -1737,7 +1771,7 @@ public class TfsmEditor
 	 * @generated
 	 */
 	public IActionBars getActionBars() {
-		return this.getActionBarContributor().getActionBars();
+		return getActionBarContributor().getActionBars();
 	}
 
 	/**
@@ -1746,7 +1780,7 @@ public class TfsmEditor
 	 * @generated
 	 */
 	public AdapterFactory getAdapterFactory() {
-		return this.adapterFactory;
+		return adapterFactory;
 	}
 
 	/**
@@ -1756,24 +1790,24 @@ public class TfsmEditor
 	 */
 	@Override
 	public void dispose() {
-		this.updateProblemIndication = false;
+		updateProblemIndication = false;
 
-		ResourcesPlugin.getWorkspace().removeResourceChangeListener(this.resourceChangeListener);
+		ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
 
-		this.getSite().getPage().removePartListener(this.partListener);
+		getSite().getPage().removePartListener(partListener);
 
-		this.adapterFactory.dispose();
+		adapterFactory.dispose();
 
-		if (this.getActionBarContributor().getActiveEditor() == this) {
-			this.getActionBarContributor().setActiveEditor(null);
+		if (getActionBarContributor().getActiveEditor() == this) {
+			getActionBarContributor().setActiveEditor(null);
 		}
 
-		for (final PropertySheetPage propertySheetPage : this.propertySheetPages) {
+		for (PropertySheetPage propertySheetPage : propertySheetPages) {
 			propertySheetPage.dispose();
 		}
 
-		if (this.contentOutlinePage != null) {
-			this.contentOutlinePage.dispose();
+		if (contentOutlinePage != null) {
+			contentOutlinePage.dispose();
 		}
 
 		super.dispose();

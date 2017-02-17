@@ -20,7 +20,7 @@ public class IntVarAssignTest extends IntOperationTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(IntVarAssignTest.class);
 	}
 
@@ -30,7 +30,7 @@ public class IntVarAssignTest extends IntOperationTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IntVarAssignTest(final String name) {
+	public IntVarAssignTest(String name) {
 		super(name);
 	}
 
@@ -42,7 +42,7 @@ public class IntVarAssignTest extends IntOperationTest {
 	 */
 	@Override
 	protected IntVarAssign getFixture() {
-		return (IntVarAssign)this.fixture;
+		return (IntVarAssign)fixture;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class IntVarAssignTest extends IntOperationTest {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(ExpressionFactory.eINSTANCE.createIntVarAssign());
+		setFixture(ExpressionFactory.eINSTANCE.createIntVarAssign());
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class IntVarAssignTest extends IntOperationTest {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //IntVarAssignTest

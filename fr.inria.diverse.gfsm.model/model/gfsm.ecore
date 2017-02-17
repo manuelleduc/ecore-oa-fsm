@@ -76,7 +76,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="boolExpression1" lowerBound="1"
         eType="#//BooleanExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="boolExpression2" lowerBound="1"
-        eType="#//BooleanCompareExpression" containment="true"/>
+        eType="#//BooleanExpression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BooleanCompareExpression" abstract="true"
       eSuperTypes="#//BooleanExpression">

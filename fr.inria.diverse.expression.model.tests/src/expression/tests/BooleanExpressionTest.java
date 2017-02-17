@@ -28,7 +28,7 @@ public abstract class BooleanExpressionTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public BooleanExpressionTest(final String name) {
+	public BooleanExpressionTest(String name) {
 		super(name);
 	}
 
@@ -38,7 +38,7 @@ public abstract class BooleanExpressionTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void setFixture(final BooleanExpression fixture) {
+	protected void setFixture(BooleanExpression fixture) {
 		this.fixture = fixture;
 	}
 
@@ -49,7 +49,7 @@ public abstract class BooleanExpressionTest extends TestCase {
 	 * @generated
 	 */
 	protected BooleanExpression getFixture() {
-		return this.fixture;
+		return fixture;
 	}
 
 } //BooleanExpressionTest

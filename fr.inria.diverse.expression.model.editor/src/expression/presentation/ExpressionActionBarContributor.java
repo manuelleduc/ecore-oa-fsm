@@ -22,6 +22,7 @@ import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IContributionManager;
+import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
@@ -74,9 +75,9 @@ public class ExpressionActionBarContributor
 			@Override
 			public void run() {
 				try {
-					ExpressionActionBarContributor.this.getPage().showView("org.eclipse.ui.views.PropertySheet");
+					getPage().showView("org.eclipse.ui.views.PropertySheet");
 				}
-				catch (final PartInitException exception) {
+				catch (PartInitException exception) {
 					ExpressionEditorPlugin.INSTANCE.log(exception);
 				}
 			}
@@ -93,13 +94,13 @@ public class ExpressionActionBarContributor
 		new Action(ExpressionEditorPlugin.INSTANCE.getString("_UI_RefreshViewer_menu_item")) {
 			@Override
 			public boolean isEnabled() {
-				return ExpressionActionBarContributor.this.activeEditorPart instanceof IViewerProvider;
+				return activeEditorPart instanceof IViewerProvider;
 			}
 
 			@Override
 			public void run() {
-				if (ExpressionActionBarContributor.this.activeEditorPart instanceof IViewerProvider) {
-					final Viewer viewer = ((IViewerProvider)ExpressionActionBarContributor.this.activeEditorPart).getViewer();
+				if (activeEditorPart instanceof IViewerProvider) {
+					Viewer viewer = ((IViewerProvider)activeEditorPart).getViewer();
 					if (viewer != null) {
 						viewer.refresh();
 					}
@@ -148,10 +149,10 @@ public class ExpressionActionBarContributor
 	 * @generated
 	 */
 	public ExpressionActionBarContributor() {
-		super(EditingDomainActionBarContributor.ADDITIONS_LAST_STYLE);
-		this.loadResourceAction = new LoadResourceAction();
-		this.validateAction = new ValidateAction();
-		this.controlAction = new ControlAction();
+		super(ADDITIONS_LAST_STYLE);
+		loadResourceAction = new LoadResourceAction();
+		validateAction = new ValidateAction();
+		controlAction = new ControlAction();
 	}
 
 	/**
@@ -161,7 +162,7 @@ public class ExpressionActionBarContributor
 	 * @generated
 	 */
 	@Override
-	public void contributeToToolBar(final IToolBarManager toolBarManager) {
+	public void contributeToToolBar(IToolBarManager toolBarManager) {
 		toolBarManager.add(new Separator("expression-settings"));
 		toolBarManager.add(new Separator("expression-additions"));
 	}
@@ -174,10 +175,10 @@ public class ExpressionActionBarContributor
 	 * @generated
 	 */
 	@Override
-	public void contributeToMenu(final IMenuManager menuManager) {
+	public void contributeToMenu(IMenuManager menuManager) {
 		super.contributeToMenu(menuManager);
 
-		final IMenuManager submenuManager = new MenuManager(ExpressionEditorPlugin.INSTANCE.getString("_UI_ExpressionEditor_menu"), "expressionMenuID");
+		IMenuManager submenuManager = new MenuManager(ExpressionEditorPlugin.INSTANCE.getString("_UI_ExpressionEditor_menu"), "expressionMenuID");
 		menuManager.insertAfter("additions", submenuManager);
 		submenuManager.add(new Separator("settings"));
 		submenuManager.add(new Separator("actions"));
@@ -186,20 +187,24 @@ public class ExpressionActionBarContributor
 
 		// Prepare for CreateChild item addition or removal.
 		//
-		this.createChildMenuManager = new MenuManager(ExpressionEditorPlugin.INSTANCE.getString("_UI_CreateChild_menu_item"));
-		submenuManager.insertBefore("additions", this.createChildMenuManager);
+		createChildMenuManager = new MenuManager(ExpressionEditorPlugin.INSTANCE.getString("_UI_CreateChild_menu_item"));
+		submenuManager.insertBefore("additions", createChildMenuManager);
 
 		// Prepare for CreateSibling item addition or removal.
 		//
-		this.createSiblingMenuManager = new MenuManager(ExpressionEditorPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
-		submenuManager.insertBefore("additions", this.createSiblingMenuManager);
+		createSiblingMenuManager = new MenuManager(ExpressionEditorPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
+		submenuManager.insertBefore("additions", createSiblingMenuManager);
 
 		// Force an update because Eclipse hides empty menus now.
 		//
 		submenuManager.addMenuListener
-			(menuManager1 -> menuManager1.updateAll(true));
+			(new IMenuListener() {
+				 public void menuAboutToShow(IMenuManager menuManager) {
+					 menuManager.updateAll(true);
+				 }
+			 });
 
-		this.addGlobalActions(submenuManager);
+		addGlobalActions(submenuManager);
 	}
 
 	/**
@@ -209,26 +214,26 @@ public class ExpressionActionBarContributor
 	 * @generated
 	 */
 	@Override
-	public void setActiveEditor(final IEditorPart part) {
+	public void setActiveEditor(IEditorPart part) {
 		super.setActiveEditor(part);
-		this.activeEditorPart = part;
+		activeEditorPart = part;
 
 		// Switch to the new selection provider.
 		//
-		if (this.selectionProvider != null) {
-			this.selectionProvider.removeSelectionChangedListener(this);
+		if (selectionProvider != null) {
+			selectionProvider.removeSelectionChangedListener(this);
 		}
 		if (part == null) {
-			this.selectionProvider = null;
+			selectionProvider = null;
 		}
 		else {
-			this.selectionProvider = part.getSite().getSelectionProvider();
-			this.selectionProvider.addSelectionChangedListener(this);
+			selectionProvider = part.getSite().getSelectionProvider();
+			selectionProvider.addSelectionChangedListener(this);
 
 			// Fake a selection changed event to update the menus.
 			//
-			if (this.selectionProvider.getSelection() != null) {
-				this.selectionChanged(new SelectionChangedEvent(this.selectionProvider, this.selectionProvider.getSelection()));
+			if (selectionProvider.getSelection() != null) {
+				selectionChanged(new SelectionChangedEvent(selectionProvider, selectionProvider.getSelection()));
 			}
 		}
 	}
@@ -242,14 +247,14 @@ public class ExpressionActionBarContributor
 	 * @generated
 	 */
 	@Override
-	public void selectionChanged(final SelectionChangedEvent event) {
+	public void selectionChanged(SelectionChangedEvent event) {
 		// Remove any menu items for old selection.
 		//
-		if (this.createChildMenuManager != null) {
-			this.depopulateManager(this.createChildMenuManager, this.createChildActions);
+		if (createChildMenuManager != null) {
+			depopulateManager(createChildMenuManager, createChildActions);
 		}
-		if (this.createSiblingMenuManager != null) {
-			this.depopulateManager(this.createSiblingMenuManager, this.createSiblingActions);
+		if (createSiblingMenuManager != null) {
+			depopulateManager(createSiblingMenuManager, createSiblingActions);
 		}
 
 		// Query the new selection for appropriate new child/sibling descriptors
@@ -257,11 +262,11 @@ public class ExpressionActionBarContributor
 		Collection<?> newChildDescriptors = null;
 		Collection<?> newSiblingDescriptors = null;
 
-		final ISelection selection = event.getSelection();
+		ISelection selection = event.getSelection();
 		if (selection instanceof IStructuredSelection && ((IStructuredSelection)selection).size() == 1) {
-			final Object object = ((IStructuredSelection)selection).getFirstElement();
+			Object object = ((IStructuredSelection)selection).getFirstElement();
 
-			final EditingDomain domain = ((IEditingDomainProvider)this.activeEditorPart).getEditingDomain();
+			EditingDomain domain = ((IEditingDomainProvider)activeEditorPart).getEditingDomain();
 
 			newChildDescriptors = domain.getNewChildDescriptors(object, null);
 			newSiblingDescriptors = domain.getNewChildDescriptors(null, object);
@@ -269,16 +274,16 @@ public class ExpressionActionBarContributor
 
 		// Generate actions for selection; populate and redraw the menus.
 		//
-		this.createChildActions = this.generateCreateChildActions(newChildDescriptors, selection);
-		this.createSiblingActions = this.generateCreateSiblingActions(newSiblingDescriptors, selection);
+		createChildActions = generateCreateChildActions(newChildDescriptors, selection);
+		createSiblingActions = generateCreateSiblingActions(newSiblingDescriptors, selection);
 
-		if (this.createChildMenuManager != null) {
-			this.populateManager(this.createChildMenuManager, this.createChildActions, null);
-			this.createChildMenuManager.update(true);
+		if (createChildMenuManager != null) {
+			populateManager(createChildMenuManager, createChildActions, null);
+			createChildMenuManager.update(true);
 		}
-		if (this.createSiblingMenuManager != null) {
-			this.populateManager(this.createSiblingMenuManager, this.createSiblingActions, null);
-			this.createSiblingMenuManager.update(true);
+		if (createSiblingMenuManager != null) {
+			populateManager(createSiblingMenuManager, createSiblingActions, null);
+			createSiblingMenuManager.update(true);
 		}
 	}
 
@@ -289,11 +294,11 @@ public class ExpressionActionBarContributor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected Collection<IAction> generateCreateChildActions(final Collection<?> descriptors, final ISelection selection) {
-		final Collection<IAction> actions = new ArrayList<IAction>();
+	protected Collection<IAction> generateCreateChildActions(Collection<?> descriptors, ISelection selection) {
+		Collection<IAction> actions = new ArrayList<IAction>();
 		if (descriptors != null) {
-			for (final Object descriptor : descriptors) {
-				actions.add(new CreateChildAction(this.activeEditorPart, selection, descriptor));
+			for (Object descriptor : descriptors) {
+				actions.add(new CreateChildAction(activeEditorPart, selection, descriptor));
 			}
 		}
 		return actions;
@@ -306,11 +311,11 @@ public class ExpressionActionBarContributor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected Collection<IAction> generateCreateSiblingActions(final Collection<?> descriptors, final ISelection selection) {
-		final Collection<IAction> actions = new ArrayList<IAction>();
+	protected Collection<IAction> generateCreateSiblingActions(Collection<?> descriptors, ISelection selection) {
+		Collection<IAction> actions = new ArrayList<IAction>();
 		if (descriptors != null) {
-			for (final Object descriptor : descriptors) {
-				actions.add(new CreateSiblingAction(this.activeEditorPart, selection, descriptor));
+			for (Object descriptor : descriptors) {
+				actions.add(new CreateSiblingAction(activeEditorPart, selection, descriptor));
 			}
 		}
 		return actions;
@@ -325,9 +330,9 @@ public class ExpressionActionBarContributor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void populateManager(final IContributionManager manager, final Collection<? extends IAction> actions, final String contributionID) {
+	protected void populateManager(IContributionManager manager, Collection<? extends IAction> actions, String contributionID) {
 		if (actions != null) {
-			for (final IAction action : actions) {
+			for (IAction action : actions) {
 				if (contributionID != null) {
 					manager.insertBefore(contributionID, action);
 				}
@@ -345,13 +350,13 @@ public class ExpressionActionBarContributor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void depopulateManager(final IContributionManager manager, final Collection<? extends IAction> actions) {
+	protected void depopulateManager(IContributionManager manager, Collection<? extends IAction> actions) {
 		if (actions != null) {
-			final IContributionItem[] items = manager.getItems();
-			for (final IContributionItem item : items) {
+			IContributionItem[] items = manager.getItems();
+			for (int i = 0; i < items.length; i++) {
 				// Look into SubContributionItems
 				//
-				IContributionItem contributionItem = item;
+				IContributionItem contributionItem = items[i];
 				while (contributionItem instanceof SubContributionItem) {
 					contributionItem = ((SubContributionItem)contributionItem).getInnerItem();
 				}
@@ -359,7 +364,7 @@ public class ExpressionActionBarContributor
 				// Delete the ActionContributionItems with matching action.
 				//
 				if (contributionItem instanceof ActionContributionItem) {
-					final IAction action = ((ActionContributionItem)contributionItem).getAction();
+					IAction action = ((ActionContributionItem)contributionItem).getAction();
 					if (actions.contains(action)) {
 						manager.remove(contributionItem);
 					}
@@ -375,16 +380,16 @@ public class ExpressionActionBarContributor
 	 * @generated
 	 */
 	@Override
-	public void menuAboutToShow(final IMenuManager menuManager) {
+	public void menuAboutToShow(IMenuManager menuManager) {
 		super.menuAboutToShow(menuManager);
 		MenuManager submenuManager = null;
 
 		submenuManager = new MenuManager(ExpressionEditorPlugin.INSTANCE.getString("_UI_CreateChild_menu_item"));
-		this.populateManager(submenuManager, this.createChildActions, null);
+		populateManager(submenuManager, createChildActions, null);
 		menuManager.insertBefore("edit", submenuManager);
 
 		submenuManager = new MenuManager(ExpressionEditorPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
-		this.populateManager(submenuManager, this.createSiblingActions, null);
+		populateManager(submenuManager, createSiblingActions, null);
 		menuManager.insertBefore("edit", submenuManager);
 	}
 
@@ -395,12 +400,12 @@ public class ExpressionActionBarContributor
 	 * @generated
 	 */
 	@Override
-	protected void addGlobalActions(final IMenuManager menuManager) {
+	protected void addGlobalActions(IMenuManager menuManager) {
 		menuManager.insertAfter("additions-end", new Separator("ui-actions"));
-		menuManager.insertAfter("ui-actions", this.showPropertiesViewAction);
+		menuManager.insertAfter("ui-actions", showPropertiesViewAction);
 
-		this.refreshViewerAction.setEnabled(this.refreshViewerAction.isEnabled());		
-		menuManager.insertAfter("ui-actions", this.refreshViewerAction);
+		refreshViewerAction.setEnabled(refreshViewerAction.isEnabled());		
+		menuManager.insertAfter("ui-actions", refreshViewerAction);
 
 		super.addGlobalActions(menuManager);
 	}

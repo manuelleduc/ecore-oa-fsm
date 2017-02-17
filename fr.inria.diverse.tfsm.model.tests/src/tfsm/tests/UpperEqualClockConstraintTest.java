@@ -20,7 +20,7 @@ public class UpperEqualClockConstraintTest extends ClockConstraintTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(UpperEqualClockConstraintTest.class);
 	}
 
@@ -30,7 +30,7 @@ public class UpperEqualClockConstraintTest extends ClockConstraintTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public UpperEqualClockConstraintTest(final String name) {
+	public UpperEqualClockConstraintTest(String name) {
 		super(name);
 	}
 
@@ -42,7 +42,7 @@ public class UpperEqualClockConstraintTest extends ClockConstraintTest {
 	 */
 	@Override
 	protected UpperEqualClockConstraint getFixture() {
-		return (UpperEqualClockConstraint)this.fixture;
+		return (UpperEqualClockConstraint)fixture;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class UpperEqualClockConstraintTest extends ClockConstraintTest {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(TfsmFactory.eINSTANCE.createUpperEqualClockConstraint());
+		setFixture(TfsmFactory.eINSTANCE.createUpperEqualClockConstraint());
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class UpperEqualClockConstraintTest extends ClockConstraintTest {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //UpperEqualClockConstraintTest

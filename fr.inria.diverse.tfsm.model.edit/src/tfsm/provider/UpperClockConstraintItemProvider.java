@@ -26,7 +26,7 @@ public class UpperClockConstraintItemProvider extends ClockConstraintItemProvide
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public UpperClockConstraintItemProvider(final AdapterFactory adapterFactory) {
+	public UpperClockConstraintItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -37,12 +37,12 @@ public class UpperClockConstraintItemProvider extends ClockConstraintItemProvide
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
-		if (this.itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
@@ -52,8 +52,8 @@ public class UpperClockConstraintItemProvider extends ClockConstraintItemProvide
 	 * @generated
 	 */
 	@Override
-	public Object getImage(final Object object) {
-		return this.overlayImage(object, this.getResourceLocator().getImage("full/obj16/UpperClockConstraint"));
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/UpperClockConstraint"));
 	}
 
 	/**
@@ -63,9 +63,9 @@ public class UpperClockConstraintItemProvider extends ClockConstraintItemProvide
 	 * @generated
 	 */
 	@Override
-	public String getText(final Object object) {
-		final UpperClockConstraint upperClockConstraint = (UpperClockConstraint)object;
-		return this.getString("_UI_UpperClockConstraint_type") + " " + upperClockConstraint.getThreshold();
+	public String getText(Object object) {
+		UpperClockConstraint upperClockConstraint = (UpperClockConstraint)object;
+		return getString("_UI_UpperClockConstraint_type") + " " + upperClockConstraint.getThreshold();
 	}
 	
 
@@ -77,8 +77,8 @@ public class UpperClockConstraintItemProvider extends ClockConstraintItemProvide
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(final Notification notification) {
-		this.updateChildren(notification);
+	public void notifyChanged(Notification notification) {
+		updateChildren(notification);
 		super.notifyChanged(notification);
 	}
 
@@ -90,7 +90,7 @@ public class UpperClockConstraintItemProvider extends ClockConstraintItemProvide
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors, final Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 

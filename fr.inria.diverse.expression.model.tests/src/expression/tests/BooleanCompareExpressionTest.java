@@ -18,7 +18,7 @@ public abstract class BooleanCompareExpressionTest extends BooleanExpressionTest
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public BooleanCompareExpressionTest(final String name) {
+	public BooleanCompareExpressionTest(String name) {
 		super(name);
 	}
 
@@ -30,7 +30,7 @@ public abstract class BooleanCompareExpressionTest extends BooleanExpressionTest
 	 */
 	@Override
 	protected BooleanCompareExpression getFixture() {
-		return (BooleanCompareExpression)this.fixture;
+		return (BooleanCompareExpression)fixture;
 	}
 
 } //BooleanCompareExpressionTest

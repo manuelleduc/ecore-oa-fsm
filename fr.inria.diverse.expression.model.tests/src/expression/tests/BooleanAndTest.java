@@ -20,7 +20,7 @@ public class BooleanAndTest extends BooleanBinaryExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(BooleanAndTest.class);
 	}
 
@@ -30,7 +30,7 @@ public class BooleanAndTest extends BooleanBinaryExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public BooleanAndTest(final String name) {
+	public BooleanAndTest(String name) {
 		super(name);
 	}
 
@@ -42,7 +42,7 @@ public class BooleanAndTest extends BooleanBinaryExpressionTest {
 	 */
 	@Override
 	protected BooleanAnd getFixture() {
-		return (BooleanAnd)this.fixture;
+		return (BooleanAnd)fixture;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class BooleanAndTest extends BooleanBinaryExpressionTest {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(ExpressionFactory.eINSTANCE.createBooleanAnd());
+		setFixture(ExpressionFactory.eINSTANCE.createBooleanAnd());
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class BooleanAndTest extends BooleanBinaryExpressionTest {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //BooleanAndTest

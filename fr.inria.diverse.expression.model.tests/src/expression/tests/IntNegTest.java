@@ -20,7 +20,7 @@ public class IntNegTest extends IntExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(IntNegTest.class);
 	}
 
@@ -30,7 +30,7 @@ public class IntNegTest extends IntExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IntNegTest(final String name) {
+	public IntNegTest(String name) {
 		super(name);
 	}
 
@@ -42,7 +42,7 @@ public class IntNegTest extends IntExpressionTest {
 	 */
 	@Override
 	protected IntNeg getFixture() {
-		return (IntNeg)this.fixture;
+		return (IntNeg)fixture;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class IntNegTest extends IntExpressionTest {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(ExpressionFactory.eINSTANCE.createIntNeg());
+		setFixture(ExpressionFactory.eINSTANCE.createIntNeg());
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class IntNegTest extends IntExpressionTest {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //IntNegTest

@@ -31,7 +31,7 @@ public class BinaryClockConstraintItemProvider extends ClockConstraintOperationI
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public BinaryClockConstraintItemProvider(final AdapterFactory adapterFactory) {
+	public BinaryClockConstraintItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -42,12 +42,12 @@ public class BinaryClockConstraintItemProvider extends ClockConstraintOperationI
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(final Object object) {
-		if (this.itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
-		return this.itemPropertyDescriptors;
+		return itemPropertyDescriptors;
 	}
 
 	/**
@@ -59,13 +59,13 @@ public class BinaryClockConstraintItemProvider extends ClockConstraintOperationI
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(final Object object) {
-		if (this.childrenFeatures == null) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			this.childrenFeatures.add(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__LEFT);
-			this.childrenFeatures.add(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__RIGHT);
+			childrenFeatures.add(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__LEFT);
+			childrenFeatures.add(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__RIGHT);
 		}
-		return this.childrenFeatures;
+		return childrenFeatures;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class BinaryClockConstraintItemProvider extends ClockConstraintOperationI
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(final Object object, final Object child) {
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -88,8 +88,8 @@ public class BinaryClockConstraintItemProvider extends ClockConstraintOperationI
 	 * @generated
 	 */
 	@Override
-	public String getText(final Object object) {
-		return this.getString("_UI_BinaryClockConstraint_type");
+	public String getText(Object object) {
+		return getString("_UI_BinaryClockConstraint_type");
 	}
 	
 
@@ -101,13 +101,13 @@ public class BinaryClockConstraintItemProvider extends ClockConstraintOperationI
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(final Notification notification) {
-		this.updateChildren(notification);
+	public void notifyChanged(Notification notification) {
+		updateChildren(notification);
 
 		switch (notification.getFeatureID(BinaryClockConstraint.class)) {
 			case TfsmPackage.BINARY_CLOCK_CONSTRAINT__LEFT:
 			case TfsmPackage.BINARY_CLOCK_CONSTRAINT__RIGHT:
-				this.fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -121,66 +121,66 @@ public class BinaryClockConstraintItemProvider extends ClockConstraintOperationI
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(final Collection<Object> newChildDescriptors, final Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__LEFT,
 				 TfsmFactory.eINSTANCE.createLowerClockConstraint()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__LEFT,
 				 TfsmFactory.eINSTANCE.createLowerEqualClockConstraint()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__LEFT,
 				 TfsmFactory.eINSTANCE.createUpperClockConstraint()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__LEFT,
 				 TfsmFactory.eINSTANCE.createUpperEqualClockConstraint()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__LEFT,
 				 TfsmFactory.eINSTANCE.createAndClockConstraint()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__LEFT,
 				 TfsmFactory.eINSTANCE.createOrClockConstraint()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__RIGHT,
 				 TfsmFactory.eINSTANCE.createLowerClockConstraint()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__RIGHT,
 				 TfsmFactory.eINSTANCE.createLowerEqualClockConstraint()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__RIGHT,
 				 TfsmFactory.eINSTANCE.createUpperClockConstraint()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__RIGHT,
 				 TfsmFactory.eINSTANCE.createUpperEqualClockConstraint()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__RIGHT,
 				 TfsmFactory.eINSTANCE.createAndClockConstraint()));
 
 		newChildDescriptors.add
-			(this.createChildParameter
+			(createChildParameter
 				(TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__RIGHT,
 				 TfsmFactory.eINSTANCE.createOrClockConstraint()));
 	}
@@ -192,18 +192,18 @@ public class BinaryClockConstraintItemProvider extends ClockConstraintOperationI
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(final Object owner, final Object feature, final Object child, final Collection<?> selection) {
-		final Object childFeature = feature;
-		final Object childObject = child;
+	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
+		Object childFeature = feature;
+		Object childObject = child;
 
-		final boolean qualify =
+		boolean qualify =
 			childFeature == TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__LEFT ||
 			childFeature == TfsmPackage.Literals.BINARY_CLOCK_CONSTRAINT__RIGHT;
 
 		if (qualify) {
-			return this.getString
+			return getString
 				("_UI_CreateChild_text2",
-				 new Object[] { this.getTypeText(childObject), this.getFeatureText(childFeature), this.getTypeText(owner) });
+				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);
 	}

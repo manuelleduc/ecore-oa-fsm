@@ -28,7 +28,7 @@ public abstract class IntExpressionTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IntExpressionTest(final String name) {
+	public IntExpressionTest(String name) {
 		super(name);
 	}
 
@@ -38,7 +38,7 @@ public abstract class IntExpressionTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void setFixture(final IntExpression fixture) {
+	protected void setFixture(IntExpression fixture) {
 		this.fixture = fixture;
 	}
 
@@ -49,7 +49,7 @@ public abstract class IntExpressionTest extends TestCase {
 	 * @generated
 	 */
 	protected IntExpression getFixture() {
-		return this.fixture;
+		return fixture;
 	}
 
 } //IntExpressionTest

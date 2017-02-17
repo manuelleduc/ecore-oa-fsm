@@ -20,7 +20,7 @@ public class BooleanOrTest extends BooleanBinaryExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		TestRunner.run(BooleanOrTest.class);
 	}
 
@@ -30,7 +30,7 @@ public class BooleanOrTest extends BooleanBinaryExpressionTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public BooleanOrTest(final String name) {
+	public BooleanOrTest(String name) {
 		super(name);
 	}
 
@@ -42,7 +42,7 @@ public class BooleanOrTest extends BooleanBinaryExpressionTest {
 	 */
 	@Override
 	protected BooleanOr getFixture() {
-		return (BooleanOr)this.fixture;
+		return (BooleanOr)fixture;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class BooleanOrTest extends BooleanBinaryExpressionTest {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		this.setFixture(ExpressionFactory.eINSTANCE.createBooleanOr());
+		setFixture(ExpressionFactory.eINSTANCE.createBooleanOr());
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class BooleanOrTest extends BooleanBinaryExpressionTest {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		this.setFixture(null);
+		setFixture(null);
 	}
 
 } //BooleanOrTest

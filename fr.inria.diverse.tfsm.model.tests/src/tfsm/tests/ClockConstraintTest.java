@@ -18,7 +18,7 @@ public abstract class ClockConstraintTest extends ClockConstraintOperationTest {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ClockConstraintTest(final String name) {
+	public ClockConstraintTest(String name) {
 		super(name);
 	}
 
@@ -30,7 +30,7 @@ public abstract class ClockConstraintTest extends ClockConstraintOperationTest {
 	 */
 	@Override
 	protected ClockConstraint getFixture() {
-		return (ClockConstraint)this.fixture;
+		return (ClockConstraint)fixture;
 	}
 
 } //ClockConstraintTest

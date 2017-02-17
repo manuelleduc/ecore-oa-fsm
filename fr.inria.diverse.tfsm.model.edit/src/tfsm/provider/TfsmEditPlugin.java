@@ -2,8 +2,6 @@
  */
 package tfsm.provider;
 
-import fsm.provider.FsmEditPlugin;
-
 import org.eclipse.emf.common.EMFPlugin;
 
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -40,7 +38,6 @@ public final class TfsmEditPlugin extends EMFPlugin {
 	public TfsmEditPlugin() {
 		super
 		  (new ResourceLocator [] {
-		     FsmEditPlugin.INSTANCE,
 		   });
 	}
 
@@ -53,7 +50,7 @@ public final class TfsmEditPlugin extends EMFPlugin {
 	 */
 	@Override
 	public ResourceLocator getPluginResourceLocator() {
-		return TfsmEditPlugin.plugin;
+		return plugin;
 	}
 
 	/**
@@ -64,7 +61,7 @@ public final class TfsmEditPlugin extends EMFPlugin {
 	 * @generated
 	 */
 	public static Implementation getPlugin() {
-		return TfsmEditPlugin.plugin;
+		return plugin;
 	}
 
 	/**
@@ -85,7 +82,7 @@ public final class TfsmEditPlugin extends EMFPlugin {
 
 			// Remember the static instance.
 			//
-			TfsmEditPlugin.plugin = this;
+			plugin = this;
 		}
 	}
 
