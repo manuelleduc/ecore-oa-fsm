@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/fr.inria.diverse.tfsm.ecore/src" modelPluginID="fr.inria.diverse.tfsm.ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/fr.inria.diverse.tfsm.model/src" modelPluginID="fr.inria.diverse.tfsm.model"
     modelName="Tfsm" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
     usedGenPackages="../../fr.inria.diverse.fsm.model/model/fsm.genmodel#//fsm" operationReflection="true"
     importOrganizing="true">
   <foreignModel>tfsm.ecore</foreignModel>
   <genPackages prefix="Tfsm" disposableProviderFactory="true" ecorePackage="tfsm.ecore#/">
-    <genClasses ecoreClass="tfsm.ecore#//TimedFSM">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tfsm.ecore#//TimedFSM/clocks"/>
+    <genClasses ecoreClass="tfsm.ecore#//FSM">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tfsm.ecore#//FSM/clocks"/>
     </genClasses>
-    <genClasses ecoreClass="tfsm.ecore#//TimedState">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tfsm.ecore#//TimedState/stateguard"/>
+    <genClasses ecoreClass="tfsm.ecore#//State">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tfsm.ecore#//State/stateguard"/>
     </genClasses>
-    <genClasses ecoreClass="tfsm.ecore#//TimedTransition">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tfsm.ecore#//TimedTransition/clockresets"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tfsm.ecore#//TimedTransition/transitionguard"/>
+    <genClasses ecoreClass="tfsm.ecore#//Transition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tfsm.ecore#//Transition/clockresets"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tfsm.ecore#//Transition/transitionguard"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tfsm.ecore#//Transition/event"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference tfsm.ecore#//Transition/fsm"/>
     </genClasses>
     <genClasses ecoreClass="tfsm.ecore#//Clock">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tfsm.ecore#//Clock/name"/>
@@ -39,7 +41,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tfsm.ecore#//BinaryClockConstraint/left"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tfsm.ecore#//BinaryClockConstraint/right"/>
     </genClasses>
-    <genClasses ecoreClass="tfsm.ecore#//TimedFinalState"/>
-    <genClasses ecoreClass="tfsm.ecore#//TimedInitialState"/>
+    <genClasses ecoreClass="tfsm.ecore#//FinalState"/>
+    <genClasses ecoreClass="tfsm.ecore#//InitialState"/>
   </genPackages>
 </genmodel:GenModel>

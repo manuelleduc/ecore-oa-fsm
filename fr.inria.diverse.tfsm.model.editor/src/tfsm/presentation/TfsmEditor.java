@@ -609,7 +609,7 @@ public class TfsmEditor
 			final BasicDiagnostic diagnostic =
 				new BasicDiagnostic
 					(Diagnostic.OK,
-					 "fr.inria.diverse.tfsm.ecore.editor",
+					 "fr.inria.diverse.tfsm.model.editor",
 					 0,
 					 null,
 					 new Object [] { this.editingDomain.getResourceSet() });
@@ -962,7 +962,7 @@ public class TfsmEditor
 			final BasicDiagnostic basicDiagnostic =
 				new BasicDiagnostic
 					(hasErrors ? Diagnostic.ERROR : Diagnostic.WARNING,
-					 "fr.inria.diverse.tfsm.ecore.editor",
+					 "fr.inria.diverse.tfsm.model.editor",
 					 0,
 					 TfsmEditor.getString("_UI_CreateModelError_message", resource.getURI()),
 					 new Object [] { exception == null ? (Object)resource : exception });
@@ -973,7 +973,7 @@ public class TfsmEditor
 			return
 				new BasicDiagnostic
 					(Diagnostic.ERROR,
-					 "fr.inria.diverse.tfsm.ecore.editor",
+					 "fr.inria.diverse.tfsm.model.editor",
 					 0,
 					 TfsmEditor.getString("_UI_CreateModelError_message", resource.getURI()),
 					 new Object[] { exception });

@@ -3,7 +3,7 @@
     modelDirectory="/fr.inria.diverse.gtfsm.model/src" modelPluginID="fr.inria.diverse.gtfsm.model"
     modelName="Gtfsm" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
-    usedGenPackages="../../fr.inria.diverse.expression.model/model/expression.genmodel#//expression ../../fr.inria.diverse.fsm.model/model/fsm.genmodel#//fsm ../../fr.inria.diverse.gfsm.model/model/gfsm.genmodel#//gfsm ../../fr.inria.diverse.tfsm.ecore/model/tfsm.genmodel#//tfsm"
+    usedGenPackages="../../fr.inria.diverse.expression.model/model/expression.genmodel#//expression ../../fr.inria.diverse.fsm.model/model/fsm.genmodel#//fsm ../../fr.inria.diverse.gfsm.model/model/gfsm.genmodel#//gfsm ../../fr.inria.diverse.tfsm.model/model/tfsm.genmodel#//tfsm"
     operationReflection="true" importOrganizing="true">
   <foreignModel>gtfsm.ecore</foreignModel>
   <genPackages prefix="Gtfsm" disposableProviderFactory="true" ecorePackage="gtfsm.ecore#/">

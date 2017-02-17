@@ -18,5 +18,5 @@ Require-Bundle: org.eclipse.core.runtime,
  fr.inria.diverse.expression.model.edit;visibility:=reexport,
  fr.inria.diverse.fsm.model.edit;visibility:=reexport,
  fr.inria.diverse.gfsm.model.edit;visibility:=reexport,
- fr.inria.diverse.tfsm.ecore.edit;visibility:=reexport
+ fr.inria.diverse.tfsm.model.edit;visibility:=reexport
 Bundle-ActivationPolicy: lazy

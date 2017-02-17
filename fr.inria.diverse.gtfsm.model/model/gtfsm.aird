@@ -2,7 +2,7 @@
 <viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style" xmi:id="_aKZqoMFQEea7uMR9feX20A" selectedViews="_aLsEEMFQEea7uMR9feX20A" version="10.1.0.201509162000">
   <semanticResources>gtfsm.ecore</semanticResources>
   <semanticResources>gtfsm.genmodel</semanticResources>
-  <semanticResources>platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore</semanticResources>
+  <semanticResources>platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore</semanticResources>
   <semanticResources>platform:/resource/fr.inria.diverse.fsm.model/model/fsm.ecore</semanticResources>
   <semanticResources>http://www.eclipse.org/emf/2002/Ecore</semanticResources>
   <semanticResources>platform:/resource/fr.inria.diverse.gfsm.model/model/gfsm.ecore</semanticResources>
@@ -10,7 +10,7 @@
   <semanticResources>platform:/resource/fr.inria.diverse.expression.model/model/expression.genmodel</semanticResources>
   <semanticResources>platform:/resource/fr.inria.diverse.fsm.model/model/fsm.genmodel</semanticResources>
   <semanticResources>platform:/resource/fr.inria.diverse.gfsm.model/model/gfsm.genmodel</semanticResources>
-  <semanticResources>platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.genmodel</semanticResources>
+  <semanticResources>platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.genmodel</semanticResources>
   <ownedViews xmi:type="viewpoint:DRepresentationContainer" xmi:id="_aLsEEMFQEea7uMR9feX20A">
     <ownedRepresentations xmi:type="diagram:DSemanticDiagram" xmi:id="_aM8oUMFQEea7uMR9feX20A" name="gtfsm">
       <ownedAnnotationEntries xmi:type="description:AnnotationEntry" xmi:id="_aM8oUcFQEea7uMR9feX20A" source="DANNOTATION_CUSTOMIZATION_KEY">
@@ -424,8 +424,8 @@
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_yy4cQMFQEea7uMR9feX20A" name="TimedFSM" tooltipText="" incomingEdges="_yzFQkMFQEea7uMR9feX20A" width="12" height="10">
-        <target xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedFSM"/>
-        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedFSM"/>
+        <target xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedFSM"/>
+        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedFSM"/>
         <decorations xmi:type="viewpoint:Decoration" xmi:id="_yzEpgMFQEea7uMR9feX20A">
           <description xmi:type="description:SemanticBasedDecoration" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@decorationDescriptionsSet/@decorationDescriptions[name='External']"/>
         </decorations>
@@ -511,8 +511,8 @@
         <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@edgeMappings[name='EC%20ESupertypes']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_MSlw0MFREea7uMR9feX20A" name="TimedState" tooltipText="" incomingEdges="_MSvh0MFREea7uMR9feX20A _Sr74gMFREea7uMR9feX20A _VHpF8MFREea7uMR9feX20A" width="12" height="10">
-        <target xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedState"/>
-        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedState"/>
+        <target xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedState"/>
+        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedState"/>
         <decorations xmi:type="viewpoint:Decoration" xmi:id="_MSuTsMFREea7uMR9feX20A">
           <description xmi:type="description:SemanticBasedDecoration" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@decorationDescriptionsSet/@decorationDescriptions[name='External']"/>
         </decorations>
@@ -609,8 +609,8 @@
         <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@edgeMappings[name='EC%20ESupertypes']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_Sr1x4MFREea7uMR9feX20A" name="TimedFinalState" tooltipText="" outgoingEdges="_Sr74gMFREea7uMR9feX20A" incomingEdges="_bwQ_wMFREea7uMR9feX20A" width="12" height="10">
-        <target xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedFinalState"/>
-        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedFinalState"/>
+        <target xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedFinalState"/>
+        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedFinalState"/>
         <decorations xmi:type="viewpoint:Decoration" xmi:id="_Sr6DUMFREea7uMR9feX20A">
           <description xmi:type="description:SemanticBasedDecoration" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@decorationDescriptionsSet/@decorationDescriptions[name='External']"/>
         </decorations>
@@ -623,9 +623,9 @@
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_Sr74gMFREea7uMR9feX20A" sourceNode="_Sr1x4MFREea7uMR9feX20A" targetNode="_MSlw0MFREea7uMR9feX20A">
-        <target xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedFinalState"/>
-        <semanticElements xmi:type="ecore:EGenericType" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedFinalState/@eGenericSuperTypes.0"/>
-        <semanticElements xmi:type="ecore:EGenericType" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedFinalState/@eGenericSuperTypes.1"/>
+        <target xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedFinalState"/>
+        <semanticElements xmi:type="ecore:EGenericType" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedFinalState/@eGenericSuperTypes.0"/>
+        <semanticElements xmi:type="ecore:EGenericType" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedFinalState/@eGenericSuperTypes.1"/>
         <decorations xmi:type="viewpoint:Decoration" xmi:id="_bUhe8cFREea7uMR9feX20A">
           <description xmi:type="description:SemanticBasedDecoration" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@decorationDescriptionsSet/@decorationDescriptions[name='External']"/>
         </decorations>
@@ -639,8 +639,8 @@
         <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@edgeMappings[name='EC%20ESupertypes']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_VHZ1YMFREea7uMR9feX20A" name="TimedInitialState" tooltipText="" outgoingEdges="_VHpF8MFREea7uMR9feX20A" incomingEdges="_VHoe4MFREea7uMR9feX20A" width="12" height="10">
-        <target xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedInitialState"/>
-        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedInitialState"/>
+        <target xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedInitialState"/>
+        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedInitialState"/>
         <decorations xmi:type="viewpoint:Decoration" xmi:id="_VHiYQMFREea7uMR9feX20A">
           <description xmi:type="description:SemanticBasedDecoration" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@decorationDescriptionsSet/@decorationDescriptions[name='External']"/>
         </decorations>
@@ -667,9 +667,9 @@
         <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@edgeMappings[name='EC%20ESupertypes']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_VHpF8MFREea7uMR9feX20A" sourceNode="_VHZ1YMFREea7uMR9feX20A" targetNode="_MSlw0MFREea7uMR9feX20A">
-        <target xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedInitialState"/>
-        <semanticElements xmi:type="ecore:EGenericType" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedInitialState/@eGenericSuperTypes.0"/>
-        <semanticElements xmi:type="ecore:EGenericType" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedInitialState/@eGenericSuperTypes.1"/>
+        <target xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedInitialState"/>
+        <semanticElements xmi:type="ecore:EGenericType" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedInitialState/@eGenericSuperTypes.0"/>
+        <semanticElements xmi:type="ecore:EGenericType" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedInitialState/@eGenericSuperTypes.1"/>
         <decorations xmi:type="viewpoint:Decoration" xmi:id="_bUhe8sFREea7uMR9feX20A">
           <description xmi:type="description:SemanticBasedDecoration" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@decorationDescriptionsSet/@decorationDescriptions[name='External']"/>
         </decorations>
@@ -763,8 +763,8 @@
         <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@edgeMappings[name='EC%20ESupertypes']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_jCHcwMFREea7uMR9feX20A" name="TimedTransition" tooltipText="" incomingEdges="_nVWMgMFREea7uMR9feX20A" width="12" height="10">
-        <target xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedTransition"/>
-        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.ecore/model/tfsm.ecore#//TimedTransition"/>
+        <target xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedTransition"/>
+        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/fr.inria.diverse.tfsm.model/model/tfsm.ecore#//TimedTransition"/>
         <decorations xmi:type="viewpoint:Decoration" xmi:id="_jCLuMMFREea7uMR9feX20A">
           <description xmi:type="description:SemanticBasedDecoration" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@decorationDescriptionsSet/@decorationDescriptions[name='External']"/>
         </decorations>
