@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated gfsm -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="gfsm.presentation.GfsmModelWizardID"
+            name="%_UI_GfsmModelWizard_label"
+            class="gfsm.presentation.GfsmModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/GfsmModelFile.gif">
+         <description>%_UI_GfsmModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated gfsm -->
+      <editor
+            id="gfsm.presentation.GfsmEditorID"
+            name="%_UI_GfsmEditor_label"
+            icon="icons/full/obj16/GfsmModelFile.gif"
+            extensions="gfsm"
+            class="gfsm.presentation.GfsmEditor"
+            contributorClass="gfsm.presentation.GfsmActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>
