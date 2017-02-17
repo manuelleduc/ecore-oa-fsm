@@ -65,6 +65,8 @@ public class StateItemProvider
 
 			addNamePropertyDescriptor(object);
 			addFsmPropertyDescriptor(object);
+			addOutgoingtransitionsPropertyDescriptor(object);
+			addIncommingtransitionsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -105,6 +107,50 @@ public class StateItemProvider
 				 getString("_UI_State_fsm_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_State_fsm_feature", "_UI_State_type"),
 				 TfsmPackage.Literals.STATE__FSM,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Outgoingtransitions feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addOutgoingtransitionsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_State_outgoingtransitions_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_State_outgoingtransitions_feature", "_UI_State_type"),
+				 TfsmPackage.Literals.STATE__OUTGOINGTRANSITIONS,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Incommingtransitions feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addIncommingtransitionsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_State_incommingtransitions_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_State_incommingtransitions_feature", "_UI_State_type"),
+				 TfsmPackage.Literals.STATE__INCOMMINGTRANSITIONS,
 				 true,
 				 false,
 				 true,

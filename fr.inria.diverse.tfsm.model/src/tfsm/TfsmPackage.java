@@ -112,13 +112,22 @@ public interface TfsmPackage extends EPackage {
 	int FSM__NAME = 4;
 
 	/**
+	 * The feature id for the '<em><b>Current State</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FSM__CURRENT_STATE = 5;
+
+	/**
 	 * The number of structural features of the '<em>FSM</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FSM_FEATURE_COUNT = 5;
+	int FSM_FEATURE_COUNT = 6;
 
 	/**
 	 * The number of operations of the '<em>FSM</em>' class.
@@ -167,13 +176,31 @@ public interface TfsmPackage extends EPackage {
 	int STATE__FSM = 2;
 
 	/**
+	 * The feature id for the '<em><b>Outgoingtransitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATE__OUTGOINGTRANSITIONS = 3;
+
+	/**
+	 * The feature id for the '<em><b>Incommingtransitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATE__INCOMMINGTRANSITIONS = 4;
+
+	/**
 	 * The number of structural features of the '<em>State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STATE_FEATURE_COUNT = 3;
+	int STATE_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>State</em>' class.
@@ -222,13 +249,31 @@ public interface TfsmPackage extends EPackage {
 	int TRANSITION__EVENT = 2;
 
 	/**
+	 * The feature id for the '<em><b>From</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSITION__FROM = 3;
+
+	/**
+	 * The feature id for the '<em><b>To</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSITION__TO = 4;
+
+	/**
 	 * The number of structural features of the '<em>Transition</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSITION_FEATURE_COUNT = 3;
+	int TRANSITION_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Transition</em>' class.
@@ -756,6 +801,24 @@ public interface TfsmPackage extends EPackage {
 	int FINAL_STATE__FSM = STATE__FSM;
 
 	/**
+	 * The feature id for the '<em><b>Outgoingtransitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FINAL_STATE__OUTGOINGTRANSITIONS = STATE__OUTGOINGTRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Incommingtransitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FINAL_STATE__INCOMMINGTRANSITIONS = STATE__INCOMMINGTRANSITIONS;
+
+	/**
 	 * The number of structural features of the '<em>Final State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -809,6 +872,24 @@ public interface TfsmPackage extends EPackage {
 	 * @ordered
 	 */
 	int INITIAL_STATE__FSM = STATE__FSM;
+
+	/**
+	 * The feature id for the '<em><b>Outgoingtransitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INITIAL_STATE__OUTGOINGTRANSITIONS = STATE__OUTGOINGTRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Incommingtransitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INITIAL_STATE__INCOMMINGTRANSITIONS = STATE__INCOMMINGTRANSITIONS;
 
 	/**
 	 * The number of structural features of the '<em>Initial State</em>' class.
@@ -895,6 +976,17 @@ public interface TfsmPackage extends EPackage {
 	EAttribute getFSM_Name();
 
 	/**
+	 * Returns the meta object for the reference '{@link tfsm.FSM#getCurrentState <em>Current State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Current State</em>'.
+	 * @see tfsm.FSM#getCurrentState()
+	 * @see #getFSM()
+	 * @generated
+	 */
+	EReference getFSM_CurrentState();
+
+	/**
 	 * Returns the meta object for class '{@link tfsm.State <em>State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -938,6 +1030,28 @@ public interface TfsmPackage extends EPackage {
 	EReference getState_Fsm();
 
 	/**
+	 * Returns the meta object for the reference list '{@link tfsm.State#getOutgoingtransitions <em>Outgoingtransitions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Outgoingtransitions</em>'.
+	 * @see tfsm.State#getOutgoingtransitions()
+	 * @see #getState()
+	 * @generated
+	 */
+	EReference getState_Outgoingtransitions();
+
+	/**
+	 * Returns the meta object for the reference list '{@link tfsm.State#getIncommingtransitions <em>Incommingtransitions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Incommingtransitions</em>'.
+	 * @see tfsm.State#getIncommingtransitions()
+	 * @see #getState()
+	 * @generated
+	 */
+	EReference getState_Incommingtransitions();
+
+	/**
 	 * Returns the meta object for class '{@link tfsm.Transition <em>Transition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -979,6 +1093,28 @@ public interface TfsmPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTransition_Event();
+
+	/**
+	 * Returns the meta object for the reference '{@link tfsm.Transition#getFrom <em>From</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>From</em>'.
+	 * @see tfsm.Transition#getFrom()
+	 * @see #getTransition()
+	 * @generated
+	 */
+	EReference getTransition_From();
+
+	/**
+	 * Returns the meta object for the reference '{@link tfsm.Transition#getTo <em>To</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>To</em>'.
+	 * @see tfsm.Transition#getTo()
+	 * @see #getTransition()
+	 * @generated
+	 */
+	EReference getTransition_To();
 
 	/**
 	 * Returns the meta object for class '{@link tfsm.Clock <em>Clock</em>}'.
@@ -1261,6 +1397,14 @@ public interface TfsmPackage extends EPackage {
 		EAttribute FSM__NAME = eINSTANCE.getFSM_Name();
 
 		/**
+		 * The meta object literal for the '<em><b>Current State</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FSM__CURRENT_STATE = eINSTANCE.getFSM_CurrentState();
+
+		/**
 		 * The meta object literal for the '{@link tfsm.impl.StateImpl <em>State</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1295,6 +1439,22 @@ public interface TfsmPackage extends EPackage {
 		EReference STATE__FSM = eINSTANCE.getState_Fsm();
 
 		/**
+		 * The meta object literal for the '<em><b>Outgoingtransitions</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STATE__OUTGOINGTRANSITIONS = eINSTANCE.getState_Outgoingtransitions();
+
+		/**
+		 * The meta object literal for the '<em><b>Incommingtransitions</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STATE__INCOMMINGTRANSITIONS = eINSTANCE.getState_Incommingtransitions();
+
+		/**
 		 * The meta object literal for the '{@link tfsm.impl.TransitionImpl <em>Transition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1327,6 +1487,22 @@ public interface TfsmPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TRANSITION__EVENT = eINSTANCE.getTransition_Event();
+
+		/**
+		 * The meta object literal for the '<em><b>From</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRANSITION__FROM = eINSTANCE.getTransition_From();
+
+		/**
+		 * The meta object literal for the '<em><b>To</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRANSITION__TO = eINSTANCE.getTransition_To();
 
 		/**
 		 * The meta object literal for the '{@link tfsm.impl.ClockImpl <em>Clock</em>}' class.

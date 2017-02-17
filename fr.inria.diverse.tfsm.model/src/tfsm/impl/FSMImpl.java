@@ -38,6 +38,7 @@ import tfsm.Transition;
  *   <li>{@link tfsm.impl.FSMImpl#getTransitions <em>Transitions</em>}</li>
  *   <li>{@link tfsm.impl.FSMImpl#getInitialstate <em>Initialstate</em>}</li>
  *   <li>{@link tfsm.impl.FSMImpl#getName <em>Name</em>}</li>
+ *   <li>{@link tfsm.impl.FSMImpl#getCurrentState <em>Current State</em>}</li>
  * </ul>
  *
  * @generated
@@ -102,6 +103,16 @@ public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getCurrentState() <em>Current State</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCurrentState()
+	 * @generated
+	 * @ordered
+	 */
+	protected State currentState;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -222,6 +233,44 @@ public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public State getCurrentState() {
+		if (currentState != null && currentState.eIsProxy()) {
+			InternalEObject oldCurrentState = (InternalEObject)currentState;
+			currentState = (State)eResolveProxy(oldCurrentState);
+			if (currentState != oldCurrentState) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TfsmPackage.FSM__CURRENT_STATE, oldCurrentState, currentState));
+			}
+		}
+		return currentState;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public State basicGetCurrentState() {
+		return currentState;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCurrentState(State newCurrentState) {
+		State oldCurrentState = currentState;
+		currentState = newCurrentState;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TfsmPackage.FSM__CURRENT_STATE, oldCurrentState, currentState));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -254,6 +303,9 @@ public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
 				return basicGetInitialstate();
 			case TfsmPackage.FSM__NAME:
 				return getName();
+			case TfsmPackage.FSM__CURRENT_STATE:
+				if (resolve) return getCurrentState();
+				return basicGetCurrentState();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -285,6 +337,9 @@ public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
 			case TfsmPackage.FSM__NAME:
 				setName((String)newValue);
 				return;
+			case TfsmPackage.FSM__CURRENT_STATE:
+				setCurrentState((State)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -312,6 +367,9 @@ public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
 			case TfsmPackage.FSM__NAME:
 				setName(NAME_EDEFAULT);
 				return;
+			case TfsmPackage.FSM__CURRENT_STATE:
+				setCurrentState((State)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -334,6 +392,8 @@ public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
 				return initialstate != null;
 			case TfsmPackage.FSM__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case TfsmPackage.FSM__CURRENT_STATE:
+				return currentState != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -7,122 +7,124 @@ import java.util.Map
 import tfsm.AndClockConstraint
 import tfsm.Clock
 import tfsm.ClockReset
+import tfsm.FSM
+import tfsm.FinalState
+import tfsm.InitialState
 import tfsm.LowerClockConstraint
 import tfsm.LowerEqualClockConstraint
 import tfsm.OrClockConstraint
-import tfsm.TimedFSM
-import tfsm.TimedFinalState
-import tfsm.TimedInitialState
-import tfsm.TimedState
-import tfsm.TimedTransition
+import tfsm.State
+import tfsm.Transition
 import tfsm.UpperClockConstraint
 import tfsm.UpperEqualClockConstraint
 import tfsm.algebra.TfsmAlgebra
-import fsm.*
-import fsm.Transition
-import fsm.State
-import fsm.FinalState
-import fsm.InitialState
-import fsm.FSM
 
 // find out a solution to overload types defined at an upper level at the level of the arguments (here timedActions vs userinput)
 interface ExecutableTFSMAlgebra extends TfsmAlgebra<Boolean, Void, CtxExecutableExp, ExecutableExp, ExecutableExp, ExecutableExp>, ExecutableFSMAlgebra {
-
+	
 	def Map<Integer, String> getTimedActions()
-
+	
 	def void setTime(Integer time)
 
 	def Integer getTime()
-
-	override timedFSM(TimedFSM timedFSM) {
+	
+	override andClockConstraint(AndClockConstraint andClockConstraint) {
+		$(andClockConstraint.left) && $(andClockConstraint.right)
+	}
+	
+	override clock(Clock clock) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	override clockReset(ClockReset clockReset) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	override fSM(FSM fsm) {
 		[
-			this.currentState = timedFSM.initialstate
-			while (this.currentState != null) {
-				$(this.currentState).execute
-				timedFSM.clocks.forEach[e|e.tick = e.tick + 1]
+			fsm.currentState = fsm.initialstate
+			while (fsm.currentState != null) {
+				$(fsm.currentState).execute
+				fsm.clocks.forEach[e|e.tick = e.tick + 1]
 				time = time + 1
 			}
 		]
 	}
-
-	override timedInitialState(TimedInitialState timedInitialState) {
-		this.timedState(timedInitialState)
+	
+	override finalState(FinalState finalState) {
+		this.state(finalState)
 	}
-
-	override timedFinalState(TimedFinalState timedFinalState) {
-		this.timedState(timedFinalState)
+	
+	override initialState(InitialState initialState) {
+		this.state(initialState)
 	}
-
-	override timedTransition(TimedTransition timedTransition) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	
+	override lowerClockConstraint(LowerClockConstraint clockConstraint) {
+		clockConstraint.clock.tick < clockConstraint.threshold
 	}
-
-	override timedState(TimedState state) {
+	
+	override lowerEqualClockConstraint(LowerEqualClockConstraint lowerEqualClockConstraint) {
+		lowerEqualClockConstraint.clock.tick <= lowerEqualClockConstraint.threshold
+	}
+	
+	override orClockConstraint(OrClockConstraint orClockConstraint) {
+		$(orClockConstraint.left) || $(orClockConstraint.right)
+	}
+	
+	override state(State state) {
 		[
 			val action = timedActions.get(time)
 
 			// action with time in the future.
 			val futureActions = timedActions.filter[p1, p2|p1 >= time].size
 			if (futureActions == 0) {
-				if (!(this.currentState instanceof TimedFinalState)) {
+				if (!(state.fsm.currentState instanceof FinalState)) {
 					println("[ERROR] no action available but final state not reached")
-					this.currentState = null
+					state.fsm.currentState = null
 				}
 			} else if (action != null) {
 				val nonGardedRes = state.outgoingtransitions.filter[e|e.event == action]
 				// aweful downcast !!
-				val res0 = nonGardedRes.filter [ e |
-					e instanceof TimedTransition && (e as TimedTransition).transitionguard == null ||
-						$((e as TimedTransition).transitionguard)
+				val res = nonGardedRes.filter [ e |
+					e.transitionguard == null ||
+						$(e.transitionguard)
 				]
-				val res = res0.map[e|(e as TimedTransition)]
 				val resSize = res.size
 				if (resSize > 1) {
 					println('''[ERROR] non deterministic: «res.length» outgoing transitions matches event «action»''')
-					this.currentState = null
+					state.fsm.currentState = null
 				} else if (resSize == 1) {
 					val transition = res.get(
 						0)
-					println('''transition (time «time»): event «action» - «this.currentState.name» -> «transition.to.name»''')
+					println('''transition (time «time»): event «action» - «state.fsm.currentState.name» -> «transition.to.name»''')
 					transition.clockresets.forEach[e|e.clock.tick = 0]
 					println('''
 						clocks :
-						«FOR clock : (state.eContainer as TimedFSM).clocks»
+						«FOR clock : state.fsm.clocks»
 							- clock «clock.name» = «clock.tick»
 						«ENDFOR»
 					''')
-					this.currentState = transition.to
+					state.fsm.currentState = transition.to
 				}
 			}
-			if (!$((this.currentState as TimedState).stateguard)) {
-				println('''[ERROR] deadlock! State guard triggered at time «time» on state «this.currentState.name»''')
+			if (!$(state.fsm.currentState.stateguard)) {
+				println('''[ERROR] deadlock! State guard triggered at time «time» on state «state.fsm.currentState.name»''')
 				println('''
 					clocks :
-					«FOR clock : (state.eContainer as TimedFSM).clocks»
+					«FOR clock : state.fsm.clocks»
 						- clock «clock.name» = «clock.tick»
 					«ENDFOR»
 				''')
 
-				this.currentState = null
+				state.fsm.currentState = null
 			}
 		]
 	}
-
-	override clock(Clock clock) {
+	
+	override transition(Transition transition) {
 		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
-
-	override clockReset(ClockReset clockReset) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
-	}
-
-	override lowerClockConstraint(LowerClockConstraint clockConstraint) {
-		clockConstraint.clock.tick < clockConstraint.threshold
-	}
-
-	override lowerEqualClockConstraint(LowerEqualClockConstraint lowerEqualClockConstraint) {
-		lowerEqualClockConstraint.clock.tick <= lowerEqualClockConstraint.threshold
-	}
+	
 
 	override upperClockConstraint(UpperClockConstraint upperClockConstraint) {
 		upperClockConstraint.clock.tick > upperClockConstraint.threshold
@@ -131,47 +133,4 @@ interface ExecutableTFSMAlgebra extends TfsmAlgebra<Boolean, Void, CtxExecutable
 	override upperEqualClockConstraint(UpperEqualClockConstraint upperEqualClockConstraint) {
 		upperEqualClockConstraint.clock.tick >= upperEqualClockConstraint.threshold
 	}
-
-	override andClockConstraint(AndClockConstraint andClockConstraint) {
-		$(andClockConstraint.left) && $(andClockConstraint.right)
-	}
-
-	override orClockConstraint(OrClockConstraint orClockConstraint) {
-		$(orClockConstraint.left) || $(orClockConstraint.right)
-	}
-	
-	override $(FSM fSM) {
-		TfsmAlgebra.super.$(fSM)
-	}
-	
-	override $(State state) {
-		TfsmAlgebra.super.$(state)
-	}
-	
-	override $(Transition transition) {
-		TfsmAlgebra.super.$(transition)
-	}
-	
-	override transition(Transition transition) {
-		ExecutableFSMAlgebra.super.transition(transition)
-	}
-	
-	override state(State state) {
-		ExecutableFSMAlgebra.super.state(state)
-	}
-	
-	override finalState(FinalState finalState) {
-		ExecutableFSMAlgebra.super.finalState(finalState)
-	}
-
-	
-	override initialState(InitialState initialState) {
-		ExecutableFSMAlgebra.super.initialState(initialState)
-	}
-	
-	override fSM(FSM fsm) {
-		ExecutableFSMAlgebra.super.fSM(fsm)
-	}
-	
-
 }

@@ -266,6 +266,15 @@ public class TfsmPackageImpl extends EPackageImpl implements TfsmPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getFSM_CurrentState() {
+		return (EReference)fsmEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getState() {
 		return stateEClass;
 	}
@@ -302,6 +311,24 @@ public class TfsmPackageImpl extends EPackageImpl implements TfsmPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getState_Outgoingtransitions() {
+		return (EReference)stateEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getState_Incommingtransitions() {
+		return (EReference)stateEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getTransition() {
 		return transitionEClass;
 	}
@@ -331,6 +358,24 @@ public class TfsmPackageImpl extends EPackageImpl implements TfsmPackage {
 	 */
 	public EAttribute getTransition_Event() {
 		return (EAttribute)transitionEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTransition_From() {
+		return (EReference)transitionEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTransition_To() {
+		return (EReference)transitionEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -547,16 +592,21 @@ public class TfsmPackageImpl extends EPackageImpl implements TfsmPackage {
 		createEReference(fsmEClass, FSM__TRANSITIONS);
 		createEReference(fsmEClass, FSM__INITIALSTATE);
 		createEAttribute(fsmEClass, FSM__NAME);
+		createEReference(fsmEClass, FSM__CURRENT_STATE);
 
 		stateEClass = createEClass(STATE);
 		createEReference(stateEClass, STATE__STATEGUARD);
 		createEAttribute(stateEClass, STATE__NAME);
 		createEReference(stateEClass, STATE__FSM);
+		createEReference(stateEClass, STATE__OUTGOINGTRANSITIONS);
+		createEReference(stateEClass, STATE__INCOMMINGTRANSITIONS);
 
 		transitionEClass = createEClass(TRANSITION);
 		createEReference(transitionEClass, TRANSITION__CLOCKRESETS);
 		createEReference(transitionEClass, TRANSITION__TRANSITIONGUARD);
 		createEAttribute(transitionEClass, TRANSITION__EVENT);
+		createEReference(transitionEClass, TRANSITION__FROM);
+		createEReference(transitionEClass, TRANSITION__TO);
 
 		clockEClass = createEClass(CLOCK);
 		createEAttribute(clockEClass, CLOCK__NAME);
@@ -638,16 +688,21 @@ public class TfsmPackageImpl extends EPackageImpl implements TfsmPackage {
 		initEReference(getFSM_Transitions(), this.getTransition(), null, "transitions", null, 0, -1, tfsm.FSM.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFSM_Initialstate(), this.getInitialState(), null, "initialstate", null, 1, 1, tfsm.FSM.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFSM_Name(), ecorePackage.getEString(), "name", "", 0, 1, tfsm.FSM.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFSM_CurrentState(), this.getState(), null, "currentState", null, 0, 1, tfsm.FSM.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(stateEClass, State.class, "State", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getState_Stateguard(), this.getClockConstraintOperation(), null, "stateguard", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getState_Name(), ecorePackage.getEString(), "name", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getState_Fsm(), this.getFSM(), null, "fsm", null, 1, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getState_Outgoingtransitions(), this.getTransition(), this.getTransition_From(), "outgoingtransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getState_Incommingtransitions(), this.getTransition(), this.getTransition_To(), "incommingtransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTransition_Clockresets(), this.getClockReset(), null, "clockresets", null, 0, -1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTransition_Transitionguard(), this.getClockConstraintOperation(), null, "transitionguard", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTransition_Event(), ecorePackage.getEString(), "event", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTransition_From(), this.getState(), this.getState_Outgoingtransitions(), "from", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTransition_To(), this.getState(), this.getState_Incommingtransitions(), "to", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(clockEClass, Clock.class, "Clock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getClock_Name(), ecorePackage.getEString(), "name", null, 0, 1, Clock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
